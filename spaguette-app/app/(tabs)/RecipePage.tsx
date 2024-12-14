@@ -4,9 +4,11 @@ import { useEffect, useState } from 'react';
 import { Text, View } from '@/components/Themed';
 import { dataService } from '@/services/data/data-service';
 import RecipesList from '@/components/recipes/showRecipes/RecipesList';
-import RecipeAddButton from '@/components/recipes/addRecipe/RecipeAddButton';
+import AddRecipeButton from '@/components/recipes/addRecipe/AddRecipeButton';
+import AddRecipeModal from '../../components/recipes/addRecipe/AddRecipeModal';
 
 export default function TabOneScreen() {
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [recipes, setRecipes] = useState<Recipe[] | null>(null);
 
   useEffect(() => {
@@ -24,9 +26,8 @@ export default function TabOneScreen() {
         <Text>Loading...</Text>
       )}
 
-      <RecipeAddButton onPress={() => {
-        alert('Add Recipe button pressed');
-      }} />
+      <AddRecipeButton onPress={() => setIsModalVisible(true)} />
+      <AddRecipeModal  onClose={() => setIsModalVisible(false)} visible={isModalVisible} />
     </View>
   );
 }
@@ -40,10 +41,5 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
   },
 });

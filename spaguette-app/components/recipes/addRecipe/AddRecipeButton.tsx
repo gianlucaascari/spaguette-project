@@ -5,10 +5,10 @@ interface RecipeAddButtonProps {
     onPress: () => void
 }
 
-const RecipeAddButton: React.FC<RecipeAddButtonProps> = ({ onPress }) => {
+const AddRecipeButton: React.FC<RecipeAddButtonProps> = ({ onPress }) => {
   return (
     <Button title="Add Recipe" onPress={onPress}/>
   )
 }
 
-export default RecipeAddButton
+export default AddRecipeButton
