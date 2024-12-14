@@ -28,6 +28,23 @@ const GET_MY_RECIP = gql`
   }
 `;
 
+const ADD_RECIP = gql`
+  mutation AddRecipe($input: RecipeInput!) {
+    addRecipe(input: $input) {
+      id
+      name
+      ingredients {
+        ingredient {
+          id
+          name
+          unityOfMeasure
+        }
+        quantity
+      }
+    }
+  }
+`;
+
 // API Service
 export const apiService = {
   getIngredients: async (): Promise<Ingredient[]> => {
@@ -35,7 +52,7 @@ export const apiService = {
       const response = await client.query<{ getMyIngredients: Ingredient[] }>({ query: GET_MY_INGRE });
       return response.data.getMyIngredients;
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error fetching ingredients:', error);
       throw error;
     }
   },
@@ -44,7 +61,17 @@ export const apiService = {
       const response = await client.query<{ getMyRecipes: Recipe[] }>({ query: GET_MY_RECIP });
       return response.data.getMyRecipes;
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error fetching recipes:', error);
+      throw error;
+    }
+  },
+  addRecipe: async (recipe: RecipeInput): Promise<Recipe> => {
+    try {
+      const response = await client.mutate<{ addRecipe: Recipe }>({ mutation: ADD_RECIP, variables: { input: recipe } });
+      if (!response.data) throw new Error('No data received from mutation');
+      return response.data.addRecipe;
+    } catch (error) {
+      console.error('Error adding recipe:', error);
       throw error;
     }
   },
