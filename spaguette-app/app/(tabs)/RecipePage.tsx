@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Text, View } from '@/components/Themed';
 import { dataService } from '@/services/data/data-service';
 import RecipesList from '@/components/recipes/showRecipes/RecipesList';
+import RecipeAddButton from '@/components/recipes/addRecipe/RecipeAddButton';
 
 export default function TabOneScreen() {
   const [recipes, setRecipes] = useState<Recipe[] | null>(null);
@@ -22,6 +23,10 @@ export default function TabOneScreen() {
       ) : (
         <Text>Loading...</Text>
       )}
+
+      <RecipeAddButton onPress={() => {
+        alert('Add Recipe button pressed');
+      }} />
     </View>
   );
 }

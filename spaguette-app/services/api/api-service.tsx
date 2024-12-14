@@ -14,8 +14,8 @@ const GET_MY_INGRE = gql`
 const GET_MY_RECIP = gql`
   query GetMyRecipes {
     getMyRecipes {
-      name
       id
+      name
       ingredients {
         quantity
         ingredient {

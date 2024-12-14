@@ -7,4 +7,7 @@ export const dataService = {
     getRecipes: async (): Promise<Recipe[]> => {
         return await apiService.getRecipes();
     },
+    addRecipe: async (recipe: RecipeInput): Promise<Recipe> => {
+        return await apiService.addRecipe(recipe);
+    },
 };
