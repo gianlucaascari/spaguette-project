@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Text, View } from '@/components/Themed';
 import { dataService } from '@/services/data/data-service';
 import RecipesList from '@/components/recipes/showRecipes/RecipesList';
-import AddRecipeInput from '@/components/recipes/addRecipe/AddRecipeButton';
+import AddRecipeButton from '@/components/recipes/addRecipe/AddRecipeButton';
 import AddRecipeModal from '../../components/recipes/addRecipe/AddRecipeModal';
 
 export default function TabOneScreen() {
@@ -26,7 +26,7 @@ export default function TabOneScreen() {
         <Text>Loading...</Text>
       )}
 
-      <AddRecipeInput onPress={() => setIsModalVisible(true)} />
+      <AddRecipeButton onPress={() => setIsModalVisible(true)} />
       <AddRecipeModal  onClose={() => setIsModalVisible(false)} visible={isModalVisible} />
     </View>
   );
