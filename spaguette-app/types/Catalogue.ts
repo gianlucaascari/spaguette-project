@@ -7,16 +7,13 @@ type Ingredient = {
 type Recipe = {
     id: string;
     name: string;
+    description?: string;
+    stepsLink?: string;
     ingredients: {
         quantity: number;
         ingredient: Ingredient;
     }[];
 };
-
-type RecipeComplete = Recipe & {
-    description?: string;
-    stepsLink?: string;
-}
 
 type RecipeInput = {
     name: string;
