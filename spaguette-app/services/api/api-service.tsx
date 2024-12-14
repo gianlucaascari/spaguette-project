@@ -1,6 +1,5 @@
 import { gql } from '@apollo/client';
-import { ApolloProvider } from '@apollo/client/react';
-import React from 'react';
+import client from './apollo-client';
 
 const GET_MY_INGRE = gql`
   query GetIngredients {
@@ -8,6 +7,23 @@ const GET_MY_INGRE = gql`
       id
       name
       unityOfMeasure
+    }
+  }
+`;
+
+const GET_MY_RECIP = gql`
+  query GetMyRecipes {
+    getMyRecipes {
+      name
+      id
+      ingredients {
+        quantity
+        ingredient {
+          id
+          name
+          unityOfMeasure
+        }
+      }
     }
   }
 `;
@@ -23,12 +39,13 @@ export const apiService = {
       throw error;
     }
   },
+  getRecipes: async (): Promise<Recipe[]> => {
+    try {
+      const response = await client.query<{ getMyRecipes: Recipe[] }>({ query: GET_MY_RECIP });
+      return response.data.getMyRecipes;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    }
+  },
 };
-
-// Apollo Provider Wrapper
-import { ReactNode } from 'react';
-import client from './apollo-client';
-
-export const ApolloProviderWrapper: React.FC<{ children: ReactNode }> = ({ children }) => (
-    <ApolloProvider client={client}>{children}</ApolloProvider>
-);
