@@ -1,0 +1,58 @@
+
+type Recipe {
+  id: ID!
+  user: User
+  name: String!
+  description: String
+  stepsLink: String
+  ingredients: [IngredientQuantity!]!
+}
+
+type IngredientQuantity {
+  ingredient: Ingredient!
+  quantity: Float!
+}
+
+type Ingredient {
+  id: ID!
+  user: User
+  name: String!
+  unityOfMeasure: String!
+}
+
+input RecipeInput {
+  name: String!
+  description: String
+  stepsLink: String
+  ingredients: [InputIngredientQuantity!]!
+}
+
+input InputIngredientQuantity {
+  ingredientID: ID!
+  quantity: Float!
+}
+
+type Query {
+  # ingredients
+  getMyIngredients: [Ingredient!]!
+
+  # recipes
+  getMyRecipes: [Recipe!]!
+  getRecipe(recipeID: ID!): Recipe!
+}
+
+type Mutation {
+  # ingredients
+  addIngredient(name: String!, unityOfMeasure: String!): Ingredient!
+  updIngredient(id: ID!, name: String!, unityOfMeasure: String!): Ingredient!
+  remIngredient(id: ID!): Boolean!
+
+  # recipes 
+  addRecipe(input: RecipeInput!): Recipe!
+  updRecipe(id: ID!, input: RecipeInput!): Recipe!
+  remRecipe(id: ID!): Boolean!
+
+  # util
+  utilRemIngredients(subString: String): Int!
+  utilRemRecipes(subString: String!): Int!
+}

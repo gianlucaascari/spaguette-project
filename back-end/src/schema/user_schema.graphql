@@ -1,0 +1,35 @@
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  plan: Plan
+  list: List
+  addRequests: [AddRequest!]
+}
+
+type AuthUser {
+  user: User!
+  token: String!
+}
+
+type OthUser {
+  status: Int!
+  user: User!
+}
+
+type Query {
+  getFriends: [User!]!
+  getUsers(searchString: String): [OthUser!]!
+  getUser(id: ID!): OthUser
+
+  getFriendRequests: [OthUser!]!
+}
+
+type Mutation {
+  signUp(name: String!, email: String!, password: String!): AuthUser
+  signIn(email: String!, password: String!): AuthUser
+
+  sendFriendshipRequest(userID: ID!): Int!
+  answerFriendshipRequest(userID: ID!, mode: Int!): Int!      # mode 0: refuse, mode 1: accept | return status
+}

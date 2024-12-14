@@ -1,0 +1,77 @@
+
+type Plan {
+  recipes: [RecipeQuantity!]!
+}
+
+type RecipeQuantity {
+  recipe: Recipe!
+  user: User              # for recipes added by other users
+  numTimes: Float!
+}
+
+type List {
+  items: [ListItem!]!
+}
+
+type ListItem {
+  ingredient: Ingredient!,
+  user: User              # for ingredients added by other users
+  quantity: Float!,
+  taken: Boolean!,
+}
+
+input PlanInput {
+  recipes: [PlanRecipeInput!]!
+}
+
+input PlanRecipeInput {
+  recipeID: ID!
+  userID: ID
+  numTimes: Int!
+}
+
+input ListInput {
+  items: [ListItemInput!]!
+}
+
+input ListItemInput {
+  ingredientID: ID!
+  userID: ID!
+  quantity: Float!
+  taken: Boolean!
+}
+
+type AddRequest {
+  user: User!
+  recipe: Recipe!
+  numTimes: Int!
+}
+
+type ReceivedAddRequest {
+  addRequest: AddRequest!
+  addMode: Boolean!
+}
+
+type Query {
+  getMyPlan: Plan!
+  getMyList: List!
+
+  getMyAddRequests: [AddRequest!]!
+}
+
+type Mutation {
+  updPlan(input: PlanInput!): Plan!
+  updList(input: ListInput!): List!
+
+  addRequest(userID: ID!, recipe: PlanRecipeInput): AddRequest!
+  answerAddRequest(userID: ID!, recipeID: ID!, mode: Int!): Plan!
+
+  remAppRequest(userID: ID!, recipeID: ID!): ID!    # return recipeID
+  remPenRequest(userID: ID!, recipeID: ID!): ID!    # return recipeID
+}
+
+type Subscription {
+  listenAddRequests: ReceivedAddRequest
+  listenAnswerAddRequests(userID: ID!): AddRequest
+  listenUpdPlan(userID: ID!): Plan
+}
