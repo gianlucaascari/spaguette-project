@@ -12,13 +12,6 @@ const GET_MY_INGRE = gql`
   }
 `;
 
-// Define Ingredient type
-type Ingredient = {
-  id: string;
-  name: string;
-  unityOfMeasure: string;
-};
-
 // API Service
 export const apiService = {
   getIngredients: async (): Promise<Ingredient[]> => {
