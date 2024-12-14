@@ -8,9 +8,9 @@ A simple application that simplifies creating and managing shopping lists collab
 
 ## 🏗️ Project Structure
 
-/root-directory
-  /spaguette-app (React Native)
-  /backend (Node.js/GraphQL)
+    /root-directory
+        /spaguette-app (React Native)
+        /backend (Node.js/GraphQL)
 
 ## 🛠️ Technologies Used
 
