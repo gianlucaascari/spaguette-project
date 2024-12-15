@@ -9,6 +9,7 @@ import { apiService } from "../api/api-service";
 export const dataService = {
     
     // TODO
+    // TODO: instead of queries and mutations have the data service work on global state
     // TODO: test with node server down and try to return meaningful things
     // TODO
 

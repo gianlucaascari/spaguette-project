@@ -21,6 +21,6 @@ type RecipeInput = {
     stepsLink?: string;
     ingredients: {
         quantity: number;
-        ingredientId: string;
+        ingredientID: string;
     }[];
 }

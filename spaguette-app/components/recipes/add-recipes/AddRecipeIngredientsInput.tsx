@@ -41,57 +41,19 @@ const AddRecipeIngredientsInput: React.FC<AddRecipeIngredientsInputProps> = ({ i
         setIngredients(newIngredients);
     }
 
-    // keyboard ux
-    const ingredientRefs = React.useRef<(TextInput | null)[]>([]);
-    const quantityRefs = React.useRef<(TextInput | null)[]>([]);
-
-    const handleKeyDown = (event: any, index: number, type: 'ingredient' | 'quantity') => {
-        const { key } = event.nativeEvent;
-
-        if (key === 'Backspace') {
-            onRemoveIngredient(index);
-        }
-
-        if (key === 'ArrowUp' && index > 0) {
-            if (type === 'ingredient') {
-                ingredientRefs.current[index - 1]?.focus();
-            } else {
-                quantityRefs.current[index - 1]?.focus();
-            }
-        } else if (key === 'ArrowDown' && index < ingredients.length - 1) {
-            if (type === 'ingredient') {
-                ingredientRefs.current[index + 1]?.focus();
-            } else {
-                quantityRefs.current[index + 1]?.focus();
-            }
-        } else if (key === 'ArrowRight') {
-            if (type === 'ingredient') {
-                quantityRefs.current[index]?.focus();
-            }
-        } else if (key === 'ArrowLeft') {
-            if (type === 'quantity') {
-                ingredientRefs.current[index]?.focus();
-            }
-        }
-    };
-
 return (
     <View>
         {ingredients.map((ingredient, index) => (
             <View key={index} style={styles.container}>
                 <TextInput 
-                    ref={(ref) => ingredientRefs.current[index] = ref}
                     style={styles.textInput}
                     value={ingredient.ingredient.name}
                     editable={false}
-                    onKeyPress={(e) => handleKeyDown(e, index, 'ingredient')}
                     />
                 <TextInput
-                    ref={(ref) => quantityRefs.current[index] = ref}
                     style={styles.textInput}
                     value={ingredient.quantity.toString()}
                     editable={false}
-                    onKeyPress={(e) => handleKeyDown(e, index, 'quantity')}
                     />
                 <Pressable style={styles.button} onPress={() => onRemoveIngredient(index)}>
                     <Text>Remove</Text>
@@ -115,11 +77,6 @@ return (
                 placeholder="Quantity"
                 value={chosenQuantity}
                 onChangeText={(text) => setChosenQuantity(text)}
-                onKeyPress={(e) => {
-                    if(e.nativeEvent.key === 'Enter') {
-                        onAddIngredient();
-                    }
-                }}
                 />
                 
             <Pressable style={styles.button} onPress={onAddIngredient}>
