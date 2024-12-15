@@ -7,6 +7,11 @@ import { apiService } from "../api/api-service";
  * @see module:types/Catalogue
  */
 export const dataService = {
+    
+    // TODO
+    // TODO: test with node server down and try to return meaningful things
+    // TODO
+
     getIngredients: async (): Promise<Ingredient[]> => {
         return await apiService.getIngredients();
     },
