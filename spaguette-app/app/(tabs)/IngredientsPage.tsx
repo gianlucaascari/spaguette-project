@@ -1,22 +1,24 @@
 import { StyleSheet } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { Text, View } from '@/components/Themed';
-import { dataService } from '@/services/data/data-service';
+import { DataContext } from '@/services/data/DataContext';
+import { useDataService } from '@/services/data/data-service';
 
 export default function TabTwoScreen() {
-  const [ingredients, setIngredients] = useState<Ingredient[] | null>(null);
-
+  const { state } = useContext(DataContext);
+  const { getIngredients } = useDataService();
 
   useEffect(() => {
-    dataService.getIngredients().then(setIngredients);
+    getIngredients();
   }, []);
+
   return (
     <View style={styles.container}>
           <Text style={styles.title}>Ingredients</Text>
     
-          {ingredients ? (
-            ingredients.map((ingredient: Ingredient, index: number) => (
+          {state.ingredients ? (
+            state.ingredients.map((ingredient: Ingredient, index: number) => (
               <Text key={index}>{ingredient.name}</Text>
             ))
           ) : (

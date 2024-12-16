@@ -1,9 +1,11 @@
 import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import AddRecipeIngredientsInput from './AddRecipeIngredientsInput';
-import { dataService } from '@/services/data/data-service';
+import { useDataService } from '@/services/data/data-service';
 
 const AddRecipeInput = () => {
+
+    const { addRecipe } = useDataService();
 
     const [name, setName] = useState<string>('');
     const [description, setDescription] = useState<string>('');
@@ -28,7 +30,7 @@ const AddRecipeInput = () => {
 
         // call dataService
         try{
-            await dataService.addRecipe(recipeInput);
+            await addRecipe(recipeInput);
         } catch(e:any) {
             alert('AddRecipeInput> Error adding recipe\n' + e?.message);
             return;

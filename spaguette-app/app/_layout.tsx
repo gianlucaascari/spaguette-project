@@ -9,6 +9,7 @@ import 'react-native-reanimated';
 import { useColorScheme } from '@/components/useColorScheme';
 import { ApolloCache, ApolloProvider } from '@apollo/client';
 import client from '@/services/api/apollo-client';
+import { DataProvider } from '@/services/data/DataContext';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -52,12 +53,14 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <ApolloProvider client={client}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-        </Stack>
-      </ApolloProvider>
+      <DataProvider>
+        <ApolloProvider client={client}>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          </Stack>
+        </ApolloProvider>
+      </DataProvider>
     </ThemeProvider>
   );
 }

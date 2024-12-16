@@ -1,7 +1,8 @@
 import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Dropdown } from 'react-native-element-dropdown';
-import { dataService } from '@/services/data/data-service';
+import { DataContext } from '@/services/data/DataContext';
+import { useDataService } from '@/services/data/data-service';
 
 interface AddRecipeIngredientsInputProps {
     ingredients: {ingredient: Ingredient, quantity: number}[];
@@ -11,13 +12,15 @@ interface AddRecipeIngredientsInputProps {
 const AddRecipeIngredientsInput: React.FC<AddRecipeIngredientsInputProps> = ({ ingredients, setIngredients }) => {
 
     // add and remove ingredients logic
-    const [chosenIngredient, setChosenIngredient] = React.useState<Ingredient | null>(null);
-    const [chosenQuantity, setChosenQuantity] = React.useState<string>("");
-    const [ingredientsList, setIngredientsList] = React.useState<Ingredient[]>([]);
+    const { state } = useContext(DataContext);
+    const { getIngredients } = useDataService();
 
     useEffect(() => {
-        dataService.getIngredients().then(setIngredientsList);
+        getIngredients();
     }, []);
+
+    const [chosenIngredient, setChosenIngredient] = React.useState<Ingredient | null>(null);
+    const [chosenQuantity, setChosenQuantity] = React.useState<string>("");
 
     const onAddIngredient = () => {
         if(chosenIngredient === null) {
@@ -64,7 +67,7 @@ return (
         <View style={styles.container}>
             <Dropdown 
                 style={styles.textInput}
-                data={ingredientsList.filter(ingredient => !ingredients.map(i => i.ingredient.id).includes(ingredient.id))}
+                data={state.ingredients.filter(ingredient => !ingredients.map(i => i.ingredient.id).includes(ingredient.id))}
                 value={chosenIngredient}
                 onChange={(value) => setChosenIngredient(value)}
                 labelField="name"

@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { apiService } from "../api/api-service";
+import { DataContext } from "./DataContext";
 
 /**
  * Data service to fetch and manipulate data, combining API and (soon) local storage
@@ -6,20 +8,21 @@ import { apiService } from "../api/api-service";
  * @see module:services/api/api-service
  * @see module:types/Catalogue
  */
-export const dataService = {
+export const useDataService = () => {
+    const { dispatch } = useContext(DataContext);
     
-    // TODO
-    // TODO: instead of queries and mutations have the data service work on global state
-    // TODO: test with node server down and try to return meaningful things
-    // TODO
-
-    getIngredients: async (): Promise<Ingredient[]> => {
-        return await apiService.getIngredients();
-    },
-    getRecipes: async (): Promise<Recipe[]> => {
-        return await apiService.getRecipes();
-    },
-    addRecipe: async (recipe: RecipeInput): Promise<Recipe> => {
-        return await apiService.addRecipe(recipe);
-    },
+    return {
+        getIngredients: async () => {
+            const ingredients = await apiService.getIngredients();
+            dispatch({ type: 'SET_INGREDIENTS', payload: ingredients });
+        },
+        getRecipes: async () => {
+            const recipes = await apiService.getRecipes();
+            dispatch({ type: 'SET_RECIPES', payload: recipes });
+        },
+        addRecipe: async (recipe: RecipeInput) => {
+            const addedRecipe = await apiService.addRecipe(recipe);
+            dispatch({ type: 'ADD_RECIPE', payload: addedRecipe });
+        },
+    };
 };

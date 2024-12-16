@@ -1,17 +1,19 @@
 import { StyleSheet } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { Text, View } from '@/components/Themed';
-import { dataService } from '@/services/data/data-service';
 import RecipesList from '@/components/recipes/show-recipes/RecipesList';
 import AddRecipeInput from '@/components/recipes/add-recipes/AddRecipeInput';
+import { DataContext } from '@/services/data/DataContext';
+import { useDataService } from '@/services/data/data-service';
 
 export default function TabOneScreen() {
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [recipes, setRecipes] = useState<Recipe[] | null>(null);
+
+  const { state } = useContext(DataContext);
+  const { getRecipes } = useDataService();
 
   useEffect(() => {
-    dataService.getRecipes().then(setRecipes);
+    getRecipes();
   }, []);
   
   return (
@@ -21,8 +23,8 @@ export default function TabOneScreen() {
 
       <AddRecipeInput />
 
-      {recipes ? (
-        <RecipesList recipes={recipes} />
+      {state.recipes ? (
+        <RecipesList recipes={state.recipes} />
       ) : (
         <Text>Loading...</Text>
       )}      
