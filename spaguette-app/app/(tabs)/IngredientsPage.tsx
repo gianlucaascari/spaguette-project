@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 
 import { Text, View } from '@/components/Themed';
 import { DataContext } from '@/services/data/DataContext';
-import { useDataService } from '@/services/data/data-service';
+import { useDataService } from '@/services/data/useDataService';
 
 export default function TabTwoScreen() {
   const { state } = useContext(DataContext);

@@ -2,7 +2,7 @@ import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native'
 import React, { useContext, useEffect } from 'react'
 import { Dropdown } from 'react-native-element-dropdown';
 import { DataContext } from '@/services/data/DataContext';
-import { useDataService } from '@/services/data/data-service';
+import { useDataService } from '@/services/data/useDataService';
 
 interface AddRecipeIngredientsInputProps {
     ingredients: {ingredient: Ingredient, quantity: number}[];

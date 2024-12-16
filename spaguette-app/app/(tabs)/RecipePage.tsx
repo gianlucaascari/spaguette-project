@@ -5,7 +5,7 @@ import { Text, View } from '@/components/Themed';
 import RecipesList from '@/components/recipes/show-recipes/RecipesList';
 import AddRecipeInput from '@/components/recipes/add-recipes/AddRecipeInput';
 import { DataContext } from '@/services/data/DataContext';
-import { useDataService } from '@/services/data/data-service';
+import { useDataService } from '@/services/data/useDataService';
 
 export default function TabOneScreen() {
 

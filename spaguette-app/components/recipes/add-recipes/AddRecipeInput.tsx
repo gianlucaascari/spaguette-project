@@ -1,7 +1,7 @@
 import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native'
 import React, { useContext, useState } from 'react'
 import AddRecipeIngredientsInput from './AddRecipeIngredientsInput';
-import { useDataService } from '@/services/data/data-service';
+import { useDataService } from '@/services/data/useDataService';
 
 const AddRecipeInput = () => {
 
