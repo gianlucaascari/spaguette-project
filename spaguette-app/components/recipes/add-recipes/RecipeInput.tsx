@@ -1,14 +1,15 @@
 import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native'
 import React, { useContext, useState } from 'react'
-import AddRecipeIngredientsInput from './AddRecipeIngredientsInput';
+import RecipeIngredientsInput from './RecipeIngredientsInput';
 import { useDataService } from '@/services/data/useDataService';
 
 interface RecipeInputProps {
     initialRecipe: Recipe,
     mode: "add" | "update",
+    afterSubmit?: () => void,
 }
 
-const RecipeInput:React.FC<RecipeInputProps> = ({initialRecipe, mode}) => {
+const RecipeInput:React.FC<RecipeInputProps> = ({initialRecipe, mode, afterSubmit}) => {
 
     const { addRecipe, updateRecipe } = useDataService();
 
@@ -18,7 +19,6 @@ const RecipeInput:React.FC<RecipeInputProps> = ({initialRecipe, mode}) => {
     const [ingredients, setIngredients] = useState<{ quantity: number, ingredient: Ingredient }[]>(initialRecipe.ingredients);
 
     const onSubmit = async () => {
-        alert('Add Recipe' + name + description + stepsLink + ingredients);
         // check fields
         // TODO -> what if there is no id for update? is it a possibility?
         if(name === '' || ingredients.length === 0) {
@@ -52,6 +52,9 @@ const RecipeInput:React.FC<RecipeInputProps> = ({initialRecipe, mode}) => {
                 return;
             }
         }
+
+        // after submit
+        if(afterSubmit) afterSubmit();
         
         // reset fields
         setName('');
@@ -66,7 +69,7 @@ const RecipeInput:React.FC<RecipeInputProps> = ({initialRecipe, mode}) => {
         <TextInput style={styles.textInput} placeholder="Description" value={description} onChangeText={setDescription} />
         <TextInput style={styles.textInput} placeholder="Steps Link" value={stepsLink} onChangeText={setStepsLink} />
 
-        <AddRecipeIngredientsInput ingredients={ingredients} setIngredients={setIngredients} />
+        <RecipeIngredientsInput ingredients={ingredients} setIngredients={setIngredients} />
 
         <Pressable style={styles.button} onPress={onSubmit} >
             <Text>Add Recipe</Text>

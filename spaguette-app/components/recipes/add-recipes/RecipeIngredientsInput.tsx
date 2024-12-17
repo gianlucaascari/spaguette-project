@@ -4,12 +4,12 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { DataContext } from '@/services/data/DataContext';
 import { useDataService } from '@/services/data/useDataService';
 
-interface AddRecipeIngredientsInputProps {
+interface RecipeIngredientsInputProps {
     ingredients: {ingredient: Ingredient, quantity: number}[];
     setIngredients: React.Dispatch<React.SetStateAction<{ingredient: Ingredient, quantity: number}[]>>;   
 }
 
-const AddRecipeIngredientsInput: React.FC<AddRecipeIngredientsInputProps> = ({ ingredients, setIngredients }) => {
+const RecipeIngredientsInput: React.FC<RecipeIngredientsInputProps> = ({ ingredients, setIngredients }) => {
 
     // add and remove ingredients logic
     const { state } = useContext(DataContext);
@@ -90,7 +90,7 @@ return (
   )
 }
 
-export default AddRecipeIngredientsInput
+export default RecipeIngredientsInput
 
 const styles = StyleSheet.create({
     container: {
