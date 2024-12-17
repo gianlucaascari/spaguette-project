@@ -33,6 +33,8 @@ const ADD_RECIP = gql`
     addRecipe(input: $input) {
       id
       name
+      stepsLink
+      description
       ingredients {
         ingredient {
           id
@@ -44,6 +46,26 @@ const ADD_RECIP = gql`
     }
   }
 `;
+
+const UPD_RECIP = gql`
+  mutation UpdRecipe($id: ID!, $input: RecipeInput!) {
+    updRecipe(id: $id, input: $input) {
+      id
+      name
+      stepsLink
+      description
+      ingredients {
+        ingredient {
+          id
+          name
+          unityOfMeasure
+        }
+        quantity
+      }
+    }
+  }
+`;
+
 
 /**
  * API service to fetch and manipulate data from the server
@@ -59,13 +81,8 @@ export const apiService = {
    * @throws {Error} If an error occurs while fetching the ingredients
    */
   getIngredients: async (): Promise<Ingredient[]> => {
-    try {
       const response = await client.query<{ getMyIngredients: Ingredient[] }>({ query: GET_MY_INGRE });
       return response.data.getMyIngredients;
-    } catch (error) {
-      console.error('Error fetching ingredients:', error);
-      throw error;
-    }
   },
 
   /**
@@ -74,13 +91,8 @@ export const apiService = {
    * @throws {Error} If an error occurs while fetching the recipes
    */
   getRecipes: async (): Promise<Recipe[]> => {
-    try {
       const response = await client.query<{ getMyRecipes: Recipe[] }>({ query: GET_MY_RECIP });
       return response.data.getMyRecipes;
-    } catch (error) {
-      console.error('Error fetching recipes:', error);
-      throw error;
-    }
   },
 
   /**
@@ -90,13 +102,21 @@ export const apiService = {
    * @throws {Error} If an error occurs while adding the recipe
    */
   addRecipe: async (recipe: RecipeInput): Promise<Recipe> => {
-    try {
       const response = await client.mutate<{ addRecipe: Recipe }>({ mutation: ADD_RECIP, variables: { input: recipe } });
       if (!response.data) throw new Error('No data received from mutation');
       return response.data.addRecipe;
-    } catch (error) {
-      console.error('Error adding recipe:', error);
-      throw error;
-    }
   },
+
+  /**
+   * Update a recipe on the server
+   * @param {string} id The ID of the recipe to update
+   * @param {RecipeInput} recipe The updated recipe
+   * @returns {Promise<Recipe>} A promise that resolves to the updated recipe
+   * @throws {Error} If an error occurs while updating the recipe
+   */
+  updateRecipe: async (id: string, recipe: RecipeInput): Promise<Recipe> => {
+    const response = await client.mutate<{ updRecipe: Recipe }>({ mutation: UPD_RECIP, variables: { input: recipe, id: id}})
+    if(!response.data) throw new Error('No data received from mutation')
+    return response.data.updRecipe
+  }
 };

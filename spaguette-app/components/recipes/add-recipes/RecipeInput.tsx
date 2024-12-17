@@ -3,18 +3,24 @@ import React, { useContext, useState } from 'react'
 import AddRecipeIngredientsInput from './AddRecipeIngredientsInput';
 import { useDataService } from '@/services/data/useDataService';
 
-const AddRecipeInput = () => {
+interface RecipeInputProps {
+    initialRecipe: Recipe,
+    mode: "add" | "update",
+}
 
-    const { addRecipe } = useDataService();
+const RecipeInput:React.FC<RecipeInputProps> = ({initialRecipe, mode}) => {
 
-    const [name, setName] = useState<string>('');
-    const [description, setDescription] = useState<string>('');
-    const [stepsLink, setStepsLink] = useState<string>('');
-    const [ingredients, setIngredients] = useState<{ quantity: number, ingredient: Ingredient }[]>([]);
+    const { addRecipe, updateRecipe } = useDataService();
 
-    const onAddRecipe = async () => {
+    const [name, setName] = useState<string>(initialRecipe.name);
+    const [description, setDescription] = useState<string>(initialRecipe.description || '');
+    const [stepsLink, setStepsLink] = useState<string>(initialRecipe.stepsLink || '');
+    const [ingredients, setIngredients] = useState<{ quantity: number, ingredient: Ingredient }[]>(initialRecipe.ingredients);
+
+    const onSubmit = async () => {
         alert('Add Recipe' + name + description + stepsLink + ingredients);
         // check fields
+        // TODO -> what if there is no id for update? is it a possibility?
         if(name === '' || ingredients.length === 0) {
             alert('Please insert at least a name and an ingredient');
             return;
@@ -29,12 +35,23 @@ const AddRecipeInput = () => {
         }
 
         // call dataService
-        try{
-            await addRecipe(recipeInput);
-        } catch(e:any) {
-            alert('AddRecipeInput> Error adding recipe\n' + e?.message);
-            return;
-        } 
+        if(mode == "add"){
+            try{
+                await addRecipe(recipeInput);
+            } catch(e:any) {
+                alert('AddRecipeInput> Error adding recipe\n' + e?.message);
+                return;
+            } 
+        }
+        else {
+            try {
+                await updateRecipe(initialRecipe.id, recipeInput)
+            }
+            catch (e:any) {
+                alert('AddRecipeInput> Error updating recipe\n' + e?.message);
+                return;
+            }
+        }
         
         // reset fields
         setName('');
@@ -51,14 +68,14 @@ const AddRecipeInput = () => {
 
         <AddRecipeIngredientsInput ingredients={ingredients} setIngredients={setIngredients} />
 
-        <Pressable style={styles.button} onPress={onAddRecipe} >
+        <Pressable style={styles.button} onPress={onSubmit} >
             <Text>Add Recipe</Text>
         </Pressable>
     </View>
   )
 }
 
-export default AddRecipeInput
+export default RecipeInput
 
 const styles = StyleSheet.create({
     container: {

@@ -21,6 +21,7 @@ type Action =
     | { type: 'SET_RECIPES'; payload: Recipe[] }
     | { type: 'SET_INGREDIENTS'; payload: Ingredient[] }
     | { type: 'ADD_RECIPE'; payload: Recipe }
+    | { type: 'UPDATE_RECIPE'; payload: Recipe }
 
 const initialState: State = {
     recipes: [],
@@ -35,6 +36,8 @@ const reducer = (state: State, action: Action): State => {
             return { ...state, ingredients: action.payload };
         case "ADD_RECIPE":
             return { ...state, recipes: [...state.recipes, action.payload] };
+        case "UPDATE_RECIPE":
+            return { ...state, recipes: state.recipes.map(recipe => recipe.id === action.payload.id ? action.payload : recipe) };
         default:
             return state;
     }
