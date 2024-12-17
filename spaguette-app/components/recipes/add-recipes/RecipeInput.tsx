@@ -72,7 +72,7 @@ const RecipeInput:React.FC<RecipeInputProps> = ({initialRecipe, mode, afterSubmi
         <RecipeIngredientsInput ingredients={ingredients} setIngredients={setIngredients} />
 
         <Pressable style={styles.button} onPress={onSubmit} >
-            <Text>Add Recipe</Text>
+            <Text>{mode == "add" ? "Add Recipe" : "Save"}</Text>
         </Pressable>
     </View>
   )
