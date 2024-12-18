@@ -6,7 +6,7 @@ import { createContext, ReactNode, useReducer } from "react";
  * @property {Recipe[]} recipes - list of recipes
  * @property {Ingredient[]} ingredients - list of ingredients
  */
-interface State {
+interface ContextState {
     recipes: Recipe[];
     ingredients: Ingredient[];
 }
@@ -24,12 +24,12 @@ type Action =
     | { type: 'UPDATE_RECIPE'; payload: Recipe }
     | { type: 'REMOVE_RECIPE'; payload: string };
 
-const initialState: State = {
+const initialState: ContextState = {
     recipes: [],
     ingredients: [],
 };
 
-const reducer = (state: State, action: Action): State => {
+const reducer = (state: ContextState, action: Action): ContextState => {
     switch (action.type) {
         case "SET_RECIPES":
             return { ...state, recipes: action.payload };

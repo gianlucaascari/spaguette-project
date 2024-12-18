@@ -2,6 +2,7 @@ import { View, Text, Pressable, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import RecipeInput from './RecipeInput'
 import { useDataService } from '@/services/data/useDataService'
+import { styles } from '@/styles/style'
 
 const AddRecipeInput = () => {
 
@@ -55,30 +56,3 @@ const AddRecipeInput = () => {
 }
 
 export default AddRecipeInput
-
-const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        padding: 10,
-    },
-    rowContainer: {
-        flexDirection: 'row',
-        padding: 10,
-    },
-    textInput: {
-        padding: 10,
-        margin: 5,
-        borderWidth: 1,
-        borderColor: 'black',
-    },
-    button: {
-        padding: 10,
-        margin: 5,
-        borderWidth: 1,
-        backgroundColor: 'orange',
-    },
-    title: {
-        fontSize: 14,
-        fontWeight: 'bold',
-    },
-});

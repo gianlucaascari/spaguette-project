@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from 'react'
 import { Dropdown } from 'react-native-element-dropdown';
 import { DataContext } from '@/services/data/DataContext';
 import { useDataService } from '@/services/data/useDataService';
+import { styles } from '@/styles/style';
 
 interface RecipeIngredientsInputProps {
     ingredients: {ingredient: Ingredient, quantity: number}[];
@@ -47,7 +48,7 @@ const RecipeIngredientsInput: React.FC<RecipeIngredientsInputProps> = ({ ingredi
 return (
     <View>
         {ingredients.map((ingredient, index) => (
-            <View key={index} style={styles.container}>
+            <View key={index} style={styles.rowContainer}>
                 <TextInput 
                     style={styles.textInput}
                     value={ingredient.ingredient.name}
@@ -64,7 +65,7 @@ return (
             </View>
         ))}
 
-        <View style={styles.container}>
+        <View style={styles.rowContainer}>
             <Dropdown 
                 style={styles.textInput}
                 data={state.ingredients.filter(ingredient => !ingredients.map(i => i.ingredient.id).includes(ingredient.id))}
@@ -91,26 +92,3 @@ return (
 }
 
 export default RecipeIngredientsInput
-
-const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-    },
-    textInput: {
-        width: 150,
-        padding: 10,
-        margin: 5,
-        borderWidth: 1,
-        borderColor: 'black',
-    },
-    button: {
-        padding: 10,
-        margin: 5,
-        borderWidth: 1,
-        backgroundColor: 'orange',
-    },
-    title: {
-        fontSize: 14,
-        fontWeight: 'bold',
-    },
-});

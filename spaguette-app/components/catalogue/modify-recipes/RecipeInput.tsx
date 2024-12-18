@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TextInput, Pressable } from 'react-native'
 import React from 'react'
 import RecipeIngredientsInput from './RecipeIngredientsInput'
+import { styles } from '@/styles/style'
 
 interface RecipeInputProps {
     recipe: Recipe,
@@ -9,7 +10,7 @@ interface RecipeInputProps {
 
 const RecipeInput: React.FC<RecipeInputProps> = ({ recipe, setRecipe }) => {
   return (
-    <View style={styles.container}>
+    <View style={styles.rowContainer}>
         <TextInput 
             style={styles.textInput} 
             placeholder="Name" 
@@ -37,26 +38,3 @@ const RecipeInput: React.FC<RecipeInputProps> = ({ recipe, setRecipe }) => {
 }
 
 export default RecipeInput
-
-const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        padding: 10,
-    },
-    textInput: {
-        padding: 10,
-        margin: 5,
-        borderWidth: 1,
-        borderColor: 'black',
-    },
-    button: {
-        padding: 10,
-        margin: 5,
-        borderWidth: 1,
-        backgroundColor: 'orange',
-    },
-    title: {
-        fontSize: 14,
-        fontWeight: 'bold',
-    },
-});

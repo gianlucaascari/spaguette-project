@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Text, View } from '@/components/Themed';
 import { DataContext } from '@/services/data/DataContext';
 import { useDataService } from '@/services/data/useDataService';
+import { styles } from '@/styles/style';
 
 export default function TabTwoScreen() {
   const { state } = useContext(DataContext);
@@ -14,7 +15,7 @@ export default function TabTwoScreen() {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.mainContainer}>
           <Text style={styles.title}>Ingredients</Text>
     
           {state.ingredients ? (
@@ -27,20 +28,3 @@ export default function TabTwoScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});

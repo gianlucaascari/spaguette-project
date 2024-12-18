@@ -2,6 +2,7 @@ import { View, Text, Pressable, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { useDataService } from '@/services/data/useDataService'
 import RecipeInput from './RecipeInput'
+import { styles } from '@/styles/style'
 
 interface UpdateRecipeInputProps {
     initialRecipe: Recipe,
@@ -50,7 +51,7 @@ const UpdateRecipeInput: React.FC<UpdateRecipeInputProps> = ({ initialRecipe, af
             alert('UpdateRecipeInput> Error deleting recipe\n' + e?.message);
             return;
         }
-
+        
         // after submit
         if(afterSubmit) afterSubmit();
     }
@@ -73,30 +74,3 @@ const UpdateRecipeInput: React.FC<UpdateRecipeInputProps> = ({ initialRecipe, af
 }
 
 export default UpdateRecipeInput
-
-const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        padding: 10,
-    },
-    rowContainer: {
-        flexDirection: 'row',
-        padding: 10,
-    },
-    textInput: {
-        padding: 10,
-        margin: 5,
-        borderWidth: 1,
-        borderColor: 'black',
-    },
-    button: {
-        padding: 10,
-        margin: 5,
-        borderWidth: 1,
-        backgroundColor: 'orange',
-    },
-    title: {
-        fontSize: 14,
-        fontWeight: 'bold',
-    },
-});
