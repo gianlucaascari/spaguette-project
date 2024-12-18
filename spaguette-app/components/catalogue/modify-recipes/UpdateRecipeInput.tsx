@@ -22,7 +22,7 @@ const UpdateRecipeInput: React.FC<UpdateRecipeInputProps> = ({ initialRecipe, af
         }
 
         // create recipeInput
-        const recipeInput = {
+        const recipeInput: RecipeInput = {
             name: recipe.name,
             description: recipe.description,
             stepsLink: recipe.stepsLink,

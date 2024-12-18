@@ -12,12 +12,28 @@ const GET_MY_INGRE = gql`
 `;
 
 const ADD_INGRE = gql`
-  mutation AddIngredient($name: String!, $unityOfMeasure: String!) {
-    addIngredient(name: $name, unityOfMeasure: $unityOfMeasure) {
+  mutation AddIngredient($name: String!, $UdM: String!) {
+    addIngredient(name: $name, unityOfMeasure: $UdM) {
       id
       name
       unityOfMeasure
     }
+  }
+`;
+
+const UPD_INGRE = gql`
+  mutation UpdIngredient($id: ID!, $name: String!, $UdM: String!) {
+    updIngredient(id: $id, name: $name, unityOfMeasure: $UdM) {
+      id
+      name
+      unityOfMeasure
+    }
+  }
+`;
+
+const REM_INGRE = gql`
+  mutation RemIngredient($remIngredientId: ID!) {
+    remIngredient(id: $remIngredientId)
   }
 `;
 
@@ -92,7 +108,7 @@ const REM_RECIP = gql`
 export const apiService = {
 
   /**
-   * Fetch all ingredients from the server
+   * Fetch all ingredients from the database
    * @returns {Promise<Ingredient[]>} A promise that resolves to an array of ingredients
    * @throws {Error} If an error occurs while fetching the ingredients
    */
@@ -102,19 +118,44 @@ export const apiService = {
   },
 
   /**
-   * Add a new ingredient to the server
+   * Add a new ingredient to the remote database
    * @param {IngredientInput} ingredient The ingredient to add
    * @returns {Promise<Ingredient>} A promise that resolves to the added ingredient
    * @throws {Error} If an error occurs while adding the ingredient
    */
   addIngredient: async (ingredient: IngredientInput): Promise<Ingredient> => {
-      const response = await client.mutate<{ addIngredient: Ingredient }>({ mutation: ADD_INGRE, variables: { name: ingredient.name, unityOfMeasure: ingredient.unityOfMeasure } });
+      const response = await client.mutate<{ addIngredient: Ingredient }>({ mutation: ADD_INGRE, variables: { name: ingredient.name, UdM: ingredient.unityOfMeasure } });
       if (!response.data) throw new Error('No data received from mutation');
       return response.data.addIngredient;
   },
 
   /**
-   * Fetch all recipes from the server
+   * Update an ingredient on the remote database
+   * @param {string} id The ID of the ingredient to update
+   * @param {IngredientInput} ingredient The updated ingredient
+   * @returns {Promise<Ingredient>} A promise that resolves to the updated ingredient
+   * @throws {Error} If an error occurs while updating the ingredient
+   */
+  updateIngredient: async (id: string, ingredient: IngredientInput): Promise<Ingredient> => {
+    const response = await client.mutate<{ updIngredient: Ingredient }>({ mutation: UPD_INGRE, variables: { id: id, name: ingredient.name, UdM: ingredient.unityOfMeasure } });
+    if (!response.data) throw new Error('No data received from mutation');
+    return response.data.updIngredient;
+  },
+
+  /**
+   * Remove an ingredient from the remote database
+   * @param {string} id The ID of the ingredient to remove
+   * @returns {Promise<boolean>} A promise that resolves to true if the ingredient was removed
+   * @throws {Error} If an error occurs while removing the ingredient
+   */
+  deleteIngredient: async (id: string): Promise<boolean> => {
+    const response = await client.mutate<{ remIngredient: boolean }>({ mutation: REM_INGRE, variables: { remIngredientId: id } });
+    if (!response.data) throw new Error('No data received from mutation');
+    return response.data.remIngredient;
+  },
+
+  /**
+   * Fetch all recipes from the remote database
    * @returns {Promise<Recipe[]>} A promise that resolves to an array of recipes
    * @throws {Error} If an error occurs while fetching the recipes
    */
@@ -124,7 +165,7 @@ export const apiService = {
   },
 
   /**
-   * Add a new recipe to the server
+   * Add a new recipe to the remote database
    * @param {RecipeInput} recipe The recipe to add
    * @returns {Promise<Recipe>} A promise that resolves to the added recipe
    * @throws {Error} If an error occurs while adding the recipe
@@ -136,7 +177,7 @@ export const apiService = {
   },
 
   /**
-   * Update a recipe on the server
+   * Update a recipe on the remote database
    * @param {string} id The ID of the recipe to update
    * @param {RecipeInput} recipe The updated recipe
    * @returns {Promise<Recipe>} A promise that resolves to the updated recipe
@@ -149,12 +190,12 @@ export const apiService = {
   },
 
   /**
-   * Remove a recipe from the server
+   * Remove a recipe from the remote database
    * @param {string} id The ID of the recipe to remove
    * @returns {Promise<boolean>} A promise that resolves to true if the recipe was removed
    * @throws {Error} If an error occurs while removing the recipe
    */
-  removeRecipe: async (id: string): Promise<boolean> => {
+  deleteRecipe: async (id: string): Promise<boolean> => {
     const response = await client.mutate<{ remRecipe: boolean }>({ mutation: REM_RECIP, variables: { remRecipeId: id } });
     if (!response.data) throw new Error('No data received from mutation');
     return response.data.remRecipe;

@@ -20,10 +20,12 @@ interface ContextState {
 type Action = 
     | { type: 'SET_INGREDIENTS'; payload: Ingredient[] }
     | { type: 'ADD_INGREDIENT'; payload: Ingredient }
+    | { type: 'UPDATE_INGREDIENT'; payload: Ingredient }
+    | { type: 'DELETE_INGREDIENT'; payload: string }
     | { type: 'SET_RECIPES'; payload: Recipe[] }
     | { type: 'ADD_RECIPE'; payload: Recipe }
     | { type: 'UPDATE_RECIPE'; payload: Recipe }
-    | { type: 'REMOVE_RECIPE'; payload: string };
+    | { type: 'DELETE_RECIPE'; payload: string };
 
 const initialState: ContextState = {
     recipes: [],
@@ -36,13 +38,17 @@ const reducer = (state: ContextState, action: Action): ContextState => {
             return { ...state, ingredients: action.payload };
         case "ADD_INGREDIENT":
             return { ...state, ingredients: [...state.ingredients, action.payload] };
+        case "UPDATE_INGREDIENT":
+            return { ...state, ingredients: state.ingredients.map(ingredient => ingredient.id === action.payload.id ? action.payload : ingredient) };
+        case "DELETE_INGREDIENT":
+            return { ...state, ingredients: state.ingredients.filter(ingredient => ingredient.id !== action.payload) };
         case "SET_RECIPES":
             return { ...state, recipes: action.payload };
         case "ADD_RECIPE":
             return { ...state, recipes: [...state.recipes, action.payload] };
         case "UPDATE_RECIPE":
             return { ...state, recipes: state.recipes.map(recipe => recipe.id === action.payload.id ? action.payload : recipe) };
-        case "REMOVE_RECIPE":
+        case "DELETE_RECIPE":
             return { ...state, recipes: state.recipes.filter(recipe => recipe.id !== action.payload) };
         default:
             return state;
