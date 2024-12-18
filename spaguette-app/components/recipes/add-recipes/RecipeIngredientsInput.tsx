@@ -6,7 +6,7 @@ import { useDataService } from '@/services/data/useDataService';
 
 interface RecipeIngredientsInputProps {
     ingredients: {ingredient: Ingredient, quantity: number}[];
-    setIngredients: React.Dispatch<React.SetStateAction<{ingredient: Ingredient, quantity: number}[]>>;   
+    setIngredients: (ingredients: {ingredient: Ingredient, quantity: number}[]) => void;   
 }
 
 const RecipeIngredientsInput: React.FC<RecipeIngredientsInputProps> = ({ ingredients, setIngredients }) => {

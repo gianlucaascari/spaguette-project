@@ -3,9 +3,9 @@ import { useContext, useEffect, useState } from 'react';
 
 import { Text, View } from '@/components/Themed';
 import RecipesList from '@/components/recipes/show-recipes/RecipesList';
-import RecipeInput from '@/components/recipes/add-recipes/RecipeInput';
 import { DataContext } from '@/services/data/DataContext';
 import { useDataService } from '@/services/data/useDataService';
+import AddRecipeInput from '@/components/recipes/add-recipes/AddRecipeInput';
 
 export default function TabOneScreen() {
 
@@ -21,7 +21,7 @@ export default function TabOneScreen() {
 
       <Text style={styles.title}>Recipes</Text>
 
-      <RecipeInput initialRecipe={{id: "", name: "", ingredients: []}} mode={"add"}/>
+      <AddRecipeInput />
 
       {state.recipes ? (
         <RecipesList recipes={state.recipes} />

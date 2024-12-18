@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import React, { useState } from "react";
-import RecipeInput from "../add-recipes/RecipeInput";
+import RecipeInput from "../add-recipes/OldRecipeInput";
 import RecipeListElementShow from "./RecipeListElementShow";
 
 interface RecipesListElementProps {
