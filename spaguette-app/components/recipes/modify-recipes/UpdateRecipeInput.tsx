@@ -11,7 +11,7 @@ interface UpdateRecipeInputProps {
 const UpdateRecipeInput: React.FC<UpdateRecipeInputProps> = ({ initialRecipe, afterSubmit }) => {
 
     const [recipe, setRecipe] = useState<Recipe>(initialRecipe)
-    const { updateRecipe } = useDataService()
+    const { updateRecipe, deleteRecipe } = useDataService()
 
     const onPressUpdate = async () => {
         // check fields
@@ -33,7 +33,21 @@ const UpdateRecipeInput: React.FC<UpdateRecipeInputProps> = ({ initialRecipe, af
             await updateRecipe(initialRecipe.id, recipeInput)
         }
         catch (e:any) {
-            alert('AddRecipeInput> Error updating recipe\n' + e?.message);
+            alert('UpdateRecipeInput> Error updating recipe\n' + e?.message);
+            return;
+        }
+
+        // after submit
+        if(afterSubmit) afterSubmit();
+    }
+
+    const onPressDelete = async () => {
+        // call dataService
+        try {
+            await deleteRecipe(initialRecipe.id)
+        }
+        catch (e:any) {
+            alert('UpdateRecipeInput> Error deleting recipe\n' + e?.message);
             return;
         }
 
@@ -45,9 +59,15 @@ const UpdateRecipeInput: React.FC<UpdateRecipeInputProps> = ({ initialRecipe, af
     <View style={styles.rowContainer}>
         <RecipeInput recipe={recipe} setRecipe={setRecipe} />
 
-        <Pressable style={styles.button} onPress={onPressUpdate} >
-                <Text>Save</Text>
-        </Pressable>
+        <View>
+            <Pressable style={styles.button} onPress={onPressUpdate} >
+                    <Text>Save</Text>
+            </Pressable>
+
+            <Pressable style={styles.button} onPress={onPressDelete} >
+                    <Text>Delete</Text>
+            </Pressable>
+        </View>
     </View>
   )
 }
