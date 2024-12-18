@@ -2,7 +2,12 @@ type Ingredient = {
     id: string;
     name: string;
     unityOfMeasure: string;
-  };
+};
+
+type IngredientInput = {
+    name: string;
+    unityOfMeasure: string;
+}
 
 type Recipe = {
     id: string;
@@ -23,4 +28,4 @@ type RecipeInput = {
         quantity: number;
         ingredientID: string;
     }[];
-}
+};

@@ -16,6 +16,10 @@ export const useDataService = () => {
             const ingredients = await apiService.getIngredients();
             dispatch({ type: 'SET_INGREDIENTS', payload: ingredients });
         },
+        addIngredient: async (ingredient: IngredientInput) => {
+            const addedIngredient = await apiService.addIngredient(ingredient);
+            dispatch({ type: 'ADD_INGREDIENT', payload: addedIngredient });
+        },
         getRecipes: async () => {
             const recipes = await apiService.getRecipes();
             dispatch({ type: 'SET_RECIPES', payload: recipes });

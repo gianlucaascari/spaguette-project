@@ -11,6 +11,16 @@ const GET_MY_INGRE = gql`
   }
 `;
 
+const ADD_INGRE = gql`
+  mutation AddIngredient($name: String!, $unityOfMeasure: String!) {
+    addIngredient(name: $name, unityOfMeasure: $unityOfMeasure) {
+      id
+      name
+      unityOfMeasure
+    }
+  }
+`;
+
 const GET_MY_RECIP = gql`
   query GetMyRecipes {
     getMyRecipes {
@@ -89,6 +99,18 @@ export const apiService = {
   getIngredients: async (): Promise<Ingredient[]> => {
       const response = await client.query<{ getMyIngredients: Ingredient[] }>({ query: GET_MY_INGRE });
       return response.data.getMyIngredients;
+  },
+
+  /**
+   * Add a new ingredient to the server
+   * @param {IngredientInput} ingredient The ingredient to add
+   * @returns {Promise<Ingredient>} A promise that resolves to the added ingredient
+   * @throws {Error} If an error occurs while adding the ingredient
+   */
+  addIngredient: async (ingredient: IngredientInput): Promise<Ingredient> => {
+      const response = await client.mutate<{ addIngredient: Ingredient }>({ mutation: ADD_INGRE, variables: { name: ingredient.name, unityOfMeasure: ingredient.unityOfMeasure } });
+      if (!response.data) throw new Error('No data received from mutation');
+      return response.data.addIngredient;
   },
 
   /**
