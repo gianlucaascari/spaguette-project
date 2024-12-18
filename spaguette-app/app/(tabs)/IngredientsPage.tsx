@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { useContext, useEffect, useState } from 'react';
 
 import { Text, View } from '@/components/Themed';
@@ -17,18 +17,20 @@ export default function TabTwoScreen() {
   }, []);
 
   return (
-    <View style={styles.mainContainer}>
-          <Text style={styles.title}>Ingredients</Text>
+    <ScrollView>
+      <View style={styles.mainContainer}>
+            <Text style={styles.title}>Ingredients</Text>
 
-          <AddIngredientInput />
-    
-          {state.ingredients ? (
-            state.ingredients.map((ingredient: Ingredient, index: number) => (
-              <IngredientListElement key={index} ingredient={ingredient} />
-            ))
-          ) : (
-            <Text>Loading...</Text>
-          )}
-    </View>
+            <AddIngredientInput />
+      
+            {state.ingredients ? (
+              state.ingredients.map((ingredient: Ingredient, index: number) => (
+                <IngredientListElement key={index} ingredient={ingredient} />
+              ))
+            ) : (
+              <Text>Loading...</Text>
+            )}
+      </View>
+    </ScrollView>
   );
 }

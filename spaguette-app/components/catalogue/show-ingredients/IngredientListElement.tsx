@@ -1,6 +1,7 @@
 import { View, Text } from 'react-native'
 import React, { useState } from 'react'
 import IngredientListElementShow from './IngredientListElementShow'
+import UpdateIngredientInput from '../modify-ingredients/UpdateIngredientInput'
 
 interface IngredientListElementProps {
     ingredient: Ingredient
@@ -14,7 +15,7 @@ const IngredientListElement: React.FC<IngredientListElementProps> = ({ ingredien
     <View>
       {
         isModiying ?
-        <Text> TODO </Text>
+        <UpdateIngredientInput initialIngredient={ingredient} afterSubmit={() => setIsModifying(false)} />
         :
         <IngredientListElementShow ingredient={ingredient} setIsModifying={setIsModifying} />
       }
