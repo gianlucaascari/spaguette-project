@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native'
 import React from 'react'
+import { styles } from '@/styles/style';
 
 interface RecipeListElementShowProps {
     recipe: Recipe;
@@ -25,23 +26,3 @@ const RecipeListElementShow: React.FC<RecipeListElementShowProps> = ({ recipe, s
 }
 
 export default RecipeListElementShow
-
-const styles = StyleSheet.create({
-    container: {
-      padding: 10,
-    },
-    rowContainer: {
-        flexDirection: 'row',
-        padding: 10,
-    },
-    button: {
-        padding: 10,
-        margin: 5,
-        borderWidth: 1,
-        backgroundColor: 'orange',
-    },
-    title: {
-      fontSize: 14,
-      fontWeight: 'bold',
-    },
-  });
