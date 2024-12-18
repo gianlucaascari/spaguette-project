@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { useContext, useEffect, useState } from 'react';
 
 import { Text, View } from '@/components/Themed';
@@ -17,6 +17,7 @@ export default function TabOneScreen() {
   }, []);
   
   return (
+    <ScrollView>
     <View style={styles.container}>
 
       <Text style={styles.title}>Recipes</Text>
@@ -29,6 +30,7 @@ export default function TabOneScreen() {
         <Text>Loading...</Text>
       )}      
     </View>
+    </ScrollView>
   );
 }
 

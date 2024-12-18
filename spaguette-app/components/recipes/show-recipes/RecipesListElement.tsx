@@ -1,7 +1,7 @@
 import { View, StyleSheet } from "react-native";
 import React, { useState } from "react";
-import RecipeInput from "../add-recipes/OldRecipeInput";
 import RecipeListElementShow from "./RecipeListElementShow";
+import UpdateRecipeInput from "../add-recipes/UpdateRecipeInput";
 
 interface RecipesListElementProps {
   recipe: Recipe;
@@ -11,9 +11,9 @@ const RecipesListElement: React.FC<RecipesListElementProps> = ({ recipe }) => {
   const [isModifying, setIsModifying] = useState<boolean>(false)
 
   return (
-    <View>
+    <View style={styles.rowContainer}>
       {isModifying ? 
-        <RecipeInput initialRecipe={recipe} mode="update" afterSubmit={() => setIsModifying(false)}/>
+        <UpdateRecipeInput initialRecipe={recipe} afterSubmit={() => setIsModifying(false)}/>
         :
         <RecipeListElementShow recipe={recipe} setIsModifying={setIsModifying} />
       }

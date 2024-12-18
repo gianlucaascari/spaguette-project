@@ -1,22 +1,19 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
-import RecipeInput from './RecipeInput'
 import { useDataService } from '@/services/data/useDataService'
+import RecipeInput from './RecipeInput'
 
-const AddRecipeInput = () => {
+interface UpdateRecipeInputProps {
+    initialRecipe: Recipe,
+    afterSubmit: () => void,
+}
 
-    const emptyRecipe: Recipe = {
-        id: '',
-        name: '',
-        description: '',
-        stepsLink: '',
-        ingredients: [],
-    }
+const UpdateRecipeInput: React.FC<UpdateRecipeInputProps> = ({ initialRecipe, afterSubmit }) => {
 
-    const [recipe, setRecipe] = useState<Recipe>(emptyRecipe)
-    const { addRecipe } = useDataService()
+    const [recipe, setRecipe] = useState<Recipe>(initialRecipe)
+    const { updateRecipe } = useDataService()
 
-    const onPressAdd = async () => {
+    const onPressUpdate = async () => {
         // check fields
         if(recipe.name === '' || recipe.ingredients.length === 0) {
             alert('Please insert at least a name and an ingredient');
@@ -32,29 +29,30 @@ const AddRecipeInput = () => {
         }
 
         // call dataService
-        try{
-            await addRecipe(recipeInput);
-        } catch(e:any) {
-            alert('AddRecipeInput> Error adding recipe\n' + e?.message);
+        try {
+            await updateRecipe(initialRecipe.id, recipeInput)
+        }
+        catch (e:any) {
+            alert('AddRecipeInput> Error updating recipe\n' + e?.message);
             return;
-        } 
-        
-        // reset fields
-        setRecipe(emptyRecipe)
+        }
+
+        // after submit
+        if(afterSubmit) afterSubmit();
     }
 
   return (
     <View style={styles.rowContainer}>
         <RecipeInput recipe={recipe} setRecipe={setRecipe} />
 
-        <Pressable style={styles.button} onPress={onPressAdd} >
-            <Text>Add Recipe</Text>
+        <Pressable style={styles.button} onPress={onPressUpdate} >
+                <Text>Save</Text>
         </Pressable>
     </View>
   )
 }
 
-export default AddRecipeInput
+export default UpdateRecipeInput
 
 const styles = StyleSheet.create({
     container: {
