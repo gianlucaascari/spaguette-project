@@ -22,6 +22,7 @@ type Action =
     | { type: 'SET_INGREDIENTS'; payload: Ingredient[] }
     | { type: 'ADD_RECIPE'; payload: Recipe }
     | { type: 'UPDATE_RECIPE'; payload: Recipe }
+    | { type: 'REMOVE_RECIPE'; payload: string };
 
 const initialState: State = {
     recipes: [],
@@ -38,6 +39,8 @@ const reducer = (state: State, action: Action): State => {
             return { ...state, recipes: [...state.recipes, action.payload] };
         case "UPDATE_RECIPE":
             return { ...state, recipes: state.recipes.map(recipe => recipe.id === action.payload.id ? action.payload : recipe) };
+        case "REMOVE_RECIPE":
+            return { ...state, recipes: state.recipes.filter(recipe => recipe.id !== action.payload) };
         default:
             return state;
     }

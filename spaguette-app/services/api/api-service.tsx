@@ -66,6 +66,12 @@ const UPD_RECIP = gql`
   }
 `;
 
+const REM_RECIP = gql`
+  mutation RemRecipe($remRecipeId: ID!) {
+    remRecipe(id: $remRecipeId)
+  }
+`;
+
 
 /**
  * API service to fetch and manipulate data from the server
@@ -118,5 +124,17 @@ export const apiService = {
     const response = await client.mutate<{ updRecipe: Recipe }>({ mutation: UPD_RECIP, variables: { input: recipe, id: id}})
     if(!response.data) throw new Error('No data received from mutation')
     return response.data.updRecipe
+  },
+
+  /**
+   * Remove a recipe from the server
+   * @param {string} id The ID of the recipe to remove
+   * @returns {Promise<boolean>} A promise that resolves to true if the recipe was removed
+   * @throws {Error} If an error occurs while removing the recipe
+   */
+  removeRecipe: async (id: string): Promise<boolean> => {
+    const response = await client.mutate<{ remRecipe: boolean }>({ mutation: REM_RECIP, variables: { remRecipeId: id } });
+    if (!response.data) throw new Error('No data received from mutation');
+    return response.data.remRecipe;
   }
 };

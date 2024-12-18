@@ -28,5 +28,9 @@ export const useDataService = () => {
             const updatedRecipe = await apiService.updateRecipe(id, recipe);
             dispatch({ type: 'UPDATE_RECIPE', payload: updatedRecipe });
         },
+        deleteRecipe: async (id: string) => {
+            await apiService.removeRecipe(id);
+            dispatch({ type: 'REMOVE_RECIPE', payload: id });
+        }
     };
 };
