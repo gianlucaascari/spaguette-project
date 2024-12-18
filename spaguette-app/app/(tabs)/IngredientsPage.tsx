@@ -6,6 +6,7 @@ import { DataContext } from '@/services/data/DataContext';
 import { useDataService } from '@/services/data/useDataService';
 import { styles } from '@/styles/style';
 import IngredientListElement from '@/components/catalogue/show-ingredients/IngredientListElement';
+import AddIngredientInput from '@/components/catalogue/modify-ingredients/AddIngredientInput';
 
 export default function TabTwoScreen() {
   const { state } = useContext(DataContext);
@@ -18,6 +19,8 @@ export default function TabTwoScreen() {
   return (
     <View style={styles.mainContainer}>
           <Text style={styles.title}>Ingredients</Text>
+
+          <AddIngredientInput />
     
           {state.ingredients ? (
             state.ingredients.map((ingredient: Ingredient, index: number) => (
