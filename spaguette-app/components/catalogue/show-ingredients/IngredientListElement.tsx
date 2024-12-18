@@ -1,5 +1,6 @@
 import { View, Text } from 'react-native'
 import React, { useState } from 'react'
+import IngredientListElementShow from './IngredientListElementShow'
 
 interface IngredientListElementProps {
     ingredient: Ingredient
@@ -11,7 +12,12 @@ const IngredientListElement: React.FC<IngredientListElementProps> = ({ ingredien
 
   return (
     <View>
-      <Text>IngredientListElement</Text>
+      {
+        isModiying ?
+        <Text> TODO </Text>
+        :
+        <IngredientListElementShow ingredient={ingredient} setIsModifying={setIsModifying} />
+      }
     </View>
   )
 }

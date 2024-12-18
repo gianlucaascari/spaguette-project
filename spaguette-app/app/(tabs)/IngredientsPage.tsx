@@ -5,6 +5,7 @@ import { Text, View } from '@/components/Themed';
 import { DataContext } from '@/services/data/DataContext';
 import { useDataService } from '@/services/data/useDataService';
 import { styles } from '@/styles/style';
+import IngredientListElement from '@/components/catalogue/show-ingredients/IngredientListElement';
 
 export default function TabTwoScreen() {
   const { state } = useContext(DataContext);
@@ -20,7 +21,7 @@ export default function TabTwoScreen() {
     
           {state.ingredients ? (
             state.ingredients.map((ingredient: Ingredient, index: number) => (
-              <Text key={index}>{ingredient.name}</Text>
+              <IngredientListElement key={index} ingredient={ingredient} />
             ))
           ) : (
             <Text>Loading...</Text>

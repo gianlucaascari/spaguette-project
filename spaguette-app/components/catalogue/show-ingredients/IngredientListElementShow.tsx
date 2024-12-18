@@ -9,8 +9,8 @@ interface IngredientListElementShowProps {
 
 const IngredientListElementShow: React.FC<IngredientListElementShowProps> = ({ ingredient, setIsModifying }) => {
   return (
-    <View>
-        <Text>{ingredient.name + " " + ingredient.unityOfMeasure}</Text>
+    <View style={styles.rowContainer}>
+        <Text style={styles.textInput}>{ingredient.name + " " + ingredient.unityOfMeasure}</Text>
 
         <Pressable style={styles.button} onPress={() => setIsModifying(true)}>
             <Text>Modify</Text>
