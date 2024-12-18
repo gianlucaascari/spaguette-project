@@ -2,6 +2,7 @@ import { View, Text, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import IngredientInput from './IngredientInput'
 import { styles } from '@/styles/style'
+import { useDataService } from '@/services/data/useDataService'
 
 const AddIngredientInput = () => {
 
@@ -12,6 +13,7 @@ const AddIngredientInput = () => {
     }
 
     const [ingredient, setIngredient] = useState<Ingredient>(emptyIngredient)
+    const { addIngredient } = useDataService()
 
     const onAddIngredientPress = () => {
         // check if the ingredient is empty
@@ -20,7 +22,12 @@ const AddIngredientInput = () => {
         }
 
         // call data service
-        alert('AddIngredientInput> Add ingredient with arguments: ' + ingredient.name + ' ' + ingredient.unityOfMeasure)
+        try {
+            addIngredient(ingredient)
+        } catch (e: any) {
+            alert('AddIngredientInput> Error adding ingredient\n' + e?.message)
+            return
+        }
 
         // reset fields
         setIngredient(emptyIngredient)
