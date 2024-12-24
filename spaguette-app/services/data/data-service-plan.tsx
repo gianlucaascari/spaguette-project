@@ -9,7 +9,6 @@ export const dataServicePlan = () => {
         getMyPlan: async () => {
             try {
                 const plan = await apiService.getMyPlan();
-                alert('Data Service Plan > Plan: ' + JSON.stringify(plan));
                 dispatch({ type: 'SET_PLAN', payload: plan });
             } catch (e: any) {
                 console.error('Error getting plan:', e);

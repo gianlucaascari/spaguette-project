@@ -1,10 +1,13 @@
 import { View, Text } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { styles } from '@/styles/style'
 import { useDataService } from '@/services/data/data-service';
+import { DataContext } from '@/services/data/DataContext';
+import PlanListElement from '@/components/plan/show-plan/PlanListElement';
 
 const PlanPage = () => {
 
+    const { state } = useContext(DataContext);
     const { getMyPlan } = useDataService();
 
     useEffect(() => {
@@ -13,7 +16,13 @@ const PlanPage = () => {
 
   return (
     <View style={styles.container}>
-      <Text>PlanPage</Text>
+      {state.plan ? (
+        state.plan.recipes.map((planElement: RecipeQuantity, index: number) => (
+          <PlanListElement key={index} planElement={planElement} />
+        )))
+        : (
+          <Text>Loading...</Text>
+        )}
     </View>
   )
 }
