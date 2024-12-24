@@ -6,3 +6,12 @@ type RecipeQuantity = {
 type Plan = {
     recipes: RecipeQuantity[];
 }
+
+type PlanElementInput = {
+    recipeID: string;
+    numTimes: number;
+}
+
+type PlanInput = {
+    recipes: PlanElementInput[];
+}

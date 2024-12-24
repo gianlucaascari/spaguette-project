@@ -1,9 +1,14 @@
 import { View, Text, Pressable, Alert } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import PlanElementInput from './PlanElementInput';
 import { styles } from '@/styles/style';
+import { DataContext } from '@/services/data/DataContext';
+import { useDataService } from '@/services/data/data-service';
 
 const AddPlanElementInput = () => {
+
+    const { state } = useContext(DataContext);
+    const { addToPlan } = useDataService();
 
     const [planElement, setPlanElement] = useState<RecipeQuantity>({
         recipe: {
@@ -15,7 +20,20 @@ const AddPlanElementInput = () => {
     });
 
     const addPlanElement = () => {
-        alert('Adding plan element: ' + planElement.recipe.name + ' ' + planElement.numTimes);
+        // check form content
+        if (planElement.recipe.id === "" || planElement.numTimes === 0) {
+            Alert.alert('Please fill in all fields');
+            return;
+        }
+
+        // create new plan element input
+        const planElementInput = { recipeID: planElement.recipe.id, numTimes: planElement.numTimes };
+
+        // call data service
+        addToPlan(planElementInput);
+
+        // reset form
+        setPlanElement({ recipe: { id: "", name: "", ingredients: [] }, numTimes: 0 });
     }
 
   return (
