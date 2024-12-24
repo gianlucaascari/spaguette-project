@@ -4,6 +4,7 @@ import { styles } from '@/styles/style'
 import { useDataService } from '@/services/data/data-service';
 import { DataContext } from '@/services/data/DataContext';
 import PlanListElement from '@/components/plan/show-plan/PlanListElement';
+import AddPlanElementInput from '@/components/plan/modify-plan/AddPlanElementInput';
 
 const PlanPage = () => {
 
@@ -16,13 +17,14 @@ const PlanPage = () => {
 
   return (
     <View style={styles.container}>
-      {state.plan ? (
-        state.plan.recipes.map((planElement: RecipeQuantity, index: number) => (
-          <PlanListElement key={index} planElement={planElement} />
+        <AddPlanElementInput />
+        {state.plan ? (
+            state.plan.recipes.map((planElement: RecipeQuantity, index: number) => (
+            <PlanListElement key={index} planElement={planElement} />
         )))
         : (
-          <Text>Loading...</Text>
-        )}
+            <Text>Loading...</Text>
+        )}  
     </View>
   )
 }
