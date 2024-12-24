@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 
 import { Text, View } from '@/components/Themed';
 import { DataContext } from '@/services/data/DataContext';
-import { useDataService } from '@/services/data/useDataService';
+import { useDataService } from '@/services/data/data-service';
 import AddRecipeInput from '@/components/catalogue/modify-recipes/AddRecipeInput';
 import RecipesListElement from '@/components/catalogue/show-recipes/RecipesListElement';
 import { styles } from '@/styles/style';

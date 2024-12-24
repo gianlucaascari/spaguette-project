@@ -18,7 +18,7 @@ const wsLink = new GraphQLWsLink(createClient({
   //url: "https://d9af-81-164-118-42.ngrok-free.app/subscriptions",
   connectionParams: async () => {
     // const token = await getToken()
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjhmMWU2Yjg2OWU0MTNjZDM1YjkwNiIsImlhdCI6MTczNDE3MTgwMiwiZXhwIjoxNzM0Nzc2NjAyfQ.6EwZ2jJ2NOXUzgIRVNpI_8gyL5kcSQFuzCk925ELFa4"
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjhmMWU2Yjg2OWU0MTNjZDM1YjkwNiIsImlhdCI6MTczNTAzODY4OH0.Y3buogE9GrS5gYZ_NhAHdmB6L0qOBZyKSc3P-sTvOsY"
     return {
       authorization: token || '',
     }
@@ -27,7 +27,7 @@ const wsLink = new GraphQLWsLink(createClient({
 
 const authLink = setContext(async (_, { headers }) => {
   // const token = await getToken();
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjhmMWU2Yjg2OWU0MTNjZDM1YjkwNiIsImlhdCI6MTczNDE3MTgwMiwiZXhwIjoxNzM0Nzc2NjAyfQ.6EwZ2jJ2NOXUzgIRVNpI_8gyL5kcSQFuzCk925ELFa4"
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjhmMWU2Yjg2OWU0MTNjZDM1YjkwNiIsImlhdCI6MTczNTAzODY4OH0.Y3buogE9GrS5gYZ_NhAHdmB6L0qOBZyKSc3P-sTvOsY"
 
   return {
     headers: {

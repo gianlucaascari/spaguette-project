@@ -2,7 +2,7 @@ import { View, Text, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import IngredientInput from './IngredientInput'
 import { styles } from '@/styles/style'
-import { useDataService } from '@/services/data/useDataService'
+import { useDataService } from '@/services/data/data-service'
 
 const AddIngredientInput = () => {
 

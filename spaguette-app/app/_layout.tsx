@@ -57,7 +57,6 @@ function RootLayoutNav() {
         <ApolloProvider client={client}>
           <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
           </Stack>
         </ApolloProvider>
       </DataProvider>

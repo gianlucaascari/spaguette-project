@@ -1,6 +1,6 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
-import { useDataService } from '@/services/data/useDataService'
+import { useDataService } from '@/services/data/data-service'
 import RecipeInput from './RecipeInput'
 import { styles } from '@/styles/style'
 

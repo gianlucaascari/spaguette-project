@@ -27,16 +27,16 @@ export default function TabLayout() {
         headerShown: useClientOnlyValue(false, true),
       }}>
       <Tabs.Screen
-        name="index"
+        name="RecipePage"
         options={{
-          title: 'Tab One',
+          title: 'Recipes',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="IngredientsPage"
         options={{
-          title: 'Tab Two',
+          title: 'Ingredients',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />

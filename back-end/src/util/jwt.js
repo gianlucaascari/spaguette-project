@@ -3,7 +3,7 @@ import { ObjectId } from 'mongodb';
 
 import { ENV } from '../config/env.js';
 
-const getToken = (user) => jwt.sign({ id: user._id }, ENV.JWT_KEY, { expiresIn: '7 days' })
+const getToken = (user) => jwt.sign({ id: user._id }, ENV.JWT_KEY)
 
 const getUserFromJWT = async (token, db) => {
   if(!token) {
