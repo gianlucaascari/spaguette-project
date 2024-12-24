@@ -121,7 +121,6 @@ app.use(
   expressMiddleware(server, {
     context: async ({ req }) => {
       const user = await getUserFromJWT(req.headers.authorization, db);
-      console.log(req)
       return {
         db,
         user,
