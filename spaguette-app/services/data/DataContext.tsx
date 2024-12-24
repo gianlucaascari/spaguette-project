@@ -9,6 +9,7 @@ import { createContext, ReactNode, useReducer } from "react";
 interface ContextState {
     recipes: Recipe[];
     ingredients: Ingredient[];
+    plan: Plan;
 }
 
 /**
@@ -25,11 +26,13 @@ type Action =
     | { type: 'SET_RECIPES'; payload: Recipe[] }
     | { type: 'ADD_RECIPE'; payload: Recipe }
     | { type: 'UPDATE_RECIPE'; payload: Recipe }
-    | { type: 'DELETE_RECIPE'; payload: string };
+    | { type: 'DELETE_RECIPE'; payload: string }
+    | { type: 'SET_PLAN'; payload: Plan }
 
 const initialState: ContextState = {
     recipes: [],
     ingredients: [],
+    plan: { recipes: [] },
 };
 
 const reducer = (state: ContextState, action: Action): ContextState => {
@@ -50,6 +53,8 @@ const reducer = (state: ContextState, action: Action): ContextState => {
             return { ...state, recipes: state.recipes.map(recipe => recipe.id === action.payload.id ? action.payload : recipe) };
         case "DELETE_RECIPE":
             return { ...state, recipes: state.recipes.filter(recipe => recipe.id !== action.payload) };
+        case "SET_PLAN":
+            return { ...state, plan: action.payload };
         default:
             return state;
     }

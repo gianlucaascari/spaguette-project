@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { apiService } from "../api/api-service";
 import { DataContext } from "./DataContext";
+import { dataServicePlan } from "./data-service-plan";
 
 /**
  * Data service to fetch and manipulate data, combining API and (soon) local storage
@@ -91,6 +92,7 @@ export const useDataService = () => {
                 alert('Data Serive > Error deleting recipe\n' + e?.message);
                 return;
             }
-        }
+        },
+        ... dataServicePlan(),
     };
 };
