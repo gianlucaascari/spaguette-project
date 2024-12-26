@@ -44,6 +44,21 @@ export const dataServicePlan = () => {
                 alert('Data Serive > Error updating in plan\n' + e?.message);
                 return;
             }
+        },
+        deleteFromPlan: async (recipeID: string) => {
+            try {
+                let recipes = state.plan.recipes.map((planElement: RecipeQuantity) => { return { recipeID: planElement.recipe.id, numTimes: planElement.numTimes } });
+                const index = recipes.findIndex((recipe) => recipe.recipeID === recipeID);
+                recipes.splice(index, 1);
+                const newPlan = { recipes: recipes };
+
+                const updatedPlan = await apiService.updatePlan(newPlan);
+                dispatch({ type: 'SET_PLAN', payload: updatedPlan });
+            } catch (e: any) {
+                console.error('Error deleting from plan:', e);
+                alert('Data Serive > Error deleting from plan\n' + e?.message);
+                return;
+            }
         }
     }
 }
