@@ -50,6 +50,21 @@ mutation UpdPlan($input: PlanInput!) {
 }
 `;
 
+const GET_MY_LIST = gql`
+query GetMyList {
+  getMyList {
+    items {
+      ingredient {
+        name
+        unityOfMeasure
+      }
+      quantity
+      taken
+    }
+  }
+}
+`;
+
 /**
  * Service to interact with the plan of the user
  * @module apiServicePlan

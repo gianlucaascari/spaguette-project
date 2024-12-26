@@ -15,3 +15,13 @@ type PlanElementInput = {
 type PlanInput = {
     recipes: PlanElementInput[];
 }
+
+type ListItem = {
+    ingredient: Ingredient,
+    quantity: number,
+    taken: boolean,
+}
+
+type List = {
+    items: ListItem[],
+}

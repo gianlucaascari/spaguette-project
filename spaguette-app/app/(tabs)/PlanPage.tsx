@@ -16,15 +16,22 @@ const PlanPage = () => {
     }, []);
 
   return (
-    <View style={styles.container}>
-        <AddPlanElementInput />
-        {state.plan ? (
-            state.plan.recipes.map((planElement: RecipeQuantity, index: number) => (
-            <PlanListElement key={index} planElement={planElement} />
-        )))
-        : (
-            <Text>Loading...</Text>
-        )}  
+    <View style={styles.rowContainer}>
+        <View style={styles.container}>
+
+            <AddPlanElementInput />
+            {state.plan ? (
+                state.plan.recipes.map((planElement: RecipeQuantity, index: number) => (
+                <PlanListElement key={index} planElement={planElement} />
+            )))
+            : (
+                <Text>Loading...</Text>
+            )}  
+        </View>
+
+        <View style={styles.container}>
+            
+        </View>
     </View>
   )
 }

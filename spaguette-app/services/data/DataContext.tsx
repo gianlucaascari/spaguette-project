@@ -10,6 +10,7 @@ interface ContextState {
     recipes: Recipe[];
     ingredients: Ingredient[];
     plan: Plan;
+    list: List;
 }
 
 /**
@@ -28,11 +29,13 @@ type Action =
     | { type: 'UPDATE_RECIPE'; payload: Recipe }
     | { type: 'DELETE_RECIPE'; payload: string }
     | { type: 'SET_PLAN'; payload: Plan }
+    | { type: 'SET_LIST'; payload: List }
 
 const initialState: ContextState = {
     recipes: [],
     ingredients: [],
     plan: { recipes: [] },
+    list: { items: [] },
 };
 
 const reducer = (state: ContextState, action: Action): ContextState => {
@@ -55,6 +58,8 @@ const reducer = (state: ContextState, action: Action): ContextState => {
             return { ...state, recipes: state.recipes.filter(recipe => recipe.id !== action.payload) };
         case "SET_PLAN":
             return { ...state, plan: action.payload };
+        case "SET_LIST":
+            return { ...state, list: action.payload };
         default:
             return state;
     }
