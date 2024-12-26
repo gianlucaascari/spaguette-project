@@ -93,4 +93,14 @@ export const apiServicePlan = {
         if(!response.data) throw new Error('No data received from mutation');
         return response.data.updPlan;
     },
+
+    /**
+     * Get the list of the user
+     * @returns the list of the user
+     * @throws an error if the request fails
+     */
+    getMyList: async (): Promise<List> => {
+        const response = await client.query<{ getMyList: List }>({ query: GET_MY_LIST });
+        return response.data.getMyList;
+    }
 };

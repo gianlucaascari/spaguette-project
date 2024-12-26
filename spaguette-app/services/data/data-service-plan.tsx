@@ -59,6 +59,16 @@ export const dataServicePlan = () => {
                 alert('Data Serive > Error deleting from plan\n' + e?.message);
                 return;
             }
+        },
+        getMyList: async () => {
+            try {
+                const list = await apiService.getMyList();
+                dispatch({ type: 'SET_LIST', payload: list });
+            } catch (e: any) {
+                console.error('Error getting list:', e);
+                alert('Data Serive > Error getting list\n' + e?.message);
+                return;
+            }
         }
     }
 }

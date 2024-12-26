@@ -9,10 +9,11 @@ import AddPlanElementInput from '@/components/plan/modify-plan/AddPlanElementInp
 const PlanPage = () => {
 
     const { state } = useContext(DataContext);
-    const { getMyPlan } = useDataService();
+    const { getMyPlan, getMyList } = useDataService();
 
     useEffect(() => {
         getMyPlan();
+        getMyList();
     }, []);
 
   return (
@@ -20,17 +21,29 @@ const PlanPage = () => {
         <View style={styles.container}>
 
             <AddPlanElementInput />
-            {state.plan ? (
+            {state.plan ? 
+            (
                 state.plan.recipes.map((planElement: RecipeQuantity, index: number) => (
-                <PlanListElement key={index} planElement={planElement} />
-            )))
-            : (
+                    <PlanListElement key={index} planElement={planElement} />
+                ))
+            )
+            : 
+            (
                 <Text>Loading...</Text>
             )}  
         </View>
 
         <View style={styles.container}>
-            
+            {state.list ? 
+            (
+                state.list.items.map((item: ListItem, index: number) => (
+                    <Text key={index}>{item.ingredient.name}</Text>
+                ))
+            )
+            :
+            (
+                <Text>Loading...</Text>
+            )}
         </View>
     </View>
   )
