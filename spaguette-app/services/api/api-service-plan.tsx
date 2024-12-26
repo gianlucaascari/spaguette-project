@@ -55,6 +55,23 @@ query GetMyList {
   getMyList {
     items {
       ingredient {
+        id
+        name
+        unityOfMeasure
+      }
+      quantity
+      taken
+    }
+  }
+}
+`;
+
+const UPDATE_LIST = gql`
+mutation UpdList($input: ListInput!) {
+  updList(input: $input) {
+    items {
+      ingredient {
+        id
         name
         unityOfMeasure
       }
@@ -102,5 +119,17 @@ export const apiServicePlan = {
     getMyList: async (): Promise<List> => {
         const response = await client.query<{ getMyList: List }>({ query: GET_MY_LIST });
         return response.data.getMyList;
+    },
+
+    /**
+     * Update the list of the user
+     * @param input the new list
+     * @returns the updated list
+     * @throws an error if the request fails
+     */
+    updateList: async (input: ListInput): Promise<List> => {
+        const response = await client.mutate<{ updList: List }>({ mutation: UPDATE_LIST, variables: { input } });
+        if(!response.data) throw new Error('No data received from mutation');
+        return response.data.updList;
     }
 };

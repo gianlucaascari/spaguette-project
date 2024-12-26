@@ -69,6 +69,21 @@ export const dataServicePlan = () => {
                 alert('Data Serive > Error getting list\n' + e?.message);
                 return;
             }
+        },
+        updateListItem: async (listItem: ListItemInput) => {
+            try {
+                let items = state.list.items.map((listItem: ListItem) => { return { ingredientID: listItem.ingredient.id, quantity: listItem.quantity, taken: listItem.taken } });
+                const index = items.findIndex((item) => item.ingredientID === listItem.ingredientID);
+                items[index] = { ingredientID: listItem.ingredientID, quantity: listItem.quantity, taken: listItem.taken };
+                const newList = { items: items };
+
+                const updatedList = await apiService.updateList(newList);
+                dispatch({ type: 'SET_LIST', payload: updatedList });
+            } catch (e: any) {
+                console.error('Error updating list item:', e);
+                alert('Data Serive > Error updating list item\n' + e?.message);
+                return;
+            }
         }
     }
 }

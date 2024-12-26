@@ -5,6 +5,7 @@ import { useDataService } from '@/services/data/data-service';
 import { DataContext } from '@/services/data/DataContext';
 import PlanListElement from '@/components/plan/show-plan/PlanListElement';
 import AddPlanElementInput from '@/components/plan/modify-plan/AddPlanElementInput';
+import ListItem from '@/components/plan/show-list/ListItem';
 
 const PlanPage = () => {
 
@@ -37,7 +38,7 @@ const PlanPage = () => {
             {state.list ? 
             (
                 state.list.items.map((item: ListItem, index: number) => (
-                    <Text key={index}>{item.ingredient.name}</Text>
+                    <ListItem key={index} item={item} />
                 ))
             )
             :

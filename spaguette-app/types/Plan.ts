@@ -25,3 +25,13 @@ type ListItem = {
 type List = {
     items: ListItem[],
 }
+
+type ListItemInput = {
+    ingredientID: string, 
+    quantity: number,
+    taken: boolean,
+}
+
+type ListInput = {
+    items: ListItemInput[],
+}
