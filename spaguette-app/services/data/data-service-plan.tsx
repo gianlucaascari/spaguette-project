@@ -30,13 +30,18 @@ export const dataServicePlan = () => {
                 return;
             }
         },
-        updatePlan: async (plan: PlanInput) => {
+        updateInPlan: async (originalID: string, planElement: PlanElementInput) => {
             try {
-                const updatedPlan = await apiService.updatePlan(plan);
+                let recipes = state.plan.recipes.map((planElement: RecipeQuantity) => { return { recipeID: planElement.recipe.id, numTimes: planElement.numTimes } });
+                const index = recipes.findIndex((recipe) => recipe.recipeID === originalID);
+                recipes[index] = { recipeID: planElement.recipeID, numTimes: planElement.numTimes };
+                const newPlan = { recipes: recipes };
+
+                const updatedPlan = await apiService.updatePlan(newPlan);
                 dispatch({ type: 'SET_PLAN', payload: updatedPlan });
             } catch (e: any) {
-                console.error('Error updating plan:', e);
-                alert('Data Serive > Error updating plan\n' + e?.message);
+                console.error('Error updating in plan:', e);
+                alert('Data Serive > Error updating in plan\n' + e?.message);
                 return;
             }
         }
