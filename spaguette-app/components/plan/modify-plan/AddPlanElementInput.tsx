@@ -1,14 +1,13 @@
 import { View, Text, Pressable, Alert } from 'react-native'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import PlanElementInput from './PlanElementInput';
 import { styles } from '@/styles/style';
-import { DataContext } from '@/services/data/DataContext';
 import { useDataService } from '@/services/data/data-service';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 const AddPlanElementInput = () => {
 
-    const { state } = useContext(DataContext);
-    const { addToPlan } = useDataService();
+    const { addToPlan, getMyList } = useDataService();
 
     const [planElement, setPlanElement] = useState<RecipeQuantity>({
         recipe: {
@@ -30,7 +29,7 @@ const AddPlanElementInput = () => {
         const planElementInput = { recipeID: planElement.recipe.id, numTimes: planElement.numTimes };
 
         // call data service
-        addToPlan(planElementInput);
+        addToPlan(planElementInput).then(() => getMyList(true));
 
         // reset form
         setPlanElement({ recipe: { id: "", name: "", ingredients: [] }, numTimes: 0 });

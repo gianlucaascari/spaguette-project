@@ -116,8 +116,8 @@ export const apiServicePlan = {
      * @returns the list of the user
      * @throws an error if the request fails
      */
-    getMyList: async (): Promise<List> => {
-        const response = await client.query<{ getMyList: List }>({ query: GET_MY_LIST });
+    getMyList: async ( ignoreCache: boolean ): Promise<List> => {
+        const response = await client.query<{ getMyList: List }>({ query: GET_MY_LIST, fetchPolicy: ignoreCache ? 'network-only' : 'cache-first' });
         return response.data.getMyList;
     },
 

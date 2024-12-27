@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/components/useColorScheme';
-import { ApolloCache, ApolloProvider } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client';
 import client from '@/services/api/apollo-client';
 import { DataProvider } from '@/services/data/DataContext';
 

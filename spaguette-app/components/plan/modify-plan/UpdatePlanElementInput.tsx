@@ -11,7 +11,7 @@ interface UpdatePlanElementInputProps {
 
 const UpdatePlanElementInput: React.FC<UpdatePlanElementInputProps> = ({ initialElement, afterSubmit }) => {
 
-    const { updateInPlan, deleteFromPlan } = useDataService()
+    const { updateInPlan, deleteFromPlan, getMyList } = useDataService()
     const [planElement, setPLanElement] = useState(initialElement)
 
     const onUpdateElement = () => {
@@ -28,7 +28,7 @@ const UpdatePlanElementInput: React.FC<UpdatePlanElementInputProps> = ({ initial
         }
 
         // call data service
-        updateInPlan(initialElement.recipe.id, planElementInput)
+        updateInPlan(initialElement.recipe.id, planElementInput).then(() => getMyList(true));
 
         // after submit
         afterSubmit()
@@ -42,7 +42,7 @@ const UpdatePlanElementInput: React.FC<UpdatePlanElementInputProps> = ({ initial
         }
 
         // call data service
-        deleteFromPlan(initialElement.recipe.id)
+        deleteFromPlan(initialElement.recipe.id).then(() => getMyList(true));
 
         // after submit
         afterSubmit()

@@ -60,9 +60,9 @@ export const dataServicePlan = () => {
                 return;
             }
         },
-        getMyList: async () => {
+        getMyList: async (ignoreCache: boolean = false) => {
             try {
-                const list = await apiService.getMyList();
+                const list = await apiService.getMyList(ignoreCache);
                 dispatch({ type: 'SET_LIST', payload: list });
             } catch (e: any) {
                 console.error('Error getting list:', e);
