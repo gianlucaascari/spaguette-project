@@ -1,10 +1,11 @@
 import { SPACING } from "@/styles/spacing";
 import { TYPOGRAPHY } from "@/styles/typography";
+import { WIDTHS } from "@/styles/widths";
 import { StyleSheet, useWindowDimensions } from "react-native";
 
 export const useStyles = () => {
     const { width } = useWindowDimensions();
-    const isMobile = width < 768;
+    const isMobile = width < WIDTHS.mobileBreakdown;
 
     return StyleSheet.create({
         container: {

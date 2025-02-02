@@ -1,9 +1,10 @@
 import { SPACING } from "@/styles/spacing";
+import { WIDTHS } from "@/styles/widths";
 import { StyleSheet, useWindowDimensions } from "react-native";
 
 export const useStyles = () => {
     const { width } = useWindowDimensions();
-    const isMobile = width < 768;
+    const isMobile = width < WIDTHS.mobileBreakdown;
 
     return StyleSheet.create({
         container: {
@@ -14,11 +15,7 @@ export const useStyles = () => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             marginVertical: isMobile ? SPACING.medium : SPACING.large,
-            paddingRight: isMobile ? 12 : 0,
-        },
-        buttonsContainer: {
-            alignSelf: 'flex-end',
-            flexDirection: 'row',
+            paddingRight: isMobile ? SPACING.medium : 0,
         },
         quantityContainer: {
             flexDirection: 'row',
@@ -28,7 +25,7 @@ export const useStyles = () => {
         quantityInput: {
             marginVertical: SPACING.small,
             width: 40,
-            marginRight: 10,
+            marginRight: SPACING.medium,
         },
         ingredientInput: {
             marginVertical: SPACING.small,
