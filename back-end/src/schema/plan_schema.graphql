@@ -36,7 +36,7 @@ input ListInput {
 
 input ListItemInput {
   ingredientID: ID!
-  userID: ID!
+  userID: ID #! !!!! IMPORTANT -> reset to mandatory when add the users back
   quantity: Float!
   taken: Boolean!
 }

@@ -1,10 +1,13 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
-import RecipeInput from './RecipeInput'
+import RecipeInput from '../RecipeInput'
 import { useDataService } from '@/services/data/data-service'
-import { styles } from '@/styles/style'
+import { useStyles } from './styles'
+import Button from '@/components/general/Button'
 
 const AddRecipeInput = () => {
+
+    const styles = useStyles();
 
     const emptyRecipe: Recipe = {
         id: '',
@@ -45,12 +48,10 @@ const AddRecipeInput = () => {
     }
 
   return (
-    <View style={styles.rowContainer}>
+    <View style={styles.container}>
         <RecipeInput recipe={recipe} setRecipe={setRecipe} />
 
-        <Pressable style={styles.button} onPress={onPressAdd} >
-            <Text>Add Recipe</Text>
-        </Pressable>
+        <Button text={'Add Recipe'} onButtonPress={onPressAdd} />
     </View>
   )
 }
