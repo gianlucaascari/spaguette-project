@@ -1,9 +1,11 @@
-import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native'
+import { View, Text, TextInput, StyleSheet, Pressable, useWindowDimensions } from 'react-native'
 import React, { useContext, useEffect } from 'react'
 import { Dropdown } from 'react-native-element-dropdown';
 import { DataContext } from '@/services/data/DataContext';
 import { useDataService } from '@/services/data/data-service';
-import { styles } from '@/styles/style';
+import Button from '@/components/general/Button';
+import { useStyles } from './styles';
+import { COLORS } from '@/styles/colors';
 
 interface RecipeIngredientsInputProps {
     ingredients: {ingredient: Ingredient, quantity: number}[];
@@ -11,6 +13,10 @@ interface RecipeIngredientsInputProps {
 }
 
 const RecipeIngredientsInput: React.FC<RecipeIngredientsInputProps> = ({ ingredients, setIngredients }) => {
+
+    const { width } = useWindowDimensions();
+    const isMobile = width < 768;
+    const styles = useStyles();
 
     // add and remove ingredients logic
     const { state } = useContext(DataContext);
@@ -48,26 +54,29 @@ const RecipeIngredientsInput: React.FC<RecipeIngredientsInputProps> = ({ ingredi
 return (
     <View>
         {ingredients.map((ingredient, index) => (
-            <View key={index} style={styles.rowContainer}>
+            <View key={index} style={styles.container}>
                 <TextInput 
-                    style={styles.textInput}
+                    style={styles.ingredientInput}
                     value={ingredient.ingredient.name}
                     editable={false}
                     />
-                <TextInput
-                    style={styles.textInput}
-                    value={ingredient.quantity.toString()}
-                    editable={false}
-                    />
-                <Pressable style={styles.button} onPress={() => onRemoveIngredient(index)}>
-                    <Text>Remove</Text>
-                </Pressable>
+                <View style={styles.quantityContainer}>
+                    <TextInput
+                        style={styles.quantityInput}
+                        value={ingredient.quantity.toString()}
+                        editable={false}
+                        />
+                    <Text style={styles.text}>
+                        {ingredient.ingredient.unityOfMeasure}
+                    </Text>
+                </View>
+                <Button text={"Remove"} style='tertiary' onButtonPress={() => onRemoveIngredient(index)} />
             </View>
         ))}
 
-        <View style={styles.rowContainer}>
+        <View style={styles.containerInput}>
             <Dropdown 
-                style={styles.textInput}
+                style={styles.ingredientInput}
                 data={state.ingredients.filter(ingredient => !ingredients.map(i => i.ingredient.id).includes(ingredient.id))}
                 value={chosenIngredient}
                 onChange={(value) => setChosenIngredient(value)}
@@ -76,16 +85,22 @@ return (
                 search
                 />
 
-            <TextInput
-                style={styles.textInput}
-                placeholder="Quantity"
-                value={chosenQuantity}
-                onChangeText={(text) => setChosenQuantity(text)}
-                />
+            <View style={styles.quantityContainer}>
+                <TextInput
+                    style={styles.quantityInput}
+                    placeholder="XX"
+                    textAlign='right'
+                    placeholderTextColor={COLORS.placeholder}
+                    value={chosenQuantity}
+                    onChangeText={(text) => setChosenQuantity(text)}
+                    />
                 
-            <Pressable style={styles.button} onPress={onAddIngredient}>
-                <Text>Add Ingredient</Text>
-            </Pressable>
+                <Text style={styles.text}>
+                    {chosenIngredient == null ? "  " : chosenIngredient.unityOfMeasure}
+                </Text>
+            </View>
+                
+            <Button text={isMobile ? "Add" : "Add Ingredient"} style='secondary' onButtonPress={onAddIngredient} />
         </View>
     </View>
   )

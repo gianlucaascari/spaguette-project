@@ -1,7 +1,8 @@
 import { View, Text, StyleSheet, TextInput, Pressable } from 'react-native'
 import React from 'react'
-import RecipeIngredientsInput from './RecipeIngredientsInput'
-import { styles } from '@/styles/style'
+import RecipeIngredientsInput from '../recipe-ingredients-input/RecipeIngredientsInput'
+import { useStyles } from './styles'
+import { COLORS } from '@/styles/colors'
 
 interface RecipeInputProps {
     recipe: Recipe,
@@ -9,27 +10,37 @@ interface RecipeInputProps {
 }
 
 const RecipeInput: React.FC<RecipeInputProps> = ({ recipe, setRecipe }) => {
+
+    const styles = useStyles();
+
   return (
-    <View style={styles.rowContainer}>
+    <View style={styles.container}>
         <TextInput 
-            style={styles.textInput} 
-            placeholder="Name" 
+            style={styles.titleInput} 
+            placeholder="Name"
+            placeholderTextColor={COLORS.placeholder}
             value={recipe.name} 
             onChangeText={(text) => setRecipe({ ...recipe, name: text })} 
-            />
-
-        <TextInput 
-            style={styles.textInput} 
-            placeholder="Description" 
-            value={recipe.description || ''} 
-            onChangeText={(text) => setRecipe({ ...recipe, description: text })} 
+            selectionColor="transparent"
             />
 
         <TextInput 
             style={styles.textInput} 
             placeholder="Steps Link" 
+            placeholderTextColor={COLORS.placeholder}
             value={recipe.stepsLink || ''} 
             onChangeText={(text) => setRecipe({ ...recipe, stepsLink: text })} 
+            selectionColor="transparent"
+            />
+
+        <TextInput 
+            style={styles.textAreaInput} 
+            placeholder="Description" 
+            placeholderTextColor={COLORS.placeholder}
+            value={recipe.description || ''} 
+            onChangeText={(text) => setRecipe({ ...recipe, description: text })} 
+            multiline
+            selectionColor="transparent"
             />
 
         <RecipeIngredientsInput ingredients={recipe.ingredients} setIngredients={(ingredients) => setRecipe({ ...recipe, ingredients: ingredients})} />

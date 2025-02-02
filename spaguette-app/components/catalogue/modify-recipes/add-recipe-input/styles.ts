@@ -8,15 +8,9 @@ export const useStyles = () => {
 
     return StyleSheet.create({
         container: {
-            padding: isMobile ? SPACING.small : SPACING.medium,
-            flexDirection: isMobile ? 'column' : 'row',
-        },
-        button: {
-            padding: SPACING.medium,
-            backgroundColor: COLORS.primary,
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: 5,
+            margin: isMobile ? SPACING.medium : SPACING.large,
+            width: isMobile ? 400 : 600,
+            backgroundColor: COLORS.background,
         }
     })
 }

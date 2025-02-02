@@ -1,6 +1,6 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
-import RecipeInput from '../RecipeInput'
+import RecipeInput from '../recipe-input/RecipeInput'
 import { useDataService } from '@/services/data/data-service'
 import { useStyles } from './styles'
 import Button from '@/components/general/Button'
@@ -50,8 +50,7 @@ const AddRecipeInput = () => {
   return (
     <View style={styles.container}>
         <RecipeInput recipe={recipe} setRecipe={setRecipe} />
-
-        <Button text={'Add Recipe'} onButtonPress={onPressAdd} />
+        <Button text={'Add Recipe'} style='primary' onButtonPress={onPressAdd} />
     </View>
   )
 }

@@ -16,7 +16,7 @@ export const TYPOGRAPHY = {
     titleSize: 24,
     subtitleSize: 18,
     bodySize: 14,
-    buttonSize: 16,
+    buttonSize: 14,
     ...WEIGHTS,
 };
   

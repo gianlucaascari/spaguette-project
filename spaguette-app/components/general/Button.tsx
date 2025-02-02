@@ -4,13 +4,21 @@ import { styles } from './styles'
 
 interface ButtonProps {
     text: String,
+    style: 'primary' | 'secondary' | 'tertiary',
     onButtonPress: () => void,
 }
 
-const Button: React.FC<ButtonProps> = ({ text, onButtonPress }) => {
+const Button: React.FC<ButtonProps> = ({ text, style, onButtonPress }) => {
   return (
-    <Pressable style={styles.button} onPress={onButtonPress} >
-        <Text style={styles.text}>{text}</Text>
+    <Pressable 
+      style={style == 'primary' ? styles.primaryButton : 
+            (style == 'secondary' ? styles.secondaryButton : styles.tertiaryButton)} 
+      onPress={onButtonPress} >
+
+        <Text style={style == 'tertiary' ? styles.tertiaryText : styles.primarytext}>
+          {text}
+        </Text>
+
     </Pressable>
   )
 }
