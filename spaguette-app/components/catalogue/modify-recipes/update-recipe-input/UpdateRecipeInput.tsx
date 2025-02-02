@@ -1,8 +1,9 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { useDataService } from '@/services/data/data-service'
-import RecipeInput from './recipe-input/RecipeInput'
-import { styles } from '@/styles/style'
+import RecipeInput from '../recipe-input/RecipeInput'
+import Button from '@/components/general/Button'
+import { useStyles } from './styles'
 
 interface UpdateRecipeInputProps {
     initialRecipe: Recipe,
@@ -10,6 +11,8 @@ interface UpdateRecipeInputProps {
 }
 
 const UpdateRecipeInput: React.FC<UpdateRecipeInputProps> = ({ initialRecipe, afterSubmit }) => {
+
+    const styles = useStyles()
 
     const [recipe, setRecipe] = useState<Recipe>(initialRecipe)
     const { updateRecipe, deleteRecipe } = useDataService()
@@ -57,17 +60,12 @@ const UpdateRecipeInput: React.FC<UpdateRecipeInputProps> = ({ initialRecipe, af
     }
 
   return (
-    <View style={styles.rowContainer}>
+    <View style={styles.container}>
         <RecipeInput recipe={recipe} setRecipe={setRecipe} />
 
-        <View>
-            <Pressable style={styles.button} onPress={onPressUpdate} >
-                    <Text>Save</Text>
-            </Pressable>
-
-            <Pressable style={styles.button} onPress={onPressDelete} >
-                    <Text>Delete</Text>
-            </Pressable>
+        <View style={styles.buttonsContainer}>
+            <Button text='Delete' style='primary' onButtonPress={onPressDelete} />
+            <Button text='Save' style='primary' onButtonPress={onPressUpdate} />
         </View>
     </View>
   )

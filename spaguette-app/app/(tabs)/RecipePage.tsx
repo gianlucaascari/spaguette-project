@@ -7,11 +7,14 @@ import { useDataService } from '@/services/data/data-service';
 import AddRecipeInput from '@/components/catalogue/modify-recipes/add-recipe-input/AddRecipeInput';
 import RecipesListElement from '@/components/catalogue/show-recipes/RecipesListElement';
 import { styles } from '@/styles/style';
+import Button from '@/components/general/Button';
 
 export default function TabOneScreen() {
 
   const { state } = useContext(DataContext);
   const { getRecipes } = useDataService();
+
+  const [isAddingRecipe, setAddingRecipe] = useState(false)
 
   useEffect(() => {
     getRecipes();
@@ -21,9 +24,11 @@ export default function TabOneScreen() {
     <ScrollView>
     <View style={styles.mainContainer}>
 
-      <Text style={styles.title}>Recipes</Text>
-
-      <AddRecipeInput />
+      {isAddingRecipe ?  
+        <AddRecipeInput onCancel={() => setAddingRecipe(false)} afterSubmit={() => setAddingRecipe(false)}/> 
+        : 
+        <Button text='Add New Recipe' onButtonPress={() => setAddingRecipe(true)} style='primary'/>
+      }
 
       {state.recipes ? (
         <View>

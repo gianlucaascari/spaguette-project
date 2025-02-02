@@ -5,7 +5,12 @@ import { useDataService } from '@/services/data/data-service'
 import { useStyles } from './styles'
 import Button from '@/components/general/Button'
 
-const AddRecipeInput = () => {
+interface AddRecipeInputProps {
+    onCancel: () => void,
+    afterSubmit: () => void,
+}
+
+const AddRecipeInput: React.FC<AddRecipeInputProps> = ({ onCancel, afterSubmit }) => {
 
     const styles = useStyles();
 
@@ -45,12 +50,19 @@ const AddRecipeInput = () => {
         
         // reset fields
         setRecipe(emptyRecipe)
+
+        // call for reset visuals
+        afterSubmit()
     }
 
   return (
     <View style={styles.container}>
         <RecipeInput recipe={recipe} setRecipe={setRecipe} />
-        <Button text={'Add Recipe'} style='primary' onButtonPress={onPressAdd} />
+
+        <View style={styles.buttonsContainer}>
+            <Button text={'Cancel'} style='tertiary' onButtonPress={onCancel} />
+            <Button text={'Add Recipe'} style='primary' onButtonPress={onPressAdd} />
+        </View>
     </View>
   )
 }

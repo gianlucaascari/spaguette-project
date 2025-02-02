@@ -16,13 +16,14 @@ export const useStyles = () => {
             marginVertical: isMobile ? SPACING.medium : SPACING.large,
             paddingRight: isMobile ? 12 : 0,
         },
+        buttonsContainer: {
+            alignSelf: 'flex-end',
+            flexDirection: 'row',
+        },
         quantityContainer: {
             flexDirection: 'row',
             alignItems: 'center',
             marginHorizontal: SPACING.small,
-        },
-        textInput: {
-            marginVertical: SPACING.small,
         },
         quantityInput: {
             marginVertical: SPACING.small,

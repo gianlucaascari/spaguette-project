@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
     primaryButton: {
         paddingVertical: SPACING.medium,
         paddingHorizontal: SPACING.large,
+        marginHorizontal: SPACING.small,
         backgroundColor: COLORS.primary,
         justifyContent: 'center',
         alignItems: 'center',
@@ -16,6 +17,7 @@ export const styles = StyleSheet.create({
     secondaryButton: {
         paddingVertical: SPACING.medium,
         paddingHorizontal: SPACING.large,
+        marginHorizontal: SPACING.small,
         backgroundColor: COLORS.secondary,
         justifyContent: 'center',
         alignItems: 'center',
