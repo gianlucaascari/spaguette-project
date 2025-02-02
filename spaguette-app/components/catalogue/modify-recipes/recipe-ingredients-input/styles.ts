@@ -14,6 +14,7 @@ export const useStyles = () => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             marginVertical: isMobile ? SPACING.medium : SPACING.large,
+            paddingRight: isMobile ? 12 : 0,
         },
         quantityContainer: {
             flexDirection: 'row',

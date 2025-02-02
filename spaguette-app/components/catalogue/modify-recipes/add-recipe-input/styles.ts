@@ -10,7 +10,6 @@ export const useStyles = () => {
         container: {
             margin: isMobile ? SPACING.medium : SPACING.large,
             width: isMobile ? 400 : 600,
-            backgroundColor: COLORS.background,
         }
     })
 }
