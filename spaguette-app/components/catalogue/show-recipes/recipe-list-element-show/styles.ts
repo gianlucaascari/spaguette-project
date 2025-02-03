@@ -1,4 +1,5 @@
 import { COLORS } from "@/styles/colors";
+import { SHADOWS } from "@/styles/shadow";
 import { SPACING } from "@/styles/spacing";
 import { TYPOGRAPHY } from "@/styles/typography";
 import { WIDTHS } from "@/styles/widths";
@@ -10,15 +11,15 @@ export const useStyles = () => {
 
     return StyleSheet.create({
         contentContainer: {
-            padding: SPACING.medium,
+            padding: SPACING.large,
             flex: 1,
         },
         shadowContainer: {
-            shadowColor: COLORS.black,
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
-            elevation: 5,
+            shadowColor: SHADOWS.color,
+            shadowOffset: SHADOWS.offset,
+            shadowOpacity: SHADOWS.opacity,
+            shadowRadius: SHADOWS.radius,
+            elevation: SHADOWS.elevation,
             borderRadius: 10,
             backgroundColor: COLORS.white,
             margin: SPACING.medium,
@@ -32,7 +33,7 @@ export const useStyles = () => {
         title: {
             fontSize: TYPOGRAPHY.titleSize,
             fontWeight: TYPOGRAPHY.titleWeight,
-            marginVertical: SPACING.small,
+            marginBottom: SPACING.small,
         },
         image: {
             backgroundColor: COLORS.secondary,
