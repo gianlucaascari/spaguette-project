@@ -1,6 +1,7 @@
 import { View, Text, TextInput } from 'react-native'
 import React from 'react'
-import { styles } from '@/styles/style'
+import { COLORS } from '@/styles/colors'
+import { useStyles } from './styles'
 
 interface IngredientInputProps {
     ingredient: Ingredient,
@@ -8,11 +9,15 @@ interface IngredientInputProps {
 }
 
 const IngredientInput: React.FC<IngredientInputProps> = ({ ingredient, setIngredient }) => {
+
+  const styles = useStyles()
+
   return (
-    <View style={styles.rowContainer}>
+    <View style={styles.container}>
         <TextInput 
             style={styles.textInput} 
             placeholder="Name" 
+            placeholderTextColor={COLORS.placeholder}
             value={ingredient.name} 
             onChangeText={(text) => setIngredient({ ...ingredient, name: text })} 
             />
@@ -20,6 +25,7 @@ const IngredientInput: React.FC<IngredientInputProps> = ({ ingredient, setIngred
         <TextInput 
             style={styles.textInput} 
             placeholder="Unity of measure" 
+            placeholderTextColor={COLORS.placeholder}
             value={ingredient.unityOfMeasure} 
             onChangeText={(text) => setIngredient({ ...ingredient, unityOfMeasure: text })} 
             />

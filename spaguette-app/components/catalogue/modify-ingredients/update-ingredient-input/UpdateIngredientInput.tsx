@@ -1,8 +1,9 @@
 import { View, Text, Pressable } from 'react-native'
 import React, { useState } from 'react'
-import IngredientInput from './IngredientInput'
-import { styles } from '@/styles/style'
+import IngredientInput from '../ingredient-input/IngredientInput'
 import { useDataService } from '@/services/data/data-service'
+import Button from '@/components/general/Button'
+import { useStyles } from './styles'
 
 interface UpdateIngredientInputProps {
     initialIngredient: Ingredient,
@@ -10,6 +11,8 @@ interface UpdateIngredientInputProps {
 }
 
 const UpdateIngredientInput: React.FC<UpdateIngredientInputProps> = ({ initialIngredient, afterSubmit }) => {
+
+    const styles = useStyles()
 
     const [ingredient, setIngredient] = useState<Ingredient>(initialIngredient)
     const { updateIngredient, deleteIngredient } = useDataService()
@@ -52,17 +55,12 @@ const UpdateIngredientInput: React.FC<UpdateIngredientInputProps> = ({ initialIn
     }
 
   return (
-    <View style={styles.rowContainer}>
+    <View style={styles.container}>
         <IngredientInput ingredient={ingredient} setIngredient={setIngredient} />
 
-        <View style={styles.rowContainer}>
-            <Pressable style={styles.button} onPress={onUpdateIngredientPress}>
-                <Text>Save</Text>
-            </Pressable>
-
-            <Pressable style={styles.button} onPress={onDeleteIngredientPress}>
-                <Text>Delete</Text>
-            </Pressable>
+        <View style={styles.buttonContainer}>
+            <Button text='Delete' style='secondary' onButtonPress={onDeleteIngredientPress} />
+            <Button text='Save' style='primary' onButtonPress={onUpdateIngredientPress} />
         </View>
     </View>
   )

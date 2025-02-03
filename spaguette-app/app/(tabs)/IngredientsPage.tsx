@@ -6,9 +6,13 @@ import { DataContext } from '@/services/data/DataContext';
 import { useDataService } from '@/services/data/data-service';
 import { styles } from '@/styles/style';
 import IngredientListElement from '@/components/catalogue/show-ingredients/IngredientListElement';
-import AddIngredientInput from '@/components/catalogue/modify-ingredients/AddIngredientInput';
+import AddIngredientInput from '@/components/catalogue/modify-ingredients/add-ingredient-input/AddIngredientInput';
+import Button from '@/components/general/Button';
 
 export default function TabTwoScreen() {
+
+  const [isAddingIngredient, setIsAddingIngredient] = useState(false)
+
   const { state } = useContext(DataContext);
   const { getIngredients } = useDataService();
 
@@ -19,9 +23,12 @@ export default function TabTwoScreen() {
   return (
     <ScrollView>
       <View style={styles.mainContainer}>
-            <Text style={styles.title}>Ingredients</Text>
 
-            <AddIngredientInput />
+            {
+              isAddingIngredient ?
+              <AddIngredientInput onCancel={() => setIsAddingIngredient(false)} afterSubmit={() => setIsAddingIngredient(false)}/> :
+              <Button text='Add New Ingredient' style='primary' onButtonPress={() => setIsAddingIngredient(true)} />
+            }
       
             {state.ingredients ? (
               state.ingredients.map((ingredient: Ingredient, index: number) => (
