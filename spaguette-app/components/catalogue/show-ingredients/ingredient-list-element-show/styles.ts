@@ -18,13 +18,13 @@ export const useStyles = () => {
             elevation: SHADOWS.elevation,
             borderRadius: 10,
             backgroundColor: COLORS.white,
-            marginVertical: SPACING.medium,
+            marginVertical: SPACING.small,
 
         },
         container: {
             flexDirection: 'row',
             width: isMobile ? WIDTHS.mobileMaxWidth : WIDTHS.desktopMaxWidth,
-            margin: SPACING.medium,
+            padding: SPACING.medium,
             alignItems: 'center',
             justifyContent: 'space-between',
         },

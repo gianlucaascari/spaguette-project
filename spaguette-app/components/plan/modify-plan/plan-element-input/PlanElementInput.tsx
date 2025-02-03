@@ -1,9 +1,10 @@
 import { View, Text, TextInput } from 'react-native'
 import React, { useContext, useEffect } from 'react'
-import { styles } from '@/styles/style';
 import { Dropdown } from 'react-native-element-dropdown';
 import { DataContext } from '@/services/data/DataContext';
 import { useDataService } from '@/services/data/data-service';
+import { COLORS } from '@/styles/colors';
+import { useStyles } from './styles';
 
 interface PlanElementInputProps {
     planElement: RecipeQuantity;
@@ -11,6 +12,8 @@ interface PlanElementInputProps {
 }
 
 const PlanElementInput: React.FC<PlanElementInputProps> = ({ planElement, setPlanElement }) => {
+
+    const styles = useStyles()
 
     const { state } = useContext(DataContext);
     const { getRecipes } = useDataService();
@@ -20,9 +23,9 @@ const PlanElementInput: React.FC<PlanElementInputProps> = ({ planElement, setPla
     }, []);
 
   return (
-    <View style={styles.rowContainer}>
+    <View style={styles.container}>
         <Dropdown
-            style={styles.textInput}
+            style={styles.recipeSelector}
             data={state.recipes}
             value={planElement.recipe}
             onChange={(recipe: Recipe) => setPlanElement({ ...planElement, recipe: recipe })}
@@ -32,8 +35,9 @@ const PlanElementInput: React.FC<PlanElementInputProps> = ({ planElement, setPla
         />
 
         <TextInput
-            style={styles.textInput}
+            style={styles.quantityInput}
             placeholder='num. of times' 
+            placeholderTextColor={COLORS.placeholder}
             keyboardType='numeric'
             value={planElement.numTimes.toString()}
             onChangeText={(text) => isNaN(parseInt(text)) ? setPlanElement({ ...planElement, numTimes: 0 }) : setPlanElement({ ...planElement, numTimes: parseInt(text) })}

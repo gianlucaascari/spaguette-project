@@ -1,11 +1,14 @@
 import { View, Text, Pressable, Alert } from 'react-native'
 import React, { useState } from 'react'
-import PlanElementInput from './PlanElementInput';
+import PlanElementInput from '../plan-element-input/PlanElementInput';
 import { styles } from '@/styles/style';
 import { useDataService } from '@/services/data/data-service';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+import Button from '@/components/general/Button';
+import { useStyles } from './styles';
 
 const AddPlanElementInput = () => {
+
+    const styles = useStyles()
 
     const { addToPlan, getMyList } = useDataService();
 
@@ -36,12 +39,9 @@ const AddPlanElementInput = () => {
     }
 
   return (
-    <View style={styles.rowContainer}>
+    <View style={styles.container}>
         <PlanElementInput planElement={planElement} setPlanElement={setPlanElement} />
-
-        <Pressable style={styles.button} onPress={addPlanElement}>
-            <Text>Add</Text>
-        </Pressable>
+        <Button text='Add' style='primary' onButtonPress={addPlanElement} />
     </View>
   )
 }

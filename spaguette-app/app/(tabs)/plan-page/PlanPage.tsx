@@ -1,13 +1,15 @@
 import { View, Text } from 'react-native'
 import React, { useContext, useEffect } from 'react'
-import { styles } from '@/styles/style'
 import { useDataService } from '@/services/data/data-service';
 import { DataContext } from '@/services/data/DataContext';
 import PlanListElement from '@/components/plan/show-plan/PlanListElement';
-import AddPlanElementInput from '@/components/plan/modify-plan/AddPlanElementInput';
+import AddPlanElementInput from '@/components/plan/modify-plan/add-plan-element-input/AddPlanElementInput';
 import ListItem from '@/components/plan/show-list/ListItem';
+import { useStyles } from './styles';
 
 const PlanPage = () => {
+
+    const styles = useStyles()
 
     const { state } = useContext(DataContext);
     const { getMyPlan, getMyList } = useDataService();
@@ -18,8 +20,8 @@ const PlanPage = () => {
     }, []);
 
   return (
-    <View style={styles.rowContainer}>
-        <View style={styles.container}>
+    <View style={styles.container}>
+        <View style={styles.planContainer}>
 
             <AddPlanElementInput />
             {state.plan ? 
@@ -34,7 +36,7 @@ const PlanPage = () => {
             )}  
         </View>
 
-        <View style={styles.container}>
+        <View style={styles.listContainer}>
             {state.list ? 
             (
                 state.list.items.map((item: ListItem, index: number) => (
