@@ -3,12 +3,15 @@ import React from 'react'
 import { styles } from '@/styles/style'
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useDataService } from '@/services/data/data-service';
+import { useStyles } from './styles';
 
 interface ListItemProps {
     item: ListItem,
 }
 
 const ListItem: React.FC<ListItemProps> = ({ item }) => {
+
+    const styles = useStyles()
 
     const { updateListItem } = useDataService()
 
@@ -21,14 +24,15 @@ const ListItem: React.FC<ListItemProps> = ({ item }) => {
     }
 
   return (
-    <View style={styles.rowContainer}>
+    <View style={styles.container}>
         <BouncyCheckbox 
             isChecked={item.taken}
             useBuiltInState={false}
             onPress={onClickCheckbox}
         />
 
-        <Text style={styles.textInput}>{item.ingredient.name} {item.quantity} {item.ingredient.unityOfMeasure}</Text>
+        <Text style={styles.quantity}>{item.quantity} {item.ingredient.unityOfMeasure}</Text>
+        <Text style={styles.text}>{item.ingredient.name} </Text>
     </View>
   )
 }

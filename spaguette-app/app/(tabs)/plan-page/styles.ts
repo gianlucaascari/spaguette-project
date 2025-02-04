@@ -9,16 +9,21 @@ export const useStyles = () => {
 
     return StyleSheet.create({
         container: {
-            flexDirection: isMobile ? 'column' : 'row',
-            alignItems: isMobile ? 'center' : 'flex-start',
-            justifyContent: isMobile ? 'flex-start' : 'center',
             padding: SPACING.medium,
             backgroundColor: COLORS.background,
             flex: 1,
         },
-        planContainer: {
+        scrollViewContentStyling: {
+            flexDirection: isMobile ? 'column' : 'row',
+            alignItems: isMobile ? 'center' : 'flex-start',
+            justifyContent: isMobile ? 'flex-start' : 'center',
+        },
+        planningContainer: {
             marginRight: isMobile ? 0 : 150,
             marginVertical: SPACING.medium,
+        },
+        planContainer: {
+            marginTop: SPACING.medium,
         },
         listContainer: {
             marginVertical: SPACING.medium,

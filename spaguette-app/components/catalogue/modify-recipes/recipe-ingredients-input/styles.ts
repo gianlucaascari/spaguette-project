@@ -24,12 +24,12 @@ export const useStyles = () => {
         },
         quantityInput: {
             marginVertical: SPACING.small,
-            width: 40,
+            width: WIDTHS.quantity,
             marginRight: SPACING.medium,
         },
         ingredientInput: {
             marginVertical: SPACING.small,
-            width: isMobile ? 200 : 250,
+            width: isMobile ? WIDTHS.mobileDropdown : WIDTHS.mobileDropdown,
         },
         text: {
             width: 20,

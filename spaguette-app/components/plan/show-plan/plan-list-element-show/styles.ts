@@ -1,6 +1,7 @@
 import { SPACING } from "@/styles/spacing";
 import { WIDTHS } from "@/styles/widths";
-import { StyleSheet, useWindowDimensions } from "react-native";
+import { StyleSheet, useWindowDimensions } from "react-native"
+
 
 export const useStyles = () => {
     const { width } = useWindowDimensions();
@@ -9,15 +10,19 @@ export const useStyles = () => {
     return StyleSheet.create({
         container: {
             flexDirection: 'row',
-            justifyContent: 'space-between',
-            padding: SPACING.medium,
+            paddingHorizontal: SPACING.small,
+            alignItems: 'center',
+            justifyContent: 'space-between'
+        }, 
+        textContainer: {
+            flexDirection: 'row',
         },
-        recipeSelector: {
+        text: {
             width: isMobile ? WIDTHS.mobileDropdown : WIDTHS.desktopDropdown,
-            marginRight: SPACING.large,
+            marginRight: 30,
         },
-        quantityInput: {
-            width: WIDTHS.quantity,
-        }
+        quantity: {
+            width: WIDTHS.quantity
+        },
     })
 }

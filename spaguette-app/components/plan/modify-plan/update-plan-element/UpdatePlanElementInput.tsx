@@ -1,8 +1,9 @@
 import { View, Text, Pressable } from 'react-native'
 import React, { useState } from 'react'
-import { styles } from '@/styles/style'
-import PlanElementInput from './plan-element-input/PlanElementInput'
 import { useDataService } from '@/services/data/data-service'
+import Button from '@/components/general/Button'
+import { useStyles } from './styles'
+import PlanElementInput from '../plan-element-input/PlanElementInput'
 
 interface UpdatePlanElementInputProps {
     initialElement: RecipeQuantity,
@@ -10,6 +11,8 @@ interface UpdatePlanElementInputProps {
 }
 
 const UpdatePlanElementInput: React.FC<UpdatePlanElementInputProps> = ({ initialElement, afterSubmit }) => {
+
+    const styles = useStyles()
 
     const { updateInPlan, deleteFromPlan, getMyList } = useDataService()
     const [planElement, setPLanElement] = useState(initialElement)
@@ -49,16 +52,12 @@ const UpdatePlanElementInput: React.FC<UpdatePlanElementInputProps> = ({ initial
     }
 
   return (  
-    <View style={styles.rowContainer}>
+    <View style={styles.container}>
       <PlanElementInput planElement={planElement} setPlanElement={setPLanElement} />
-
-      <Pressable style={styles.button} onPress={onUpdateElement}>
-        <Text>Save</Text>
-      </Pressable>
-
-      <Pressable style={styles.button} onPress={onDeleteEelement}>
-        <Text>Delete</Text>
-      </Pressable>
+      <View style={styles.buttonContainer}>
+        <Button text='Delete' style='secondary' onButtonPress={onDeleteEelement} />
+        <Button text='Save' style='primary' onButtonPress={onUpdateElement} />
+      </View>
     </View>
   )
 }

@@ -1,11 +1,12 @@
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import React, { useContext, useEffect } from 'react'
 import { useDataService } from '@/services/data/data-service';
 import { DataContext } from '@/services/data/DataContext';
-import PlanListElement from '@/components/plan/show-plan/PlanListElement';
+import PlanListElement from '@/components/plan/show-plan/plan-list-element/PlanListElement';
 import AddPlanElementInput from '@/components/plan/modify-plan/add-plan-element-input/AddPlanElementInput';
-import ListItem from '@/components/plan/show-list/ListItem';
 import { useStyles } from './styles';
+import ListItem from '@/components/plan/show-list/list-item/ListItem';
+
 
 const PlanPage = () => {
 
@@ -20,10 +21,12 @@ const PlanPage = () => {
     }, []);
 
   return (
-    <View style={styles.container}>
-        <View style={styles.planContainer}>
+    <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContentStyling}>
+        <View style={styles.planningContainer}>
 
             <AddPlanElementInput />
+
+            <View style={styles.planContainer}></View>
             {state.plan ? 
             (
                 state.plan.recipes.map((planElement: RecipeQuantity, index: number) => (
@@ -48,7 +51,7 @@ const PlanPage = () => {
                 <Text>Loading...</Text>
             )}
         </View>
-    </View>
+    </ScrollView>
   )
 }
 
