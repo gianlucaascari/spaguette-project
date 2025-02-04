@@ -1,15 +1,17 @@
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native';
 import { useContext, useEffect, useState } from 'react';
 
 import { Text, View } from '@/components/Themed';
 import { DataContext } from '@/services/data/DataContext';
 import { useDataService } from '@/services/data/data-service';
-import { styles } from '@/styles/style';
 import IngredientListElement from '@/components/catalogue/show-ingredients/IngredientListElement';
 import AddIngredientInput from '@/components/catalogue/modify-ingredients/add-ingredient-input/AddIngredientInput';
 import Button from '@/components/general/Button';
+import { useStyles } from './styles';
 
 export default function TabTwoScreen() {
+
+  const styles = useStyles()
 
   const [isAddingIngredient, setIsAddingIngredient] = useState(false)
 
@@ -22,7 +24,7 @@ export default function TabTwoScreen() {
 
   return (
     <ScrollView>
-      <View style={styles.mainContainer}>
+      <View style={styles.container}>
 
             {
               isAddingIngredient ?

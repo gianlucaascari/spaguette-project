@@ -60,7 +60,7 @@ export const dataServicePlan = () => {
                 return;
             }
         },
-        getMyList: async (ignoreCache: boolean = false) => {
+        getMyList: async (ignoreCache: boolean = true) => {
             try {
                 const list = await apiService.getMyList(ignoreCache);
                 dispatch({ type: 'SET_LIST', payload: list });

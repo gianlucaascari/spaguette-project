@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from 'react-native'
+import { View } from 'react-native'
 import React, { useState } from 'react'
 import { useDataService } from '@/services/data/data-service'
 import Button from '@/components/general/Button'
