@@ -4,7 +4,10 @@ import { Redirect, Stack } from 'expo-router'
 
 export default function SplashPage() {
 
-  return (
-      <Redirect href='/sign-in' />
-  )
+  if (1 == 1) {
+    return <Redirect href='/sign-in' />
+  }
+  else {
+    return <Redirect href='/sign-up' />
+  }
 }

@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React, { useState } from 'react'
-import IngredientListElementShow from './ingredient-list-element-show/IngredientListElementShow'
-import UpdateIngredientInput from '../modify-ingredients/update-ingredient-input/UpdateIngredientInput'
+import IngredientListElementShow from './IngredientListElementShow'
+import UpdateIngredientInput from '../modify-ingredients/UpdateIngredientInput'
 
 interface IngredientListElementProps {
     ingredient: Ingredient

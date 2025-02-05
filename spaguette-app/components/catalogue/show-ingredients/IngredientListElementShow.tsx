@@ -1,7 +1,7 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native'
 import React from 'react'
 import Button from '@/components/general/Button'
-import { useStyles } from './styles'
+import { useStyles } from './IngredientListElementShow.style'
 
 interface IngredientListElementShowProps {
     ingredient: Ingredient,
