@@ -55,8 +55,8 @@ const UpdatePlanElementInput: React.FC<UpdatePlanElementInputProps> = ({ initial
     <View style={styles.container}>
       <PlanElementInput planElement={planElement} setPlanElement={setPLanElement} />
       <View style={styles.buttonContainer}>
-        <Button text='Delete' style='secondary' onButtonPress={onDeleteEelement} />
-        <Button text='Save' style='primary' onButtonPress={onUpdateElement} />
+        <Button text='Delete' style='secondary' onPress={onDeleteEelement} />
+        <Button text='Save' style='primary' onPress={onUpdateElement} />
       </View>
     </View>
   )

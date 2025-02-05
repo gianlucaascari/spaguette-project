@@ -5,10 +5,10 @@ import { styles } from './Button.style'
 interface ButtonProps {
     text: String,
     style: 'primary' | 'secondary' | 'tertiary',
-    onButtonPress: () => void,
+    onPress: () => void,
 }
 
-const Button: React.FC<ButtonProps> = ({ text, style, onButtonPress }) => {
+const Button: React.FC<ButtonProps> = ({ text, style, onPress: onButtonPress }) => {
   return (
     <Pressable 
       style={style == 'primary' ? styles.primaryButton : 

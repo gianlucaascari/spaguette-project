@@ -17,7 +17,7 @@ const IngredientListElementShow: React.FC<IngredientListElementShowProps> = ({ i
       <View style={styles.container}>
           <Text style={styles.ingredientName}>{ingredient.name}</Text>
           <Text style={styles.UdM}>{ingredient.unityOfMeasure}</Text>
-          <Button text='Modify' style='tertiary' onButtonPress={() => setIsModifying(true)} />
+          <Button text='Modify' style='tertiary' onPress={() => setIsModifying(true)} />
       </View>
     </View>
   )

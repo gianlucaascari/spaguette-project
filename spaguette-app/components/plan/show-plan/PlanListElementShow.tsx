@@ -19,7 +19,7 @@ const PlanListElementShow: React.FC<PlanListElementShowProps> = ({ planElement, 
           <Text style={styles.quantity}>{planElement.numTimes}</Text>
         </View>
 
-        <Button text='Modify' style='tertiary' onButtonPress={() => setIsModifying(true)} />
+        <Button text='Modify' style='tertiary' onPress={() => setIsModifying(true)} />
     </View>
   )
 }

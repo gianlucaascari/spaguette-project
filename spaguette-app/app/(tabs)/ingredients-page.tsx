@@ -7,7 +7,7 @@ import { useDataService } from '@/services/data/data-service';
 import IngredientListElement from '@/components/catalogue/show-ingredients/IngredientListElement';
 import AddIngredientInput from '@/components/catalogue/modify-ingredients/AddIngredientInput';
 import Button from '@/components/general/Button';
-import { useStyles } from './styles';
+import { useStyles } from './ingredients-page.style';
 
 export default function TabTwoScreen() {
 
@@ -29,7 +29,7 @@ export default function TabTwoScreen() {
             {
               isAddingIngredient ?
               <AddIngredientInput onCancel={() => setIsAddingIngredient(false)} afterSubmit={() => setIsAddingIngredient(false)}/> :
-              <Button text='Add New Ingredient' style='primary' onButtonPress={() => setIsAddingIngredient(true)} />
+              <Button text='Add New Ingredient' style='primary' onPress={() => setIsAddingIngredient(true)} />
             }
       
             {state.ingredients ? (

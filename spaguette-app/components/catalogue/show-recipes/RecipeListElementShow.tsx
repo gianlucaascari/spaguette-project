@@ -26,7 +26,7 @@ const RecipeListElementShow: React.FC<RecipeListElementShowProps> = ({ recipe, s
                 ))}
             </View>
 
-            <Button text='Modify' style='tertiary' onButtonPress={() => setIsModifying(true)} />
+            <Button text='Modify' style='tertiary' onPress={() => setIsModifying(true)} />
         </View>
     </View>
   )

@@ -7,7 +7,7 @@ import { useDataService } from '@/services/data/data-service';
 import AddRecipeInput from '@/components/catalogue/modify-recipes/AddRecipeInput';
 import RecipesListElement from '@/components/catalogue/show-recipes/RecipeListElement';
 import Button from '@/components/general/Button';
-import { useStyles } from './styles';
+import { useStyles } from './recipe-page.style';
 
 export default function TabOneScreen() {
 
@@ -29,7 +29,7 @@ export default function TabOneScreen() {
       {isAddingRecipe ?  
         <AddRecipeInput onCancel={() => setAddingRecipe(false)} afterSubmit={() => setAddingRecipe(false)}/> 
         : 
-        <Button text='Add New Recipe' onButtonPress={() => setAddingRecipe(true)} style='primary'/>
+        <Button text='Add New Recipe' onPress={() => setAddingRecipe(true)} style='primary'/>
       }
 
       {state.recipes ? (

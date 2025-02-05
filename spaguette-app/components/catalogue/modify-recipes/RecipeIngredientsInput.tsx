@@ -70,7 +70,7 @@ return (
                         {ingredient.ingredient.unityOfMeasure}
                     </Text>
                 </View>
-                <Button text={"Remove"} style='tertiary' onButtonPress={() => onRemoveIngredient(index)} />
+                <Button text={"Remove"} style='tertiary' onPress={() => onRemoveIngredient(index)} />
             </View>
         ))}
 
@@ -100,7 +100,7 @@ return (
                 </Text>
             </View>
                 
-            <Button text={isMobile ? "Add" : "Add Ingredient"} style='secondary' onButtonPress={onAddIngredient} />
+            <Button text={isMobile ? "Add" : "Add Ingredient"} style='secondary' onPress={onAddIngredient} />
         </View>
     </View>
   )

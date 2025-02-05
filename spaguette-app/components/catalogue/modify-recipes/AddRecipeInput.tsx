@@ -60,8 +60,8 @@ const AddRecipeInput: React.FC<AddRecipeInputProps> = ({ onCancel, afterSubmit }
         <RecipeInput recipe={recipe} setRecipe={setRecipe} />
 
         <View style={styles.buttonsContainer}>
-            <Button text={'Cancel'} style='tertiary' onButtonPress={onCancel} />
-            <Button text={'Add Recipe'} style='primary' onButtonPress={onPressAdd} />
+            <Button text={'Cancel'} style='tertiary' onPress={onCancel} />
+            <Button text={'Add Recipe'} style='primary' onPress={onPressAdd} />
         </View>
     </View>
   )

@@ -59,8 +59,8 @@ const UpdateIngredientInput: React.FC<UpdateIngredientInputProps> = ({ initialIn
         <IngredientInput ingredient={ingredient} setIngredient={setIngredient} />
 
         <View style={styles.buttonContainer}>
-            <Button text='Delete' style='secondary' onButtonPress={onDeleteIngredientPress} />
-            <Button text='Save' style='primary' onButtonPress={onUpdateIngredientPress} />
+            <Button text='Delete' style='secondary' onPress={onDeleteIngredientPress} />
+            <Button text='Save' style='primary' onPress={onUpdateIngredientPress} />
         </View>
     </View>
   )

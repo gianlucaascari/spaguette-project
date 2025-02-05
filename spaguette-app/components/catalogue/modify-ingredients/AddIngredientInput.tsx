@@ -49,8 +49,8 @@ const AddIngredientInput: React.FC<AddIngredientInputProps> = ({onCancel, afterS
         <IngredientInput ingredient={ingredient} setIngredient={setIngredient} />
 
         <View style={styles.buttonContainer}>
-            <Button text='Cancel' style='tertiary' onButtonPress={onCancel} />
-            <Button text='Add Ingredient' style='primary' onButtonPress={onAddIngredientPress} />
+            <Button text='Cancel' style='tertiary' onPress={onCancel} />
+            <Button text='Add Ingredient' style='primary' onPress={onAddIngredientPress} />
         </View>
     </View>
   )

@@ -64,8 +64,8 @@ const UpdateRecipeInput: React.FC<UpdateRecipeInputProps> = ({ initialRecipe, af
         <RecipeInput recipe={recipe} setRecipe={setRecipe} />
 
         <View style={styles.buttonsContainer}>
-            <Button text='Delete' style='primary' onButtonPress={onPressDelete} />
-            <Button text='Save' style='primary' onButtonPress={onPressUpdate} />
+            <Button text='Delete' style='primary' onPress={onPressDelete} />
+            <Button text='Save' style='primary' onPress={onPressUpdate} />
         </View>
     </View>
   )

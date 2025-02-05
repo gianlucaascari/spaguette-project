@@ -40,7 +40,7 @@ const AddPlanElementInput = () => {
   return (
     <View style={styles.container}>
         <PlanElementInput planElement={planElement} setPlanElement={setPlanElement} />
-        <Button text='Add' style='primary' onButtonPress={addPlanElement} />
+        <Button text='Add' style='primary' onPress={addPlanElement} />
     </View>
   )
 }
