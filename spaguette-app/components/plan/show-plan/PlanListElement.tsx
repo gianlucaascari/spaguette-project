@@ -1,8 +1,8 @@
 import { View, Text } from 'react-native'
 import React, { useState } from 'react'
-import PlanListElementShow from '../plan-list-element-show/PlanListElementShow';
-import UpdatePlanElementInput from '../../modify-plan/update-plan-element/UpdatePlanElementInput';
-import { useStyles } from './styles';
+import PlanListElementShow from './PlanListElementShow';
+import UpdatePlanElementInput from '../modify-plan/UpdatePlanElementInput';
+import { useStyles } from './PlanListElement.style';
 
 interface PlanListElementProps {
     planElement: RecipeQuantity;

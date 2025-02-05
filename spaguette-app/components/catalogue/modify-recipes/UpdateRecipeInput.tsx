@@ -1,9 +1,9 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { useDataService } from '@/services/data/data-service'
-import RecipeInput from '../recipe-input/RecipeInput'
+import RecipeInput from './RecipeInput'
 import Button from '@/components/general/Button'
-import { useStyles } from './styles'
+import { useStyles } from './UpdateRecipeInput.style'
 
 interface UpdateRecipeInputProps {
     initialRecipe: Recipe,

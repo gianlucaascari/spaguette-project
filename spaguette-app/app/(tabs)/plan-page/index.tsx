@@ -2,10 +2,10 @@ import { View, Text, ScrollView } from 'react-native'
 import React, { useContext, useEffect } from 'react'
 import { useDataService } from '@/services/data/data-service';
 import { DataContext } from '@/services/data/DataContext';
-import PlanListElement from '@/components/plan/show-plan/plan-list-element/PlanListElement';
-import AddPlanElementInput from '@/components/plan/modify-plan/add-plan-element-input/AddPlanElementInput';
+import PlanListElement from '@/components/plan/show-plan/PlanListElement';
+import AddPlanElementInput from '@/components/plan/modify-plan/AddPlanElementInput';
 import { useStyles } from './styles';
-import ListItem from '@/components/plan/show-list/list-item/ListItem';
+import ListItem from '@/components/plan/show-list/ListItem';
 
 
 const PlanPage = () => {

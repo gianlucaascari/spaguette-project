@@ -5,7 +5,7 @@ import { Text, View } from '@/components/Themed';
 import { DataContext } from '@/services/data/DataContext';
 import { useDataService } from '@/services/data/data-service';
 import IngredientListElement from '@/components/catalogue/show-ingredients/IngredientListElement';
-import AddIngredientInput from '@/components/catalogue/modify-ingredients/add-ingredient-input/AddIngredientInput';
+import AddIngredientInput from '@/components/catalogue/modify-ingredients/AddIngredientInput';
 import Button from '@/components/general/Button';
 import { useStyles } from './styles';
 

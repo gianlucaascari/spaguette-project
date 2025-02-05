@@ -1,7 +1,7 @@
 import { View, StyleSheet } from "react-native";
 import React, { useState } from "react";
-import RecipeListElementShow from "./recipe-list-element-show/RecipeListElementShow";
-import UpdateRecipeInput from "../modify-recipes/update-recipe-input/UpdateRecipeInput";
+import RecipeListElementShow from "./RecipeListElementShow";
+import UpdateRecipeInput from "../modify-recipes/UpdateRecipeInput";
 
 interface RecipesListElementProps {
   recipe: Recipe;

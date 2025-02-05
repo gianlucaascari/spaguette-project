@@ -2,8 +2,8 @@ import { View } from 'react-native'
 import React, { useState } from 'react'
 import { useDataService } from '@/services/data/data-service'
 import Button from '@/components/general/Button'
-import { useStyles } from './styles'
-import PlanElementInput from '../plan-element-input/PlanElementInput'
+import { useStyles } from './UpdatePlanElementInput.style'
+import PlanElementInput from './PlanElementInput'
 
 interface UpdatePlanElementInputProps {
     initialElement: RecipeQuantity,

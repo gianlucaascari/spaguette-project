@@ -1,10 +1,9 @@
 import { View, Text, Pressable, Alert } from 'react-native'
 import React, { useState } from 'react'
-import PlanElementInput from '../plan-element-input/PlanElementInput';
-import { styles } from '@/styles/style';
+import PlanElementInput from './PlanElementInput';
 import { useDataService } from '@/services/data/data-service';
 import Button from '@/components/general/Button';
-import { useStyles } from './styles';
+import { useStyles } from './AddPlanElementInput.style';
 
 const AddPlanElementInput = () => {
 
