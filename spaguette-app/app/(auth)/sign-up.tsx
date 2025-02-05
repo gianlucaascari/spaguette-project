@@ -14,6 +14,29 @@ const SignUpPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  const onSignUp = () => {
+    // check if a name has been given
+    if(name == '') {
+      alert('Please insert a name')
+      return
+    }
+
+    // check if email is valid
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regex.test(email)) {
+      alert("Please insert a valid email")
+      return
+    }
+
+    // check validity of passoword
+    if(password.length < 4) {
+      alert("Please insert a password at least 4 characters long")
+      return
+    }
+
+    alert("name: " + name + "\nemail: " + email + "\npassword: " + password)
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
@@ -46,7 +69,7 @@ const SignUpPage = () => {
             />
         </View>
 
-        <Button text='Sign In' style='primary' onPress={() => alert('sign in')} />
+        <Button text='Sign In' style='primary' onPress={onSignUp} />
         <Button text="Already have an account? Sign In" style='tertiary' onPress={() => router.replace('./sign-in')} />
       </View>
     </View>

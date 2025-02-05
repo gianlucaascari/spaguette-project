@@ -27,6 +27,7 @@ export const useStyles = () => {
             shadowOpacity: SHADOWS.opacity,
             shadowRadius: SHADOWS.radius,
             elevation: SHADOWS.elevation,
+            backgroundColor: COLORS.background
         },
         inputContainer: {
             marginVertical: SPACING.medium
@@ -40,6 +41,7 @@ export const useStyles = () => {
             padding: SPACING.medium,
             marginBottom: SPACING.medium,
             backgroundColor: COLORS.white,
+            width: isMobile ? WIDTHS.mobileInputLarge : WIDTHS.desktopInputMedium,
             borderRadius: 10,
         }
     })

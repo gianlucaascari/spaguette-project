@@ -18,7 +18,7 @@ export const useStyles = () => {
             flexDirection: 'row',
         },
         text: {
-            width: isMobile ? WIDTHS.mobileDropdown : WIDTHS.desktopDropdown,
+            width: isMobile ? WIDTHS.mobileInputMedium : WIDTHS.desktopInputMedium,
             marginRight: 30,
         },
         quantity: {

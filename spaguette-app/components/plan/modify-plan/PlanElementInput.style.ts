@@ -13,7 +13,7 @@ export const useStyles = () => {
             padding: SPACING.medium,
         },
         recipeSelector: {
-            width: isMobile ? WIDTHS.mobileDropdown : WIDTHS.desktopDropdown,
+            width: isMobile ? WIDTHS.mobileInputMedium : WIDTHS.desktopInputMedium,
             marginRight: SPACING.large,
         },
         quantityInput: {

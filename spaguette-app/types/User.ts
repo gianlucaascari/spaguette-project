@@ -1,0 +1,3 @@
+type AuthUser = {
+    token: string,
+}

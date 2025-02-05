@@ -29,7 +29,7 @@ export const useStyles = () => {
         },
         ingredientInput: {
             marginVertical: SPACING.small,
-            width: isMobile ? WIDTHS.mobileDropdown : WIDTHS.mobileDropdown,
+            width: isMobile ? WIDTHS.mobileInputMedium : WIDTHS.mobileInputMedium,
         },
         text: {
             width: 20,
