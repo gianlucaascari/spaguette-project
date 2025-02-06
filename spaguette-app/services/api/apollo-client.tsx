@@ -18,19 +18,21 @@ const wsLink = new GraphQLWsLink(createClient({
    url: "http://localhost:4000/subscriptions",
   //url: "https://d9af-81-164-118-42.ngrok-free.app/subscriptions",
   connectionParams: async () => {
-    const token = await AsyncStorage.getItem('userToken')
+    const authUserString = await AsyncStorage.getItem('authUser')
+    const authUser = authUserString ? JSON.parse(authUserString) : {} 
     return {
-      authorization: token || '',
+      authorization: authUser.token || '',
     }
   }
 }))
 
 const authLink = setContext(async (_, { headers }) => {
-  const token = await AsyncStorage.getItem('userToken')
+  const authUserString = await AsyncStorage.getItem('authUser')
+  const authUser = authUserString ? JSON.parse(authUserString) : {}
   return {
     headers: {
       ...headers,
-      authorization: token || '',
+      authorization: authUser.token || '',
     },
   };
 });

@@ -1,13 +1,22 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { Redirect, Stack } from 'expo-router'
+import React, { useContext, useEffect } from 'react'
+import { Redirect } from 'expo-router'
+import { Text } from 'react-native'
+import { useAuthService } from '@/services/auth/auth-service'
+import { AuthContext } from '@/services/auth/AuthContext'
 
-export default function SplashPage() {
+const index = () => {
+  // check authentication
+  const authService = useAuthService()
+  const { authState } = useContext(AuthContext)
 
-  if (1 == 1) {
-    return <Redirect href='/sign-in' />
-  }
-  else {
-    return <Redirect href='/sign-up' />
-  }
+  useEffect(() => {
+    authService.isAuthenticated()
+  }, [])
+
+  if (!authState.loading && authState.user) return <Redirect href='/(tabs)/plan-page' />
+  if (!authState.loading && !authState.user) return <Redirect href='/(auth)/sign-in' />
+
+  return <Redirect href='/(auth)/sign-in' />
 }
+
+export default index

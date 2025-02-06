@@ -1,6 +1,6 @@
-import { COLORS } from "@/styles/colors";
-import { SPACING } from "@/styles/spacing";
-import { TYPOGRAPHY } from "@/styles/typography";
+import { COLORS } from "@/styles/const/colors";
+import { SPACING } from "@/styles/const/spacing";
+import { TYPOGRAPHY } from "@/styles/const/typography";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({

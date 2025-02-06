@@ -1,8 +1,8 @@
-import { COLORS } from "@/styles/colors";
-import { SHADOWS } from "@/styles/shadow";
-import { SPACING } from "@/styles/spacing";
-import { TYPOGRAPHY } from "@/styles/typography";
-import { WIDTHS } from "@/styles/widths";
+import { COLORS } from "@/styles/const/colors";
+import { SHADOWS } from "@/styles/const/shadow";
+import { SPACING } from "@/styles/const/spacing";
+import { TYPOGRAPHY } from "@/styles/const/typography";
+import { WIDTHS } from "@/styles/const/widths";
 import { StyleSheet, useWindowDimensions } from "react-native";
 
 export const useStyles = () => {

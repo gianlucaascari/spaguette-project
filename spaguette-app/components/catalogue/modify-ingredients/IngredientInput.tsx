@@ -1,6 +1,6 @@
 import { View, Text, TextInput } from 'react-native'
 import React from 'react'
-import { COLORS } from '@/styles/colors'
+import { COLORS } from '@/styles/const/colors'
 import { useStyles } from './IngredientInput.style'
 
 interface IngredientInputProps {

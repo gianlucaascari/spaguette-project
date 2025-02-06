@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { apiService } from "../api/api-service";
 import { DataContext } from "./DataContext";
 import { useDataServicePlan } from "./data-service-plan";
-import { useDataServiceUser } from "./data-service-user";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /**
  * Data service to fetch and manipulate data, combining API and (soon) local storage
@@ -95,6 +95,8 @@ export const useDataService = () => {
             }
         },
         ... useDataServicePlan(),
-        ... useDataServiceUser(),
+        resetState: () => {
+            dispatch({ type: 'RESET_STATE' })
+        }
     };
 };

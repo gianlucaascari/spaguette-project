@@ -3,7 +3,7 @@ import React, { useContext, useEffect } from 'react'
 import { Dropdown } from 'react-native-element-dropdown';
 import { DataContext } from '@/services/data/DataContext';
 import { useDataService } from '@/services/data/data-service';
-import { COLORS } from '@/styles/colors';
+import { COLORS } from '@/styles/const/colors';
 import { useStyles } from './PlanElementInput.style';
 
 interface PlanElementInputProps {

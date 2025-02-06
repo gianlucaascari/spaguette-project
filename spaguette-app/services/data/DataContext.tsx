@@ -11,7 +11,6 @@ interface ContextState {
     ingredients: Ingredient[];
     plan: Plan;
     list: List;
-    user?: User;
 }
 
 /**
@@ -31,7 +30,6 @@ type Action =
     | { type: 'DELETE_RECIPE'; payload: string }
     | { type: 'SET_PLAN'; payload: Plan }
     | { type: 'SET_LIST'; payload: List }
-    | { type: 'SET_USER'; payload?: User }
     | { type: 'RESET_STATE' }
 
 const initialState: ContextState = {
@@ -39,7 +37,6 @@ const initialState: ContextState = {
     ingredients: [],
     plan: { recipes: [] },
     list: { items: [] },
-    user: undefined,
 };
 
 const reducer = (state: ContextState, action: Action): ContextState => {
@@ -64,8 +61,6 @@ const reducer = (state: ContextState, action: Action): ContextState => {
             return { ...state, plan: action.payload };
         case "SET_LIST":
             return { ...state, list: action.payload };
-        case "SET_USER":
-            return { ...state, user: action.payload };
         case "RESET_STATE":
             return initialState;
         default:

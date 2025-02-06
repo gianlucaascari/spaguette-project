@@ -1,4 +1,4 @@
-import { WIDTHS } from "@/styles/widths";
+import { WIDTHS } from "@/styles/const/widths";
 import { StyleSheet, useWindowDimensions } from "react-native"
 
 

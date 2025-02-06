@@ -5,7 +5,7 @@ import { DataContext } from '@/services/data/DataContext';
 import { useDataService } from '@/services/data/data-service';
 import Button from '@/components/general/Button';
 import { useStyles } from './RecipeIngredientsInput.style';
-import { COLORS } from '@/styles/colors';
+import { COLORS } from '@/styles/const/colors';
 
 interface RecipeIngredientsInputProps {
     ingredients: {ingredient: Ingredient, quantity: number}[];

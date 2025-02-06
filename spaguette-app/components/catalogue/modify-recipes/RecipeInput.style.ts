@@ -1,6 +1,6 @@
-import { SPACING } from "@/styles/spacing";
-import { TYPOGRAPHY } from "@/styles/typography";
-import { WIDTHS } from "@/styles/widths";
+import { SPACING } from "@/styles/const/spacing";
+import { TYPOGRAPHY } from "@/styles/const/typography";
+import { WIDTHS } from "@/styles/const/widths";
 import { StyleSheet, useWindowDimensions } from "react-native";
 
 export const useStyles = () => {

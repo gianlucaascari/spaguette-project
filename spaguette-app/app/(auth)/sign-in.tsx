@@ -1,17 +1,17 @@
 import { View, Text, TextInput } from 'react-native'
 import React, { useState } from 'react'
-import { useStyles } from './sign-in.style'
+import { useStyles } from '../../styles/(auth)/sign-in.style'
 import Button from '@/components/general/Button'
-import { COLORS } from '@/styles/colors'
+import { COLORS } from '@/styles/const/colors'
 import { useRouter } from 'expo-router'
-import { useDataService } from '@/services/data/data-service'
+import { useAuthService } from '@/services/auth/auth-service'
 
 
 const SignInPage = () => {
   // utilities
   const styles = useStyles()
   const router = useRouter()
-  const dataService = useDataService()
+  const authService = useAuthService()
 
   // sign in data
   const [email, setEmail] = useState('')
@@ -33,7 +33,7 @@ const SignInPage = () => {
     }
 
     // sign in
-    dataService.signIn({email, password})
+    authService.signIn({email, password})
   }
 
   return (

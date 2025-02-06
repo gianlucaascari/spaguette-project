@@ -2,10 +2,13 @@ import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
 
-import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import Button from '@/components/general/Button';
-import { useDataService } from '@/services/data/data-service';
+import { useAuthService } from '@/services/auth/auth-service';
+
+export const unstable_settings = {
+  initialRouteName: 'plan-page',
+}
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -17,7 +20,7 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
 
-  const dataService = useDataService()
+  const authService = useAuthService()
 
   return (
     <Tabs
@@ -25,23 +28,25 @@ export default function TabLayout() {
         // Disable the static render of the header on web
         // to prevent a hydration error in React Navigation v6.
         headerShown: useClientOnlyValue(false, true),
-        headerRight: () => <Button text='Log out' style='tertiary' onPress={dataService.logOut} />
-      }}>
+        headerRight: () => <Button text='Log out' style='tertiary' onPress={authService.logOut} />,
+      }}
+      initialRouteName='plan-page'
+      >
       <Tabs.Screen
-        name="recipe-page/index"
+        name="recipe-page"
         options={{
           title: 'Recipes',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="ingredients-page/index"
+        name="ingredients-page"
         options={{
           title: 'Ingredients',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       /><Tabs.Screen
-      name="plan-page/index"
+      name="plan-page"
       options={{
         title: 'Plan',
         tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,

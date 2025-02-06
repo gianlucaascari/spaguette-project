@@ -29,7 +29,7 @@ const SIGN_UP = gql`
 
 export const apiServiceUser = {
     signIn: async (input: SignInInput) => {
-        const response = await client.mutate<{ signIn: AuthUser }>({ mutation: SIGN_IN, variables: input })
+        const response = await client.mutate({ mutation: SIGN_IN, variables: input })
         if (!response.data) throw new Error('No data received from mutation')
         return response.data.signIn
     },

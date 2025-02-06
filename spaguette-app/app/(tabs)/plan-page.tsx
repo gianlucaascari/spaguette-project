@@ -4,14 +4,19 @@ import { useDataService } from '@/services/data/data-service';
 import { DataContext } from '@/services/data/DataContext';
 import PlanListElement from '@/components/plan/show-plan/PlanListElement';
 import AddPlanElementInput from '@/components/plan/modify-plan/AddPlanElementInput';
-import { useStyles } from './plan-page.style';
+import { useStyles } from '../../styles/(tabs)/plan-page.style';
 import ListItem from '@/components/plan/show-list/ListItem';
+import { Redirect } from 'expo-router';
+import { AuthContext } from '@/services/auth/AuthContext';
 
 
 const PlanPage = () => {
+    // check authentication
+      const { authState } = useContext(AuthContext)
+      if (!authState.user) return <Redirect href='/(auth)/sign-in' />
 
+    // utilities
     const styles = useStyles()
-
     const { state } = useContext(DataContext);
     const { getMyPlan, getMyList } = useDataService();
 
@@ -21,37 +26,37 @@ const PlanPage = () => {
     }, []);
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContentStyling}>
-        <View style={styles.planningContainer}>
+        <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContentStyling}>
+            <View style={styles.planningContainer}>
 
-            <AddPlanElementInput />
+                <AddPlanElementInput />
 
-            <View style={styles.planContainer}></View>
-            {state.plan ? 
-            (
-                state.plan.recipes.map((planElement: RecipeQuantity, index: number) => (
-                    <PlanListElement key={index} planElement={planElement} />
-                ))
-            )
-            : 
-            (
-                <Text>Loading...</Text>
-            )}  
-        </View>
+                <View style={styles.planContainer}></View>
+                {state.plan ? 
+                (
+                    state.plan.recipes.map((planElement: RecipeQuantity, index: number) => (
+                        <PlanListElement key={index} planElement={planElement} />
+                    ))
+                )
+                : 
+                (
+                    <Text>Loading...</Text>
+                )}  
+            </View>
 
-        <View style={styles.listContainer}>
-            {state.list ? 
-            (
-                state.list.items.map((item: ListItem, index: number) => (
-                    <ListItem key={index} item={item} />
-                ))
-            )
-            :
-            (
-                <Text>Loading...</Text>
-            )}
-        </View>
-    </ScrollView>
+            <View style={styles.listContainer}>
+                {state.list ? 
+                (
+                    state.list.items.map((item: ListItem, index: number) => (
+                        <ListItem key={index} item={item} />
+                    ))
+                )
+                :
+                (
+                    <Text>Loading...</Text>
+                )}
+            </View>
+        </ScrollView>
   )
 }
 

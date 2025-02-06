@@ -5,7 +5,7 @@ const PlanQueries = {
   getMyPlan: (_, __, { user }) => {
     // check if user is logged
     if (!user) {
-      throw new Er("Authentication Error: Please Sign In");
+      throw new Error("Authentication Error: Please Sign In");
     }
 
     return user.plan || { recipes: [] };
@@ -13,7 +13,7 @@ const PlanQueries = {
   getMyList: (_, __, { user, db }) => {
     // check if user is logged
     if (!user) {
-      throw new Er("Authentication Error: Please Sign In");
+      throw new Error("Authentication Error: Please Sign In");
     }
 
     return { items: createList(db, user.plan.recipes, user.list.items) };
@@ -21,7 +21,7 @@ const PlanQueries = {
   getMyAddRequests: (_, __, { user }) => {
     // check if user is logged
     if (!user) {
-      throw new Er("Authentication Error: Please Sign In");
+      throw new Error("Authentication Error: Please Sign In");
     }
 
     return user.addRequests || [];

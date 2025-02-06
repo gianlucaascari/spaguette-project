@@ -7,36 +7,41 @@ import { useDataService } from '@/services/data/data-service';
 import IngredientListElement from '@/components/catalogue/show-ingredients/IngredientListElement';
 import AddIngredientInput from '@/components/catalogue/modify-ingredients/AddIngredientInput';
 import Button from '@/components/general/Button';
-import { useStyles } from './ingredients-page.style';
+import { useStyles } from '../../styles/(tabs)/ingredients-page.style';
+import { Redirect } from 'expo-router';
+import { AuthContext } from '@/services/auth/AuthContext';
 
 export default function TabTwoScreen() {
+  // check authentication
+  const { authState } = useContext(AuthContext)
+  if (!authState.user) return <Redirect href='/(auth)/sign-in' />
 
+  // utilities
   const styles = useStyles()
-
-  const [isAddingIngredient, setIsAddingIngredient] = useState(false)
-
   const { state } = useContext(DataContext);
   const { getIngredients } = useDataService();
+
+  const [isAddingIngredient, setIsAddingIngredient] = useState(false)
 
   useEffect(() => {
     getIngredients();
   }, []);
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContent}>
-      {
-        isAddingIngredient ?
-        <AddIngredientInput onCancel={() => setIsAddingIngredient(false)} afterSubmit={() => setIsAddingIngredient(false)}/> :
-        <Button text='Add New Ingredient' style='primary' onPress={() => setIsAddingIngredient(true)} />
-      }
+      <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContent}>
+        {
+          isAddingIngredient ?
+          <AddIngredientInput onCancel={() => setIsAddingIngredient(false)} afterSubmit={() => setIsAddingIngredient(false)}/> :
+          <Button text='Add New Ingredient' style='primary' onPress={() => setIsAddingIngredient(true)} />
+        }
 
-      {state.ingredients ? (
-        state.ingredients.map((ingredient: Ingredient, index: number) => (
-          <IngredientListElement key={index} ingredient={ingredient} />
-        ))
-      ) : (
-        <Text>Loading...</Text>
-      )}
-    </ScrollView>
+        {state.ingredients ? (
+          state.ingredients.map((ingredient: Ingredient, index: number) => (
+            <IngredientListElement key={index} ingredient={ingredient} />
+          ))
+        ) : (
+          <Text>Loading...</Text>
+        )}
+      </ScrollView>
   );
 }

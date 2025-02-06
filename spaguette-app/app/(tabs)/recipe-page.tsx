@@ -7,12 +7,17 @@ import { useDataService } from '@/services/data/data-service';
 import AddRecipeInput from '@/components/catalogue/modify-recipes/AddRecipeInput';
 import RecipesListElement from '@/components/catalogue/show-recipes/RecipeListElement';
 import Button from '@/components/general/Button';
-import { useStyles } from './recipe-page.style';
+import { useStyles } from '../../styles/(tabs)/recipe-page.style';
+import { Redirect } from 'expo-router';
+import { AuthContext } from '@/services/auth/AuthContext';
 
 export default function TabOneScreen() {
+  // check authentication
+  const { authState } = useContext(AuthContext);
+  if (!authState.user) return <Redirect href='/(auth)/sign-in' />
 
+  // utilities
   const styles = useStyles()
-
   const { state } = useContext(DataContext);
   const { getRecipes } = useDataService();
 
@@ -23,21 +28,21 @@ export default function TabOneScreen() {
   }, []);
   
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContent}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContent}>
 
-        {isAddingRecipe ?  
-          <AddRecipeInput onCancel={() => setAddingRecipe(false)} afterSubmit={() => setAddingRecipe(false)}/> 
-          : 
-          <Button text='Add New Recipe' onPress={() => setAddingRecipe(true)} style='primary'/>
-        }
+          {isAddingRecipe ?  
+            <AddRecipeInput onCancel={() => setAddingRecipe(false)} afterSubmit={() => setAddingRecipe(false)}/> 
+            : 
+            <Button text='Add New Recipe' onPress={() => setAddingRecipe(true)} style='primary'/>
+          }
 
-        {state.recipes ? (
-          <View>
-            {state.recipes.map((recipe: Recipe, index: number) => <RecipesListElement key={index} recipe={recipe} />)}
-          </View>
-        ) : (
-          <Text>Loading...</Text>
-        )}      
-    </ScrollView>
+          {state.recipes ? (
+            <View>
+              {state.recipes.map((recipe: Recipe, index: number) => <RecipesListElement key={index} recipe={recipe} />)}
+            </View>
+          ) : (
+            <Text>Loading...</Text>
+          )}      
+      </ScrollView>
   );
 }
