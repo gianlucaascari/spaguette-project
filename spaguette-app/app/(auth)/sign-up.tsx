@@ -4,11 +4,13 @@ import { useStyles } from './sign-up.style'
 import Button from '@/components/general/Button'
 import { COLORS } from '@/styles/colors'
 import { useRouter } from 'expo-router'
+import { useDataService } from '@/services/data/data-service'
 
 const SignUpPage = () => {
 
   const styles = useStyles()
   const router = useRouter()
+  const dataService = useDataService()
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -34,7 +36,7 @@ const SignUpPage = () => {
       return
     }
 
-    alert("name: " + name + "\nemail: " + email + "\npassword: " + password)
+    dataService.signUp({ name, email, password })
   }
 
   return (
