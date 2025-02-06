@@ -4,24 +4,20 @@ import { useStyles } from './sign-in.style'
 import Button from '@/components/general/Button'
 import { COLORS } from '@/styles/colors'
 import { useRouter } from 'expo-router'
-import { gql } from '@apollo/client'
+import { useDataService } from '@/services/data/data-service'
 
-const SIGN_IN = gql`
-  mutation SignIn($email: String!, $password: String!) {
-  signIn(email: $email, password: $password) {
-    token
-  }
-}
-`
 
 const SignInPage = () => {
-
+  // utilities
   const styles = useStyles()
   const router = useRouter()
+  const dataService = useDataService()
 
+  // sign in data
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  // method to perform on sign in
   const onSignIn = () => {
     // check if email is valid
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -30,12 +26,14 @@ const SignInPage = () => {
       return
     }
 
+    // check if password is at least 4 chars long
     if(password.length < 4) {
       alert("Please insert a password at least 4 characters long")
       return
     }
 
-    alert("email: " + email + "\npassword: " + password)
+    // sign in
+    dataService.signIn({email, password})
   }
 
   return (

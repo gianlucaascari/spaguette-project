@@ -3,6 +3,7 @@ import { setContext } from '@apollo/client/link/context';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
 import { createClient } from 'graphql-ws';
 import { getMainDefinition } from "@apollo/client/utilities";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -17,8 +18,7 @@ const wsLink = new GraphQLWsLink(createClient({
    url: "http://localhost:4000/subscriptions",
   //url: "https://d9af-81-164-118-42.ngrok-free.app/subscriptions",
   connectionParams: async () => {
-    // const token = await getToken()
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjhmMWU2Yjg2OWU0MTNjZDM1YjkwNiIsImlhdCI6MTczNTAzODY4OH0.Y3buogE9GrS5gYZ_NhAHdmB6L0qOBZyKSc3P-sTvOsY"
+    const token = await AsyncStorage.getItem('userToken')
     return {
       authorization: token || '',
     }
@@ -26,9 +26,7 @@ const wsLink = new GraphQLWsLink(createClient({
 }))
 
 const authLink = setContext(async (_, { headers }) => {
-  // const token = await getToken();
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjhmMWU2Yjg2OWU0MTNjZDM1YjkwNiIsImlhdCI6MTczNTAzODY4OH0.Y3buogE9GrS5gYZ_NhAHdmB6L0qOBZyKSc3P-sTvOsY"
-
+  const token = await AsyncStorage.getItem('userToken')
   return {
     headers: {
       ...headers,

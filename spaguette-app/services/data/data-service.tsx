@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import { apiService } from "../api/api-service";
 import { DataContext } from "./DataContext";
-import { dataServicePlan } from "./data-service-plan";
+import { useDataServicePlan } from "./data-service-plan";
+import { useDataServiceUser } from "./data-service-user";
 
 /**
  * Data service to fetch and manipulate data, combining API and (soon) local storage
@@ -93,6 +94,7 @@ export const useDataService = () => {
                 return;
             }
         },
-        ... dataServicePlan(),
+        ... useDataServicePlan(),
+        ... useDataServiceUser(),
     };
 };

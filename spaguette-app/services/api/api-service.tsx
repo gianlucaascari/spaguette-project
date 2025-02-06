@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client';
 import client from './apollo-client';
 import { apiServicePlan } from './api-service-plan';
+import { apiServiceUser } from './api-service-user';
 
 const GET_MY_INGRE = gql`
   query GetIngredients {
@@ -201,5 +202,6 @@ export const apiService = {
     if (!response.data) throw new Error('No data received from mutation');
     return response.data.remRecipe;
   },
-  ... apiServicePlan
+  ... apiServicePlan,
+  ... apiServiceUser,
 };

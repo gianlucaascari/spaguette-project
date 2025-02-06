@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { DataContext } from "./DataContext";
 import { apiService } from "../api/api-service";
 
-export const dataServicePlan = () => {
+export const useDataServicePlan = () => {
     const { state, dispatch } = useContext(DataContext);
 
     return {

@@ -51,6 +51,7 @@ function RootLayoutNav() {
       <DataProvider>
         <ApolloProvider client={client}>
           <Stack>
+            <Stack.Screen name='index' options={{ headerShown: false }} />
             <Stack.Screen name='(auth)/sign-up' options={{ title: 'Sign Up', headerShown: false }} />
             <Stack.Screen name='(auth)/sign-in' options={{ title: 'Sign In', headerShown: false }} />
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
