@@ -204,4 +204,7 @@ export const apiService = {
   },
   ... apiServicePlan,
   ... apiServiceUser,
+  clearCache: async () => {
+    await client.clearStore()
+  }
 };

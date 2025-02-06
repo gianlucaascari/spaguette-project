@@ -4,6 +4,8 @@ import { Tabs } from 'expo-router';
 
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+import Button from '@/components/general/Button';
+import { useDataService } from '@/services/data/data-service';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -14,7 +16,8 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+
+  const dataService = useDataService()
 
   return (
     <Tabs
@@ -22,6 +25,7 @@ export default function TabLayout() {
         // Disable the static render of the header on web
         // to prevent a hydration error in React Navigation v6.
         headerShown: useClientOnlyValue(false, true),
+        headerRight: () => <Button text='Log out' style='tertiary' onPress={dataService.logOut} />
       }}>
       <Tabs.Screen
         name="recipe-page/index"

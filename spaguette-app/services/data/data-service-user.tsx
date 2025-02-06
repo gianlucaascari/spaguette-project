@@ -26,7 +26,7 @@ export const useDataServiceUser = () => {
         signUp: async (input: SignUpInput) => {
             try{
                 const authUser = await apiService.signUp(input)
-                dispatch({ type: 'SET_USER', payload: authUser.user})
+                dispatch({ type: 'SET_USER', payload: authUser.user })
                 await AsyncStorage.setItem("userToken", authUser.token)
                 router.replace('/(tabs)/plan-page')
             }
@@ -35,6 +35,13 @@ export const useDataServiceUser = () => {
                 alert('Data Serive > Error signing up\n' + e?.message);
                 return;
             }
+        },
+        logOut: async () => {
+            dispatch({ type: 'RESET_STATE' })
+            await apiService.clearCache()
+            await AsyncStorage.removeItem('userToken')
+
+            router.replace('/(auth)/sign-in')
         }
     }
 }
