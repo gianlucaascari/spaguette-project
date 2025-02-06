@@ -23,23 +23,20 @@ export default function TabTwoScreen() {
   }, []);
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContent}>
+      {
+        isAddingIngredient ?
+        <AddIngredientInput onCancel={() => setIsAddingIngredient(false)} afterSubmit={() => setIsAddingIngredient(false)}/> :
+        <Button text='Add New Ingredient' style='primary' onPress={() => setIsAddingIngredient(true)} />
+      }
 
-            {
-              isAddingIngredient ?
-              <AddIngredientInput onCancel={() => setIsAddingIngredient(false)} afterSubmit={() => setIsAddingIngredient(false)}/> :
-              <Button text='Add New Ingredient' style='primary' onPress={() => setIsAddingIngredient(true)} />
-            }
-      
-            {state.ingredients ? (
-              state.ingredients.map((ingredient: Ingredient, index: number) => (
-                <IngredientListElement key={index} ingredient={ingredient} />
-              ))
-            ) : (
-              <Text>Loading...</Text>
-            )}
-      </View>
+      {state.ingredients ? (
+        state.ingredients.map((ingredient: Ingredient, index: number) => (
+          <IngredientListElement key={index} ingredient={ingredient} />
+        ))
+      ) : (
+        <Text>Loading...</Text>
+      )}
     </ScrollView>
   );
 }

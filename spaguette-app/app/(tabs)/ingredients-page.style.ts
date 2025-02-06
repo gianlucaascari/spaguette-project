@@ -11,9 +11,11 @@ export const useStyles = () => {
         container: {
             padding: SPACING.medium,
             backgroundColor: COLORS.background,
+            flex: 1,
+        },
+        scrollViewContent: {
             alignItems: 'center',
             justifyContent: 'center',
-            flex: 1,
         }
     })
 }

@@ -23,23 +23,21 @@ export default function TabOneScreen() {
   }, []);
   
   return (
-    <ScrollView>
-    <View style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContent}>
 
-      {isAddingRecipe ?  
-        <AddRecipeInput onCancel={() => setAddingRecipe(false)} afterSubmit={() => setAddingRecipe(false)}/> 
-        : 
-        <Button text='Add New Recipe' onPress={() => setAddingRecipe(true)} style='primary'/>
-      }
+        {isAddingRecipe ?  
+          <AddRecipeInput onCancel={() => setAddingRecipe(false)} afterSubmit={() => setAddingRecipe(false)}/> 
+          : 
+          <Button text='Add New Recipe' onPress={() => setAddingRecipe(true)} style='primary'/>
+        }
 
-      {state.recipes ? (
-        <View>
-          {state.recipes.map((recipe: Recipe, index: number) => <RecipesListElement key={index} recipe={recipe} />)}
-        </View>
-      ) : (
-        <Text>Loading...</Text>
-      )}      
-    </View>
+        {state.recipes ? (
+          <View>
+            {state.recipes.map((recipe: Recipe, index: number) => <RecipesListElement key={index} recipe={recipe} />)}
+          </View>
+        ) : (
+          <Text>Loading...</Text>
+        )}      
     </ScrollView>
   );
 }
