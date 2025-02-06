@@ -20,6 +20,9 @@ const UserMutations = {
       name: name,
       email: email,
       password: hashedPw,
+      plan: {
+        recipes: []
+      },
       list: {
         recipes: [],
         ingredients: [],
