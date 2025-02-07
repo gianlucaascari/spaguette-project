@@ -16,7 +16,8 @@ const PlanQueries = {
       throw new Error("Authentication Error: Please Sign In");
     }
 
-    return { items: createList(db, user.plan.recipes, user.list.items) };
+    const items = createList(db, user.plan.recipes, user.list.items)
+    return { items: items };
   },
   getMyAddRequests: (_, __, { user }) => {
     // check if user is logged
@@ -83,7 +84,11 @@ const createList = async (db, recipes, oldList) => {
       (oldIt) => oldIt.ingredientID === item.ingredientID
     );
 
-    return oldItem || item
+    // if the old items quantity was more than the new one keep the old taken
+    return {
+      ...item,
+      taken: oldItem.quantity > item.quantity ? oldItem.taken : false
+    }
   });
 
   return list;
