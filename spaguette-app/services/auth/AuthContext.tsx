@@ -11,7 +11,7 @@ interface AuthContext {
 
 const initialState: AuthContext = {
     user: undefined,
-    loading: true,
+    loading: false,
 }
 
 export const AuthContext = createContext({ authState: initialState, dispatch: (action: Action) => {} });
