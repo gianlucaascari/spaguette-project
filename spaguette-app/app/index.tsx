@@ -1,22 +1,16 @@
 import React, { useContext, useEffect } from 'react'
 import { Redirect } from 'expo-router'
-import { Text } from 'react-native'
+import { ActivityIndicator, Text } from 'react-native'
 import { useAuthService } from '@/services/auth/auth-service'
 import { AuthContext } from '@/services/auth/AuthContext'
+import { View } from '@/components/Themed'
 
 const index = () => {
-  // check authentication
   const authService = useAuthService()
-  const { authState } = useContext(AuthContext)
+  const auth = authService.verifyAuth()
+  if (auth) return auth
 
-  useEffect(() => {
-    authService.isAuthenticated()
-  }, [])
-
-  if (!authState.loading && authState.user) return <Redirect href='/(tabs)/plan-page' />
-  if (!authState.loading && !authState.user) return <Redirect href='/(auth)/sign-in' />
-
-  return <Redirect href='/(auth)/sign-in' />
+  return <Redirect href='/(protected)/(tabs)/plan-page' />
 }
 
 export default index

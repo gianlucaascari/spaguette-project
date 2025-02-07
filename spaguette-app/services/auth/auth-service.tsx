@@ -33,14 +33,15 @@ export const useAuthService = () => {
                   <ActivityIndicator size="large" />
                 </View>
               )
-              if (!authState.user) return <Redirect href='/(auth)/sign-in' />
+
+            if (!authState.user) return <Redirect href='/(auth)/sign-in' />
         },
         signIn: async (input: SignInInput) => {
             try {
                 const authUser = await apiService.signIn(input)
                 dispatch({ type: 'SET_USER', payload: authUser.user})
                 await AsyncStorage.setItem("authUser", JSON.stringify(authUser))
-                router.replace('/(tabs)/plan-page')
+                router.replace('/(protected)/(tabs)/plan-page')
             }
             catch (e: any) {
                 console.error('Error signing in:', e);
@@ -53,7 +54,7 @@ export const useAuthService = () => {
                 const authUser = await apiService.signUp(input)
                 dispatch({ type: 'SET_USER', payload: authUser.user })
                 await AsyncStorage.setItem("authUser", JSON.stringify(authUser))
-                router.replace('/(tabs)/plan-page')
+                router.replace('/(protected)/(tabs)/plan-page')
             }
             catch (e: any) {
                 console.error('Error signing up:', e);
