@@ -114,8 +114,8 @@ export const apiService = {
    * @returns {Promise<Ingredient[]>} A promise that resolves to an array of ingredients
    * @throws {Error} If an error occurs while fetching the ingredients
    */
-  getIngredients: async (): Promise<Ingredient[]> => {
-      const response = await client.query<{ getMyIngredients: Ingredient[] }>({ query: GET_MY_INGRE });
+  getIngredients: async (ignoreCache: boolean): Promise<Ingredient[]> => {
+      const response = await client.query<{ getMyIngredients: Ingredient[] }>({ query: GET_MY_INGRE, fetchPolicy: ignoreCache ? 'network-only' : 'cache-first'  });
       return response.data.getMyIngredients;
   },
 

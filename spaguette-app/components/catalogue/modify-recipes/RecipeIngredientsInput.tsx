@@ -23,7 +23,7 @@ const RecipeIngredientsInput: React.FC<RecipeIngredientsInputProps> = ({ ingredi
     const { getIngredients } = useDataService();
 
     useEffect(() => {
-        getIngredients();
+        getIngredients(true);
     }, []);
 
     const [chosenIngredient, setChosenIngredient] = React.useState<Ingredient | null>(null);

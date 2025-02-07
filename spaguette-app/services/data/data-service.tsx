@@ -14,9 +14,9 @@ export const useDataService = () => {
     const { dispatch } = useContext(DataContext);
     
     return {
-        getIngredients: async () => {
+        getIngredients: async (ignoreCache: boolean = false) => {
             try {
-                const ingredients = await apiService.getIngredients();
+                const ingredients = await apiService.getIngredients(ignoreCache);
                 dispatch({ type: 'SET_INGREDIENTS', payload: ingredients });
             } catch (e: any) {
                 console.error('Error getting ingredients:', e);
