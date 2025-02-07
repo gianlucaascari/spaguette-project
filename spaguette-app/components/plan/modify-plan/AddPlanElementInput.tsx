@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import PlanElementInput from './PlanElementInput';
 import { useDataService } from '@/services/data/data-service';
 import Button from '@/components/general/Button';
-import { useStyles } from './AddPlanElementInput.style';
+import { useStyles } from '../../../styles/components/plan/modify-plan/AddPlanElementInput.style';
 
 const AddPlanElementInput = () => {
 

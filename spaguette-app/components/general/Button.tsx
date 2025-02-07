@@ -1,6 +1,6 @@
 import { View, Text, Pressable } from 'react-native'
 import React from 'react'
-import { styles } from './Button.style'
+import { styles } from '../../styles/components/general/Button.style'
 
 interface ButtonProps {
     text: String,

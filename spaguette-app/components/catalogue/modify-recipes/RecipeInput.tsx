@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TextInput, Pressable } from 'react-native'
 import React from 'react'
 import RecipeIngredientsInput from './RecipeIngredientsInput'
-import { useStyles } from './RecipeInput.style'
+import { useStyles } from '../../../styles/components/catalogue/modify-recipes/RecipeInput.style'
 import { COLORS } from '@/styles/const/colors'
 
 interface RecipeInputProps {

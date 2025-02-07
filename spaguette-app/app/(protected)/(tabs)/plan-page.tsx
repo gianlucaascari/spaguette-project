@@ -4,7 +4,7 @@ import { useDataService } from '@/services/data/data-service';
 import { DataContext } from '@/services/data/DataContext';
 import PlanListElement from '@/components/plan/show-plan/PlanListElement';
 import AddPlanElementInput from '@/components/plan/modify-plan/AddPlanElementInput';
-import { useStyles } from '../../../styles/(tabs)/plan-page.style';
+import { useStyles } from '../../../styles/app/(tabs)/plan-page.style';
 import ListItem from '@/components/plan/show-list/ListItem';
 import { useAuthService } from '@/services/auth/auth-service';
 

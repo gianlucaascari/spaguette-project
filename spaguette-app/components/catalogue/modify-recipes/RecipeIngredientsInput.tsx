@@ -4,7 +4,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { DataContext } from '@/services/data/DataContext';
 import { useDataService } from '@/services/data/data-service';
 import Button from '@/components/general/Button';
-import { useStyles } from './RecipeIngredientsInput.style';
+import { useStyles } from '../../../styles/components/catalogue/modify-recipes/RecipeIngredientsInput.style';
 import { COLORS } from '@/styles/const/colors';
 
 interface RecipeIngredientsInputProps {

@@ -2,7 +2,7 @@ import { View, Text, Pressable, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import RecipeInput from './RecipeInput'
 import { useDataService } from '@/services/data/data-service'
-import { useStyles } from './AddRecipeInput.style'
+import { useStyles } from '../../../styles/components/catalogue/modify-recipes/AddRecipeInput.style'
 import Button from '@/components/general/Button'
 
 interface AddRecipeInputProps {

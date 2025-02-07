@@ -1,7 +1,7 @@
 import { View, Text, TextInput } from 'react-native'
 import React from 'react'
 import { COLORS } from '@/styles/const/colors'
-import { useStyles } from './IngredientInput.style'
+import { useStyles } from '../../../styles/components/catalogue/modify-ingredients/IngredientInput.style'
 
 interface IngredientInputProps {
     ingredient: Ingredient,

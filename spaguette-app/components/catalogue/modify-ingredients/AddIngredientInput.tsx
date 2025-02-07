@@ -2,7 +2,7 @@ import { View, Text, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import IngredientInput from './IngredientInput'
 import { useDataService } from '@/services/data/data-service'
-import { useStyles } from './AddIngredientInput.style'
+import { useStyles } from '../../../styles/components/catalogue/modify-ingredients/AddIngredientInput.style'
 import Button from '@/components/general/Button'
 
 interface AddIngredientInputProps {

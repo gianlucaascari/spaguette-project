@@ -1,7 +1,7 @@
 import { View, Text, Pressable } from 'react-native'
 import React from 'react'
 import Button from '@/components/general/Button';
-import { useStyles } from './PlanListElementShow.style';
+import { useStyles } from '../../../styles/components/plan/show-plan/PlanListElementShow.style';
 
 interface PlanListElementShowProps {
     planElement: RecipeQuantity;

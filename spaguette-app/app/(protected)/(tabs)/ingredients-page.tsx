@@ -7,7 +7,7 @@ import { useDataService } from '@/services/data/data-service';
 import IngredientListElement from '@/components/catalogue/show-ingredients/IngredientListElement';
 import AddIngredientInput from '@/components/catalogue/modify-ingredients/AddIngredientInput';
 import Button from '@/components/general/Button';
-import { useStyles } from '../../../styles/(tabs)/ingredients-page.style';
+import { useStyles } from '../../../styles/app/(tabs)/ingredients-page.style';
 import { useAuthService } from '@/services/auth/auth-service';
 
 export default function TabTwoScreen() {

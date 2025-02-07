@@ -1,6 +1,6 @@
 import { View, Text, TextInput } from 'react-native'
 import React, { useState } from 'react'
-import { useStyles } from '../../styles/(auth)/sign-up.style'
+import { useStyles } from '../../styles/app/(auth)/sign-up.style'
 import Button from '@/components/general/Button'
 import { COLORS } from '@/styles/const/colors'
 import { useRouter } from 'expo-router'

@@ -4,7 +4,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { DataContext } from '@/services/data/DataContext';
 import { useDataService } from '@/services/data/data-service';
 import { COLORS } from '@/styles/const/colors';
-import { useStyles } from './PlanElementInput.style';
+import { useStyles } from '../../../styles/components/plan/modify-plan/PlanElementInput.style';
 
 interface PlanElementInputProps {
     planElement: RecipeQuantity;

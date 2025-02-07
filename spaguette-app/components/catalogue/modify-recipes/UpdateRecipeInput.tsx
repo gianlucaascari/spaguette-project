@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useDataService } from '@/services/data/data-service'
 import RecipeInput from './RecipeInput'
 import Button from '@/components/general/Button'
-import { useStyles } from './UpdateRecipeInput.style'
+import { useStyles } from '../../../styles/components/catalogue/modify-recipes/UpdateRecipeInput.style'
 
 interface UpdateRecipeInputProps {
     initialRecipe: Recipe,

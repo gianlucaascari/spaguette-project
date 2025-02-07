@@ -2,7 +2,7 @@ import { View } from 'react-native'
 import React, { useState } from 'react'
 import { useDataService } from '@/services/data/data-service'
 import Button from '@/components/general/Button'
-import { useStyles } from './UpdatePlanElementInput.style'
+import { useStyles } from '../../../styles/components/plan/modify-plan/UpdatePlanElementInput.style'
 import PlanElementInput from './PlanElementInput'
 
 interface UpdatePlanElementInputProps {
