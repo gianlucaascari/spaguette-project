@@ -8,13 +8,12 @@ import IngredientListElement from '@/components/catalogue/show-ingredients/Ingre
 import AddIngredientInput from '@/components/catalogue/modify-ingredients/AddIngredientInput';
 import Button from '@/components/general/Button';
 import { useStyles } from '../../styles/(tabs)/ingredients-page.style';
-import { Redirect } from 'expo-router';
-import { AuthContext } from '@/services/auth/AuthContext';
+import { useAuthService } from '@/services/auth/auth-service';
 
 export default function TabTwoScreen() {
   // check authentication
-  const { authState } = useContext(AuthContext)
-  if (!authState.user) return <Redirect href='/(auth)/sign-in' />
+  const authService = useAuthService()
+  authService.verifyAuth()
 
   // utilities
   const styles = useStyles()

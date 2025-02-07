@@ -1,12 +1,13 @@
 import { useContext } from "react"
 import { AuthContext } from "./AuthContext"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { useRouter } from "expo-router";
+import { Redirect, useRouter } from "expo-router";
 import { apiService } from "../api/api-service";
 import { useDataService } from "../data/data-service";
+import { ActivityIndicator, View } from "react-native";
 
 export const useAuthService = () => {
-    const { dispatch } = useContext(AuthContext)
+    const { authState, dispatch } = useContext(AuthContext)
     const router = useRouter()
     const dataService = useDataService()
     
@@ -25,6 +26,14 @@ export const useAuthService = () => {
 
             if (authUserString) dispatch({ type: 'SET_USER', payload: (JSON.parse(authUserString)).user })
             dispatch({ type: 'SET_LOADING', payload: false })
+        },
+        verifyAuth: () => {
+            if (authState.loading) return (
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                  <ActivityIndicator size="large" />
+                </View>
+              )
+              if (!authState.user) return <Redirect href='/(auth)/sign-in' />
         },
         signIn: async (input: SignInInput) => {
             try {

@@ -6,14 +6,13 @@ import PlanListElement from '@/components/plan/show-plan/PlanListElement';
 import AddPlanElementInput from '@/components/plan/modify-plan/AddPlanElementInput';
 import { useStyles } from '../../styles/(tabs)/plan-page.style';
 import ListItem from '@/components/plan/show-list/ListItem';
-import { Redirect } from 'expo-router';
-import { AuthContext } from '@/services/auth/AuthContext';
+import { useAuthService } from '@/services/auth/auth-service';
 
 
 const PlanPage = () => {
-    // check authentication
-      const { authState } = useContext(AuthContext)
-      if (!authState.user) return <Redirect href='/(auth)/sign-in' />
+  // check authentication
+  const authService = useAuthService()
+  authService.verifyAuth()
 
     // utilities
     const styles = useStyles()

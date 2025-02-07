@@ -8,13 +8,12 @@ import AddRecipeInput from '@/components/catalogue/modify-recipes/AddRecipeInput
 import RecipesListElement from '@/components/catalogue/show-recipes/RecipeListElement';
 import Button from '@/components/general/Button';
 import { useStyles } from '../../styles/(tabs)/recipe-page.style';
-import { Redirect } from 'expo-router';
-import { AuthContext } from '@/services/auth/AuthContext';
+import { useAuthService } from '@/services/auth/auth-service';
 
 export default function TabOneScreen() {
   // check authentication
-  const { authState } = useContext(AuthContext);
-  if (!authState.user) return <Redirect href='/(auth)/sign-in' />
+  const authService = useAuthService()
+  authService.verifyAuth()
 
   // utilities
   const styles = useStyles()
