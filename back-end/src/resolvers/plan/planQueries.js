@@ -87,7 +87,7 @@ const createList = async (db, recipes, oldList) => {
     // if the old items quantity was more than the new one keep the old taken
     return {
       ...item,
-      taken: oldItem.quantity > item.quantity ? oldItem.taken : false
+      taken: oldItem.quantity >= item.quantity ? oldItem.taken : false
     }
   });
 
