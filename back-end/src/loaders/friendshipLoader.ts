@@ -8,9 +8,11 @@ const createFriendshipLoader = (
   db: Db, 
   user: DbUser | undefined
 ): DataLoader<ObjectId, DbFriendship[], string> => {
-  if(!user) throw new Error('Impossible loading friendships for unkown user')
-
   return new DataLoader(async (userIDs: readonly ObjectId[]) => {
+    if(!user) {
+      return []
+    }
+
     const query = {
       $and: [
         {
