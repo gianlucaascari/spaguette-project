@@ -19,9 +19,9 @@ export type User = {
     name: string
     email: string
     password: string
-    plan?: DbPlan
-    list?: DbList
-    addRequests?: DbAddRequest[]
+    plan: DbPlan
+    list: DbList
+    addRequests: DbAddRequest[]
   }
   
   export type AuthUser = {

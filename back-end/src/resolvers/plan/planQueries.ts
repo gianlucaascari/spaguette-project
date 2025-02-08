@@ -1,8 +1,11 @@
-import { ObjectId } from "mongodb";
+import { Db, ObjectId } from "mongodb";
 import { ENV } from "../../config/env.js";
+import { Context } from "types/General.js";
+import { DbAddRequest, DbList, DbListItem, DbPlan, DbRecipeQuantity } from "types/Plan.js";
+import { DbRecipe } from "types/Catalogue.js";
 
 const PlanQueries = {
-  getMyPlan: (_, __, { user }) => {
+  getMyPlan: (_: unknown, __: unknown, { user }: Context): DbPlan => {
     // check if user is logged
     if (!user) {
       throw new Error("Authentication Error: Please Sign In");
@@ -10,16 +13,16 @@ const PlanQueries = {
 
     return user.plan || { recipes: [] };
   },
-  getMyList: (_, __, { user, db }) => {
+  getMyList: async (_: unknown, __: unknown, { user, db }: Context): Promise<DbList> => {
     // check if user is logged
     if (!user) {
       throw new Error("Authentication Error: Please Sign In");
     }
 
-    const items = createList(db, user.plan.recipes, user.list.items)
-    return { items: items };
+    const items = await createList(db, user.plan.recipes, user.list.items)
+    return { items };
   },
-  getMyAddRequests: (_, __, { user }) => {
+  getMyAddRequests: (_: unknown, __: unknown, { user }: Context): DbAddRequest[] => {
     // check if user is logged
     if (!user) {
       throw new Error("Authentication Error: Please Sign In");
@@ -31,7 +34,7 @@ const PlanQueries = {
 
 export { PlanQueries };
 
-const createList = async (db, recipes, oldList) => {
+const createList = async (db: Db, recipes: DbRecipeQuantity[], oldList: DbListItem[]): Promise<DbListItem[]> => {
 
   // ricavo tutte le ricette complete
   const recipeIDs = recipes.map((rec) => new ObjectId(rec.recipeID));
@@ -39,33 +42,33 @@ const createList = async (db, recipes, oldList) => {
   const resRec = await db
     .collection(ENV.DB_RECIP_COL)
     .find({ _id: { $in: recipeIDs } })
-    .toArray();
+    .toArray() as DbRecipe[];
 
   const resRecipes = recipes.map((rec) => {
     const recipe = resRec.find(
       (resRecipe) => resRecipe._id.toString() == rec.recipeID
     );
     return {
-      recipe: recipe,
+      recipe: recipe as DbRecipe,
       numTimes: rec.numTimes,
       ...(rec.userID ? { userID: rec.userID } : {}),
     };
   });
 
   // costruisco l'array lista
-  const newList = [];
+  const newList: DbListItem[] = [];
 
   resRecipes.map((rec) => {
     rec.recipe.ingredients.map((ing) => {
       const index = newList.findIndex(
-        (item) => ing.ingredientID === item.ingredientID
+        (item) => ing.ingredientID.toString() === item.ingredientID
       );
 
       if (index !== -1) {
         newList[index].quantity += ing.quantity * rec.numTimes;
       } else {
         newList.push({
-          ingredientID: ing.ingredientID,
+          ingredientID: ing.ingredientID.toString(),
           userID: rec.userID,
           quantity: ing.quantity * rec.numTimes,
           taken: false,

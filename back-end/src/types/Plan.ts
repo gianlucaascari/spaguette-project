@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb"
 import { Ingredient, Recipe } from "./Catalogue.js"
-import { User } from "./User.js"
+import { DbUser, User } from "./User.js"
 
 export type Plan = {
   recipes: {
@@ -11,11 +11,13 @@ export type Plan = {
 }
 
 export type PlanInput = {
-  recipes: {
-      recipeID: string
-      userID?: string
-      numTimes: number
-    }[]
+  recipes: PlanRecipeInput[]
+}
+
+export type PlanRecipeInput = {
+  recipeID: string
+  userID?: string
+  numTimes: number
 }
 
 export type DbPlan = {
@@ -24,6 +26,7 @@ export type DbPlan = {
 
 export type DbRecipeQuantity = {
   recipeID: string    // why string?
+  userID?: string     // why string?
   numTimes: number
 }
 
@@ -51,6 +54,7 @@ export type DbList = {
 
 export type DbListItem = {
   ingredientID: string    // why string?
+  userID?: string
   quantity: number
   taken: boolean
 }
@@ -68,6 +72,25 @@ export type DbAddRequest = {
 }
 
 export type ReceivedAddRequest = {
-  addRequest: AddRequest
+  addRequest: DbAddRequest
   addMode: boolean
+}
+
+
+// PUBSUB MESSAGES
+
+export type NewAddRequest = {
+  toUser: string
+  recAddRequest: ReceivedAddRequest
+}
+
+export type AnsweredAddRequest = {
+  answeringUserID: ObjectId
+  addRequest: DbAddRequest
+}
+
+export type PlanUpdate = {
+  updatingUserID: ObjectId
+  updatedUserID: ObjectId
+  plan: DbPlan
 }

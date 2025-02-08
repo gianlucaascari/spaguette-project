@@ -1,8 +1,15 @@
-import { ObjectId } from "mongodb";
+import { ObjectId, Document } from "mongodb";
 import { ENV } from "../../config/env.js";
+import { AnsweredAddRequest, DbAddRequest, DbList, DbPlan, ListInput, NewAddRequest, PlanInput, PlanRecipeInput, PlanUpdate } from "types/Plan.js";
+import { Context } from "types/General.js";
+import { DbUser } from "types/User.js";
 
 const PlanMutations = {
-  updPlan: async (_, { input }, { db, user, pubsub }) => {
+  updPlan: async (
+    _: unknown, 
+    { input }: { input: PlanInput }, 
+    { db, user, pubsub }: Context
+  ): Promise<DbPlan> => {
     // check if user is logged
     if (!user) {
       throw new Error("Authentication Error: Please Sign In");
@@ -23,7 +30,11 @@ const PlanMutations = {
 
     return plan;
   },
-  updList: async (_, { input }, { db, user }) => {
+  updList: async (
+    _: unknown, 
+    { input }: { input: ListInput }, 
+    { db, user }: Context
+  ): Promise<DbList> => {
     // check if user is logged
     if (!user) {
       throw new Error("Authentication Error: Please Sign In");
@@ -35,22 +46,27 @@ const PlanMutations = {
 
     return input;
   },
-  addRequest: async (_, { userID, recipe }, { db, user, pubsub }) => {
+  addRequest: async (
+    _: unknown, 
+    { userID, recipe }: { userID: string, recipe: PlanRecipeInput }, 
+    { db, user, pubsub }: Context) => {
     // check if user is logged
     if (!user) {
       throw new Error("Authentication Error: Please Sign In");
     }
 
-    const addRequest = {
+    const addRequest: DbAddRequest = {
       userID: user._id,
       recipeID: new ObjectId(recipe.recipeID),
       numTimes: recipe.numTimes,
     };
 
-    pubsub.publish("ADD_REQUESTS", {
+    const message: NewAddRequest = {
       toUser: userID,
       recAddRequest: { addRequest: addRequest, addMode: true },
-    });
+    }
+
+    pubsub.publish("ADD_REQUESTS", message);
 
     // update existing request
     const filterUpdate = {
@@ -75,7 +91,7 @@ const PlanMutations = {
         _id: new ObjectId(userID),
       };
 
-      const updateAdd = {
+      const updateAdd: Document = {
         $push: { addRequests: addRequest },
       };
 
@@ -87,10 +103,10 @@ const PlanMutations = {
     return addRequest;
   },
   answerAddRequest: async (
-    _,
-    { userID, recipeID, mode },
-    { db, user, pubsub }
-  ) => {
+    _: unknown,
+    { userID, recipeID, mode }: { userID:string, recipeID:string, mode:number },
+    { db, user, pubsub }: Context
+  ): Promise<DbPlan> => {
     // check if user is logged
     if (!user) {
       throw new Error("Authentication Error: Please Sign In");
@@ -103,7 +119,7 @@ const PlanMutations = {
       "addRequests.userID": new ObjectId(userID),
     };
 
-    const updateDel = {
+    const updateDel: Document = {
       $pull: {
         addRequests: {
           recipeID: new ObjectId(recipeID),
@@ -114,7 +130,7 @@ const PlanMutations = {
 
     const res = await db
       .collection(ENV.DB_USERS_COL)
-      .findOneAndUpdate(filterDel, updateDel);
+      .findOneAndUpdate(filterDel, updateDel) as DbUser | null;
 
     if (!res) {
       throw new Error("Add request not found");
@@ -123,12 +139,14 @@ const PlanMutations = {
     const request = res.addRequests.find(
       (req) =>
         req.userID.toString() === userID && req.recipeID.toString() === recipeID
-    );
+    ) as DbAddRequest;
 
-    pubsub.publish("ANS_ADD_REQUESTS", {
-      ansUser: user._id.toString(),
-      addRequest: { recipeID, userID, numTimes: 0 },
-    });
+    const message: AnsweredAddRequest = {
+      answeringUserID: user._id,
+      addRequest: { recipeID: new ObjectId(recipeID), userID: new ObjectId(userID), numTimes: 0 },
+    }
+
+    pubsub.publish("ANS_ADD_REQUESTS", message);
 
     // se mode = 1, aggiungi al piano
     if (mode === 1) {
@@ -155,11 +173,13 @@ const PlanMutations = {
 
       const updPlan = { recipes: recipes };
 
-      pubsub.publish("UPDATE_PLAN", {
-        updatingUser: user._id.toString(),
-        updatedUser: user._id.toString(),
+      const message: PlanUpdate = {
+        updatingUserID: user._id,
+        updatedUserID: user._id,     // shouldn't it be userID?
         plan: updPlan,
-      });
+      }
+
+      pubsub.publish("UPDATE_PLAN", message);
 
       await db
         .collection(ENV.DB_USERS_COL)
@@ -177,7 +197,11 @@ const PlanMutations = {
       return user.plan;
     }
   },
-  remAppRequest: async (_, { userID, recipeID }, { db, user, pubsub }) => {
+  remAppRequest: async (
+    _: unknown, 
+    { userID, recipeID }: { userID:string, recipeID:string }, 
+    { db, user, pubsub }: Context
+  ): Promise<ObjectId> => {
     // check if user is logged
     if (!user) {
       throw new Error("Authentication Error: Please Sign In");
@@ -189,7 +213,7 @@ const PlanMutations = {
       "plan.recipes.userID": user._id.toString(),
     };
 
-    const updateDel = {
+    const updateDel: Document = {
       $pull: {
         "plan.recipes": {
           recipeID: recipeID,
@@ -200,7 +224,9 @@ const PlanMutations = {
 
     const res = await db
       .collection(ENV.DB_USERS_COL)
-      .findOneAndUpdate(filterDel, updateDel, { returnDocument: "after" });
+      .findOneAndUpdate(filterDel, updateDel, { returnDocument: "after" }) as DbUser | null;
+
+    if (!res) throw new Error('')
 
     pubsub.publish("UPDATE_PLAN", {
       updatingUser: user._id.toString(),
@@ -208,9 +234,13 @@ const PlanMutations = {
       plan: res.plan,
     });
 
-    return recipeID;
+    return new ObjectId(recipeID);
   },
-  remPenRequest: async (_, { userID, recipeID }, { db, user, pubsub }) => {
+  remPenRequest: async (
+    _: unknown, 
+    { userID, recipeID }: { userID:string, recipeID:string }, 
+    { db, user, pubsub }: Context
+  ): Promise<ObjectId> => {
     // check if user is logged
     if (!user) {
       throw new Error("Authentication Error: Please Sign In");
@@ -222,7 +252,7 @@ const PlanMutations = {
       "addRequests.userID": user._id,
     };
 
-    const updateDel = {
+    const updateDel: Document = {
       $pull: {
         addRequests: {
           recipeID: new ObjectId(recipeID),
@@ -233,7 +263,7 @@ const PlanMutations = {
 
     await db
       .collection(ENV.DB_USERS_COL)
-      .updateOne(filterDel, updateDel, { returnDocument: "after" });
+      .findOneAndUpdate(filterDel, updateDel, { returnDocument: "after" });
 
     pubsub.publish("ADD_REQUESTS", {
       toUser: userID,
@@ -247,7 +277,7 @@ const PlanMutations = {
       },
     });
 
-    return recipeID;
+    return new ObjectId(recipeID);
   },
 };
 

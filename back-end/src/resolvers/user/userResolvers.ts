@@ -15,7 +15,7 @@ const UserResolvers = {
         return status
       }
 
-      const friendships = await friendshipLoader.load(otherUser._id.toString());
+      const friendships = await friendshipLoader.load(otherUser._id);
 
       const foundFr = friendships.find(
         (fr) =>
