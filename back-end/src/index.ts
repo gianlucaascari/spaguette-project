@@ -7,7 +7,8 @@ import http from "http";
 import cors from "cors";
 
 import { makeExecutableSchema } from "@graphql-tools/schema";
-import { WebSocketServer } from "ws";
+import WebSocketPkg from "ws";
+const { WebSocketServer } = WebSocketPkg;
 import { useServer } from "graphql-ws/lib/use/ws";
 
 import { getUserFromJWT } from "./util/jwt.js";
@@ -35,6 +36,7 @@ import { createRecipeLoader } from "./loaders/recipeLoader.js";
 import { createIngredientLoader } from "./loaders/ingredientLoader.js";
 
 import { PubSub } from "graphql-subscriptions";
+import { Context } from "types/General.js";
 
 // Resolvers define how to fetch the types defined in the schema.
 const resolvers = {
@@ -78,8 +80,8 @@ const serverCleanup = useServer(
   {
     schema,
     context: async (ctx) => {
-      const user = await getUserFromJWT(ctx.connectionParams.authorization, db);
-      return {
+      const user = ctx.connectionParams ? await getUserFromJWT(ctx.connectionParams.authorization as string, db) : undefined;
+      const context: Context = {
         db,
         user,
         friendshipLoader: createFriendshipLoader(db, user),
@@ -87,7 +89,8 @@ const serverCleanup = useServer(
         recipeLoader: createRecipeLoader(db),
         ingredientLoader: createIngredientLoader(db),
         pubsub: pubsub,
-      };
+      }
+      return context;
     },
   },
   wsServer
@@ -120,8 +123,8 @@ app.use(
   express.json(),
   expressMiddleware(server, {
     context: async ({ req }) => {
-      const user = await getUserFromJWT(req.headers.authorization, db);
-      return {
+      const user = req.headers.authorization ? await getUserFromJWT(req.headers.authorization, db) : undefined;
+      const context: Context = {
         db,
         user,
         friendshipLoader: createFriendshipLoader(db, user),
@@ -129,7 +132,8 @@ app.use(
         recipeLoader: createRecipeLoader(db),
         ingredientLoader: createIngredientLoader(db),
         pubsub: pubsub,
-      };
+      }
+      return context;
     },
   })
 );

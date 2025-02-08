@@ -1,9 +1,15 @@
 import { ObjectId } from "mongodb";
 import { ENV } from "../../config/env.js";
+import { DbIngredient, DbIngredientInput, Ingredient, IngredientInput, RecipeInput } from "../../types/Catalogue.js";
+import { Context } from "types/General.js";
+
 
 const CatalogueMutations = {
-  addIngredient: async (_, { name, unityOfMeasure }, { db, user }) => {
-
+  addIngredient: async (
+    _: unknown, 
+    { name, unityOfMeasure }: IngredientInput, 
+    { db, user }: Context
+  ): Promise<DbIngredient> => {
     // check if user is logged
     if (!user) {
       throw new Error("Authentication Error: Please Sign In");
@@ -16,25 +22,32 @@ const CatalogueMutations = {
     // checks if ingredient already exists
     const oldIngredient = await db
       .collection(ENV.DB_INGRE_COL)
-      .findOne({ name: ingName, userID: new ObjectId(user._id) });
+      .findOne({ name: ingName, userID: new ObjectId(user.id) });
     if (oldIngredient) {
       throw new Error("Ingredient already existing");
     }
 
     // insert ingredient
-    const ingredient = {
-      userID: user._id,
+    const ingredientInput: DbIngredientInput = {
+      userID: user.id,
       name: ingName,
       unityOfMeasure: ingUnityOfMeasure,
     };
 
-    const res = await db.collection(ENV.DB_INGRE_COL).insertOne(ingredient);
+    const res = await db.collection(ENV.DB_INGRE_COL).insertOne(ingredientInput);
 
-    ingredient.id = res.insertedId;
+    const ingredient = {
+      ...ingredientInput,
+      _id: res.insertedId
+    }
 
     return ingredient;
   },
-  updIngredient: async (_, { id, name, unityOfMeasure }, { db, user }) => {
+  updIngredient: async (
+    _: unknown, 
+    { id, name, unityOfMeasure }: {id:string, name:string, unityOfMeasure:string}, 
+    { db, user }: Context
+  ): Promise<DbIngredient> => {
     // check if user is logged
     if (!user) {
       throw new Error("Authentication Error: Please Sign In");
@@ -46,7 +59,7 @@ const CatalogueMutations = {
 
     const filter = {
       _id: new ObjectId(id),
-      userID: new ObjectId(user._id),
+      userID: new ObjectId(user.id),
     };
 
     const update = {
@@ -64,12 +77,22 @@ const CatalogueMutations = {
       const res = await db
         .collection(ENV.DB_INGRE_COL)
         .findOne({ _id: new ObjectId(id) });
-      return res;
-    } else {
+
+      if (!res) {
+        throw new Error("Ingredient not found");
+      }
+
+      return res as DbIngredient;
+    } 
+    else {
       throw new Error("Ingredient not found");
     }
   },
-  remIngredient: async (_, { id }, { db, user }) => {
+  remIngredient: async (
+    _: unknown, 
+    { id }: { id: string}, 
+    { db, user }: Context
+  ): Promise<boolean> => {
     // check if user is logged
     if (!user) {
       throw new Error("Authentication Error: Please Sign In");
@@ -107,7 +130,9 @@ const CatalogueMutations = {
     // restituisci il risultato
     return false;
   },
-  addRecipe: async (_, { input }, { db, user }) => {
+  addRecipe: async (
+    _: unknown, 
+    { input }: { input: RecipeInput }, { db, user }) => {
     // check if user is logged
     if (!user) {
       throw new Error("Authentication Error: Please Sign In");

@@ -2,51 +2,59 @@ import { ENV } from "../../config/env.js";
 import bcrypt from "bcryptjs";
 import { getToken } from "../../util/jwt.js";
 import { ObjectId } from "mongodb";
+import { AuthUser, DbAuthUser, DbFriendship, DbFriendshipInput, DbUser, DbUserInput } from "types/User.js";
+import { Context } from "types/General.js";
 
 const UserMutations = {
   // allows new users to register
-  signUp: async (_, { name, email, password }, { db }) => {
+  signUp: async (
+    _: unknown, 
+    { name, email, password }: { name:string, email:string, password:string}, 
+    { db }: Context
+  ): Promise<DbAuthUser> => {
     // checks if the user is already registered
-    const user = await db
+    const oldUser: DbUser | null = await db
       .collection(ENV.DB_USERS_COL)
-      .findOne({ email: email });
-    if (user) {
-      throw new Error("Already used email");
-    }
+      .findOne({ email: email }) as DbUser | null;
+
+    if (oldUser) throw new Error("Already used email");
 
     // hashes the password and creates the new user
     const hashedPw = bcrypt.hashSync(password);
-    const newUser = {
+    const newUser: DbUserInput = {
       name: name,
       email: email,
       password: hashedPw,
-      plan: {
-        recipes: []
-      },
-      list: {
-        recipes: [],
-        ingredients: [],
-      },
+      plan: { recipes: [] },
+      list: { items: [] },
+      addRequests: [],
     };
 
     // adds the new user
     const result = await db.collection(ENV.DB_USERS_COL).insertOne(newUser);
 
-    newUser.id = result.insertedId;
+    const user: DbUser = {
+      ...newUser,
+      _id: result.insertedId
+    }
 
     // creates and return token of authorization
-    const token = getToken(newUser);
+    const token = getToken(user);
     return {
-      user: newUser,
+      user: user,
       token: token,
     };
   },
   // allows users to access
-  signIn: async (_, { email, password }, { db }) => {
+  signIn: async (
+    _: unknown, 
+    { email, password }: { email:string, password:string }, 
+    { db }: Context
+  ): Promise<DbAuthUser> => {
     // checks if user is registered
     const user = await db
       .collection(ENV.DB_USERS_COL)
-      .findOne({ email: email });
+      .findOne({ email: email }) as DbUser | null;
     if (!user) {
       throw new Error("Incorrect credientials");
     }
@@ -64,7 +72,11 @@ const UserMutations = {
       token: token,
     };
   },
-  sendFriendshipRequest: async (_, { userID }, { db, user }) => {
+  sendFriendshipRequest: async (
+    _: unknown, 
+    { userID }: { userID: string }, 
+    { db, user }: Context
+  ): Promise<number> => {
     if (!user) {
       throw new Error("Authentication Error: Please Sign In");
     }
@@ -80,7 +92,7 @@ const UserMutations = {
         { senderID: user._id, receiverID: new ObjectId(userID) },
         { senderID: new ObjectId(userID), receiverID: user._id },
       ],
-    });
+    }) as DbFriendship | null;
 
     if (oldFriendship) {
       // if a request has already been sent send an error
@@ -111,7 +123,7 @@ const UserMutations = {
       }
     }
 
-    const friendship = {
+    const friendship: DbFriendshipInput = {
       senderID: user._id,
       receiverID: new ObjectId(userID),
       status: 0,
@@ -122,7 +134,11 @@ const UserMutations = {
 
     return 1;
   },
-  answerFriendshipRequest: async (_, { userID, mode }, { db, user }) => {
+  answerFriendshipRequest: async (
+    _: unknown, 
+    { userID, mode }: { userID:string, mode:number }, 
+    { db, user }: Context
+  ): Promise<number> => {
 
     if (!user) {
       throw new Error("Authentication Error: Please Sign In");
