@@ -7,8 +7,7 @@ import http from "http";
 import cors from "cors";
 
 import { makeExecutableSchema } from "@graphql-tools/schema";
-import WebSocketPkg from "ws";
-const { WebSocketServer } = WebSocketPkg;
+import { WebSocketServer } from "ws";
 import { useServer } from "graphql-ws/lib/use/ws";
 
 import { getUserFromJWT } from "./util/jwt.js";
@@ -71,7 +70,7 @@ const schema = makeExecutableSchema({
 const app = express();
 
 const httpServer = http.createServer(app);
-const wsServer = new WebSocketServer({
+const wsServer: WebSocketServer = new WebSocketServer({
   server: httpServer,
   path: "/subscriptions",
 });
