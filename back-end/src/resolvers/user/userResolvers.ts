@@ -1,20 +1,21 @@
 import { ObjectId } from "mongodb";
+import { Context } from "types/General.js";
+import { DbOthUser, DbUser } from "types/User.js";
 
 const UserResolvers = {
   User: {
-    id: ({ _id, id }) => _id || id,
-    plan: (parent, _, __, info) => {
-      // console.log(info.variableValues.othUser)
+    id: ({ _id }: DbUser) => _id.toString(),
+    plan: (parent: DbUser) => {       // ???
       return parent.plan
     }
   },
   OthUser: {
-    status: async ({ user: otherUser, status }, _, { friendshipLoader }) => {
+    status: async ({ user: otherUser, status }: DbOthUser, _:unknown, { friendshipLoader }:Context) => {
       if (status) {
         return status
       }
 
-      const friendships = await friendshipLoader.load(otherUser._id);
+      const friendships = await friendshipLoader.load(otherUser._id.toString());
 
       const foundFr = friendships.find(
         (fr) =>

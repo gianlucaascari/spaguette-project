@@ -41,7 +41,7 @@ export type User = {
 
   export type DbOthUser = {
     user: DbUser
-    // status is not there because it is dynamically calculated by the resolver of OthUser
+    status?: number
   }
 
   export type DbFriendship = DbFriendshipInput & {
