@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
 import { ENV } from "../../config/env.js";
-import { DbIngredient, DbIngredientInput, Ingredient, IngredientInput, RecipeInput } from "../../types/Catalogue.js";
+import { DbIngredient, DbIngredientInput, DbRecipe, DbRecipeInput, Ingredient, IngredientInput, RecipeInput } from "../../types/Catalogue.js";
 import { Context } from "types/General.js";
 
 
@@ -22,14 +22,14 @@ const CatalogueMutations = {
     // checks if ingredient already exists
     const oldIngredient = await db
       .collection(ENV.DB_INGRE_COL)
-      .findOne({ name: ingName, userID: new ObjectId(user.id) });
+      .findOne({ name: ingName, userID: new ObjectId(user._id) });
     if (oldIngredient) {
       throw new Error("Ingredient already existing");
     }
 
     // insert ingredient
     const ingredientInput: DbIngredientInput = {
-      userID: user.id,
+      userID: user._id.toString(),
       name: ingName,
       unityOfMeasure: ingUnityOfMeasure,
     };
@@ -59,7 +59,7 @@ const CatalogueMutations = {
 
     const filter = {
       _id: new ObjectId(id),
-      userID: new ObjectId(user.id),
+      userID: new ObjectId(user._id),
     };
 
     const update = {
@@ -132,7 +132,9 @@ const CatalogueMutations = {
   },
   addRecipe: async (
     _: unknown, 
-    { input }: { input: RecipeInput }, { db, user }) => {
+    { input }: { input: RecipeInput }, 
+    { db, user }: Context
+  ): Promise<DbRecipe> => {
     // check if user is logged
     if (!user) {
       throw new Error("Authentication Error: Please Sign In");
@@ -151,21 +153,31 @@ const CatalogueMutations = {
       throw new Error("Recipe already existing");
     }
 
-    const recipe = {
-      userID: user._id,
+    const recipeInput: DbRecipeInput = {
+      userID: new ObjectId(user._id),
       name: recName,
       description: description,
       stepsLink: stepsLink,
-      ingredients: ingredients,
+      ingredients: ingredients.map(ingredient => ({
+        ...ingredient,
+        ingredientID: new ObjectId(ingredient.ingredientID)
+      })),
     };
 
-    const res = await db.collection(ENV.DB_RECIP_COL).insertOne(recipe);
+    const res = await db.collection(ENV.DB_RECIP_COL).insertOne(recipeInput);
 
-    recipe.id = res.insertedId;
+    const recipe = {
+      ...recipeInput,
+      _id: res.insertedId
+    }
 
     return recipe;
   },
-  updRecipe: async (_, { id, input }, { db, user }) => {
+  updRecipe: async (
+    _: unknown, 
+    { id, input }: { id: string, input: RecipeInput}, 
+    { db, user }: Context
+  ): Promise<DbRecipe> => {
     // check if user is logged
     if (!user) {
       throw new Error("Authentication Error: Please Sign In");
@@ -197,14 +209,18 @@ const CatalogueMutations = {
     if (result && result.matchedCount == 1) {
       const res = await db
         .collection(ENV.DB_RECIP_COL)
-        .findOne({ _id: new ObjectId(id) });
+        .findOne({ _id: new ObjectId(id) }) as DbRecipe;
 
       return res;
     } else {
       throw new Error("Recipe not found");
     }
   },
-  remRecipe: async (_, { id }, { db, user }) => {
+  remRecipe: async (
+    _: unknown, 
+    { id }: { id:string }, 
+    { db, user }: Context
+  ): Promise<boolean> => {
     // check if user is logged
     if (!user) {
       throw new Error("Authentication Error: Please Sign In");
@@ -243,14 +259,22 @@ const CatalogueMutations = {
     // restituisci il risultato
     return false;
   },
-  utilRemRecipes: async (_, { subString }, { db }) => {
+  utilRemRecipes: async (
+    _: unknown, 
+    { subString }: { subString:string }, 
+    { db }: Context
+  ): Promise<number> => {
     const res = await db
       .collection(ENV.DB_RECIP_COL)
       .deleteMany({ name: { $regex: subString } });
 
     return res.deletedCount
   },
-  utilRemIngredients: async (_, { subString }, { db }) => {
+  utilRemIngredients: async (
+    _: unknown, 
+    { subString }: { subString:string }, 
+    { db }: Context
+  ): Promise<number> => {
     const res = await db
       .collection(ENV.DB_INGRE_COL)
       .deleteMany({ name: { $regex: subString } });

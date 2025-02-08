@@ -19,10 +19,12 @@ export type PlanInput = {
 }
 
 export type DbPlan = {
-  recipes: {
-    recipeID: string    // why string?
-    numTimes: number
-  } []
+  recipes: DbRecipeQuantity []
+}
+
+export type DbRecipeQuantity = {
+  recipeID: string    // why string?
+  numTimes: number
 }
 
 export type List = {
@@ -44,11 +46,13 @@ export type ListInput = {
 }
 
 export type DbList = {
-  items: {
-    ingredientID: string    // why string?
-    quantity: number
-    taken: boolean
-  } []
+  items: DbListItem []
+}
+
+export type DbListItem = {
+  ingredientID: string    // why string?
+  quantity: number
+  taken: boolean
 }
 
 export type AddRequest = {

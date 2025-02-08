@@ -54,8 +54,10 @@ export type DbRecipeInput = {
     name: string
     description?: string
     stepsLink?: string
-    ingredients: {
-        ingredientID: ObjectId
-        quantity: number
-    }[]
+    ingredients: DbIngredientQuantity[]
+}
+
+export type DbIngredientQuantity = {
+    ingredientID: ObjectId
+    quantity: number
 }

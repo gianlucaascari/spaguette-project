@@ -1,4 +1,4 @@
-import { Db } from "mongodb";
+import { Db, ObjectId } from "mongodb";
 import { ENV } from "../config/env.js";
 
 import DataLoader from "dataloader";
@@ -7,10 +7,10 @@ import { DbFriendship, DbUser } from "types/User.js";
 const createFriendshipLoader = (
   db: Db, 
   user: DbUser | undefined
-): DataLoader<string, DbFriendship[], string> => {
+): DataLoader<ObjectId, DbFriendship[], string> => {
   if(!user) throw new Error('Impossible loading friendships for unkown user')
 
-  return new DataLoader(async (userIDs) => {
+  return new DataLoader(async (userIDs: readonly ObjectId[]) => {
     const query = {
       $and: [
         {
@@ -34,8 +34,8 @@ const createFriendshipLoader = (
       .find(query)
       .toArray() as DbFriendship[];
 
-    const friendshipsByUserId = userIDs.reduce((acc: Record<string, DbFriendship[]>, userID: string) => {
-      acc[userID] = friendships.filter(
+    const friendshipsByUserId = userIDs.reduce((acc: Record<string, DbFriendship[]>, userID: ObjectId) => {
+      acc[userID.toString()] = friendships.filter(
         (friendship) =>
           friendship.senderID.toString() === userID.toString() ||
           friendship.receiverID.toString() === userID.toString()
@@ -43,7 +43,7 @@ const createFriendshipLoader = (
       return acc;
     }, {});
 
-    return userIDs.map((userId) => friendshipsByUserId[userId] || []);
+    return userIDs.map((userId) => friendshipsByUserId[userId.toString()] || []);
   });
 };
 
