@@ -1,37 +1,39 @@
-type RecipeQuantity = {
+import { Ingredient, Recipe } from "./Catalogue";
+
+export type RecipeQuantity = {
     recipe: Recipe;
     numTimes: number;
 };
 
-type Plan = {
+export type Plan = {
     recipes: RecipeQuantity[];
 }
 
-type PlanElementInput = {
+export type PlanElementInput = {
     recipeID: string;
     numTimes: number;
 }
 
-type PlanInput = {
+export type PlanInput = {
     recipes: PlanElementInput[];
 }
 
-type ListItem = {
+export type ListItem = {
     ingredient: Ingredient,
     quantity: number,
     taken: boolean,
 }
 
-type List = {
+export type List = {
     items: ListItem[],
 }
 
-type ListItemInput = {
+export type ListItemInput = {
     ingredientID: string, 
     quantity: number,
     taken: boolean,
 }
 
-type ListInput = {
+export type ListInput = {
     items: ListItemInput[],
 }

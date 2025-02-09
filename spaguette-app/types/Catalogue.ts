@@ -1,15 +1,21 @@
-type Ingredient = {
+export type Ingredient = {
     id: string;
     name: string;
-    unityOfMeasure: string;
+    unityOfMeasure: UnityOfMeasure;
 };
 
-type IngredientInput = {
+export type IngredientInput = {
     name: string;
-    unityOfMeasure: string;
+    unityOfMeasure: UnityOfMeasure;
 }
 
-type Recipe = {
+export enum UnityOfMeasure {
+    GR = "GR",
+    ML = "ML",
+    PC = "PC",
+}
+
+export type Recipe = {
     id: string;
     name: string;
     description?: string;
@@ -20,7 +26,7 @@ type Recipe = {
     }[];
 };
 
-type RecipeInput = {
+export type RecipeInput = {
     name: string;
     description?: string;
     stepsLink?: string;

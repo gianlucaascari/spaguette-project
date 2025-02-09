@@ -19,7 +19,7 @@ const CatalogueMutations = {
 
     // all ingredients equally formatted
     const ingName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
-    const ingUnityOfMeasure = unityOfMeasure.toLowerCase();
+    const ingUnityOfMeasure = unityOfMeasure//.toLowerCase();
 
     // checks if ingredient already exists
     const oldIngredient = await db
@@ -59,7 +59,7 @@ const CatalogueMutations = {
 
     // all ingredients equally formatted
     const ingName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
-    const ingUnityOfMeasure = unityOfMeasure.toLowerCase();
+    const ingUnityOfMeasure = unityOfMeasure//.toLowerCase();
 
     const filter = {
       _id: new ObjectId(id),

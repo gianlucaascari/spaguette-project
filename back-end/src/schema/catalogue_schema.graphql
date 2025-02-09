@@ -13,13 +13,6 @@ type IngredientQuantity {
   quantity: Float!
 }
 
-type Ingredient {
-  id: ID!
-  user: User
-  name: String!
-  unityOfMeasure: String!
-}
-
 input RecipeInput {
   name: String!
   description: String
@@ -32,9 +25,22 @@ input InputIngredientQuantity {
   quantity: Float!
 }
 
+type Ingredient {
+  id: ID!
+  user: User
+  name: String!
+  unityOfMeasure: UnityOfMeasure!
+}
+
 input IngredientInput {
   name: String!
-  unityOfMeasure: String!
+  unityOfMeasure: UnityOfMeasure!
+}
+
+enum UnityOfMeasure {
+  GR
+  ML
+  PC
 }
 
 type Query {

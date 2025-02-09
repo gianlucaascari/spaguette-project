@@ -3,6 +3,7 @@ import React from 'react'
 import RecipeIngredientsInput from './RecipeIngredientsInput'
 import { useStyles } from '../../../styles/components/catalogue/modify-recipes/RecipeInput.style'
 import { COLORS } from '@/styles/const/colors'
+import { Recipe } from '@/types/Catalogue'
 
 interface RecipeInputProps {
     recipe: Recipe,

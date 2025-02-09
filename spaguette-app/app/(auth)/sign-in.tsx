@@ -19,20 +19,6 @@ const SignInPage = () => {
 
   // method to perform on sign in
   const onSignIn = () => {
-    // check if email is valid
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!regex.test(email)) {
-      alert("Please insert a valid email")
-      return
-    }
-
-    // check if password is at least 4 chars long
-    if(password.length < 4) {
-      alert("Please insert a password at least 4 characters long")
-      return
-    }
-
-    // sign in
     authService.signIn({email, password})
   }
 

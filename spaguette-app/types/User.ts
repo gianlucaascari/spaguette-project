@@ -1,20 +1,20 @@
-type AuthUser = {
+export type AuthUser = {
     token: string,
     user: User,
 }
 
-type User = {
+export type User = {
     id: string,
     name: string,
     email: string,
 }
 
-type SignInInput = {
+export type SignInInput = {
     email: string,
     password: string,
 }
 
-type SignUpInput = {
+export type SignUpInput = {
     name: string,
     email: string,
     password: string,

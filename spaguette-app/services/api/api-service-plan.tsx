@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 import client from "./apollo-client";
+import { List, ListInput, Plan, PlanInput } from "@/types/Plan";
 
 
 const GET_MY_PLAN = gql`

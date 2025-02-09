@@ -4,6 +4,7 @@ import IngredientInput from './IngredientInput'
 import { useDataService } from '@/services/data/data-service'
 import { useStyles } from '../../../styles/components/catalogue/modify-ingredients/AddIngredientInput.style'
 import Button from '@/components/general/Button'
+import { Ingredient, UnityOfMeasure } from '@/types/Catalogue'
 
 interface AddIngredientInputProps {
     onCancel: () => void,
@@ -17,7 +18,7 @@ const AddIngredientInput: React.FC<AddIngredientInputProps> = ({onCancel, afterS
     const emptyIngredient = {
         id: '',
         name: '',
-        unityOfMeasure: '',
+        unityOfMeasure: UnityOfMeasure.GR,
     }
 
     const [ingredient, setIngredient] = useState<Ingredient>(emptyIngredient)
@@ -25,7 +26,8 @@ const AddIngredientInput: React.FC<AddIngredientInputProps> = ({onCancel, afterS
 
     const onAddIngredientPress = () => {
         // check if the ingredient is empty
-        if (ingredient.name === '' || ingredient.unityOfMeasure === '') {
+        if (ingredient.name === '') {
+            alert('Please insert a name for the ingredient')
             return
         }
 

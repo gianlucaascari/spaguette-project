@@ -4,6 +4,7 @@ import IngredientInput from './IngredientInput'
 import { useDataService } from '@/services/data/data-service'
 import Button from '@/components/general/Button'
 import { useStyles } from '../../../styles/components/catalogue/modify-ingredients/UpdateIngredientInput.style'
+import { Ingredient, IngredientInput as IngredientInputType } from '@/types/Catalogue'
 
 interface UpdateIngredientInputProps {
     initialIngredient: Ingredient,
@@ -19,12 +20,13 @@ const UpdateIngredientInput: React.FC<UpdateIngredientInputProps> = ({ initialIn
 
     const onUpdateIngredientPress = () => {
         // check if the ingredient is empty
-        if (ingredient.name === '' || ingredient.unityOfMeasure === '') {
+        if (ingredient.name === '') {
+            alert('please insert a name for the ingredient')
             return
         }
 
         // create ingredientInput
-        const ingredientInput: IngredientInput = {
+        const ingredientInput: IngredientInputType = {
             name: ingredient.name,
             unityOfMeasure: ingredient.unityOfMeasure,
         }

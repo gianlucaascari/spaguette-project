@@ -7,6 +7,7 @@ import AddPlanElementInput from '@/components/plan/modify-plan/AddPlanElementInp
 import { useStyles } from '../../../styles/app/(tabs)/plan-page.style';
 import ListItem from '@/components/plan/show-list/ListItem';
 import { useAuthService } from '@/services/auth/auth-service';
+import { ListItem as ListItemType, RecipeQuantity } from '@/types/Plan';
 
 
 const PlanPage = () => {
@@ -43,7 +44,7 @@ const PlanPage = () => {
             <View style={styles.listContainer}>
                 {state.list ? 
                 (
-                    state.list.items.map((item: ListItem, index: number) => (
+                    state.list.items.map((item: ListItemType, index: number) => (
                         <ListItem key={index} item={item} />
                     ))
                 )

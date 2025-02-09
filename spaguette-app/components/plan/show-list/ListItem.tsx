@@ -3,9 +3,10 @@ import React from 'react'
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useDataService } from '@/services/data/data-service';
 import { useStyles } from '../../../styles/components/plan/show-list/ListItem.style';
+import { ListItem as ListItemType } from '@/types/Plan';
 
 interface ListItemProps {
-    item: ListItem,
+    item: ListItemType,
 }
 
 const ListItem: React.FC<ListItemProps> = ({ item }) => {

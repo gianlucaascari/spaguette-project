@@ -4,6 +4,7 @@ import RecipeInput from './RecipeInput'
 import { useDataService } from '@/services/data/data-service'
 import { useStyles } from '../../../styles/components/catalogue/modify-recipes/AddRecipeInput.style'
 import Button from '@/components/general/Button'
+import { Recipe } from '@/types/Catalogue'
 
 interface AddRecipeInputProps {
     onCancel: () => void,

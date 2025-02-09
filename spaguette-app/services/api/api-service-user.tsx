@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 import client from "./apollo-client";
+import { AuthUser, SignInInput, SignUpInput } from "@/types/User";
 
 const SIGN_IN = gql`
   mutation SignIn($email: String!, $password: String!) {

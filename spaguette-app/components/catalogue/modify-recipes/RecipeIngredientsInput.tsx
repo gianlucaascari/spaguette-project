@@ -6,6 +6,7 @@ import { useDataService } from '@/services/data/data-service';
 import Button from '@/components/general/Button';
 import { useStyles } from '../../../styles/components/catalogue/modify-recipes/RecipeIngredientsInput.style';
 import { COLORS } from '@/styles/const/colors';
+import { Ingredient } from '@/types/Catalogue';
 
 interface RecipeIngredientsInputProps {
     ingredients: {ingredient: Ingredient, quantity: number}[];

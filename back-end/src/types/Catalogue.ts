@@ -8,12 +8,18 @@ export type DbIngredient = DbIngredientInput & {
 export type DbIngredientInput = {
     userID: ObjectId,
     name: string,
-    unityOfMeasure: string,
+    unityOfMeasure: UnityOfMeasure,
 }
   
 export type IngredientInput = {
-    name: string;
-    unityOfMeasure: string;
+    name: string
+    unityOfMeasure: UnityOfMeasure
+}
+
+enum UnityOfMeasure {
+    GR = 'GR',
+    ML = 'ML',
+    PC = 'PC',
 }
 
 export type DbRecipe = DbRecipeInput &{

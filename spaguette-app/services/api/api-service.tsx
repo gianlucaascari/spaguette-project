@@ -2,6 +2,7 @@ import { gql } from '@apollo/client';
 import client from './apollo-client';
 import { apiServicePlan } from './api-service-plan';
 import { apiServiceUser } from './api-service-user';
+import { Ingredient, IngredientInput, Recipe, RecipeInput } from '@/types/Catalogue';
 
 const GET_MY_INGRE = gql`
   query GetIngredients {

@@ -5,6 +5,8 @@ import { DataContext } from '@/services/data/DataContext';
 import { useDataService } from '@/services/data/data-service';
 import { COLORS } from '@/styles/const/colors';
 import { useStyles } from '../../../styles/components/plan/modify-plan/PlanElementInput.style';
+import { RecipeQuantity } from '@/types/Plan';
+import { Recipe } from '@/types/Catalogue';
 
 interface PlanElementInputProps {
     planElement: RecipeQuantity;

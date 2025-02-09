@@ -9,6 +9,7 @@ import AddIngredientInput from '@/components/catalogue/modify-ingredients/AddIng
 import Button from '@/components/general/Button';
 import { useStyles } from '../../../styles/app/(tabs)/ingredients-page.style';
 import { useAuthService } from '@/services/auth/auth-service';
+import { Ingredient } from '@/types/Catalogue';
 
 export default function TabTwoScreen() {
 
