@@ -14,8 +14,8 @@ const GET_MY_INGRE = gql`
 `;
 
 const ADD_INGRE = gql`
-  mutation AddIngredient($name: String!, $UdM: String!) {
-    addIngredient(name: $name, unityOfMeasure: $UdM) {
+  mutation AddIngredient($input: IngredientInput) {
+    addIngredient(input: $input) {
       id
       name
       unityOfMeasure
@@ -24,8 +24,8 @@ const ADD_INGRE = gql`
 `;
 
 const UPD_INGRE = gql`
-  mutation UpdIngredient($id: ID!, $name: String!, $UdM: String!) {
-    updIngredient(id: $id, name: $name, unityOfMeasure: $UdM) {
+  mutation UpdIngredient($id: ID!, $input: IngredientInput) {
+    updIngredient(id: $id, input: $input) {
       id
       name
       unityOfMeasure
@@ -126,7 +126,7 @@ export const apiService = {
    * @throws {Error} If an error occurs while adding the ingredient
    */
   addIngredient: async (ingredient: IngredientInput): Promise<Ingredient> => {
-      const response = await client.mutate<{ addIngredient: Ingredient }>({ mutation: ADD_INGRE, variables: { name: ingredient.name, UdM: ingredient.unityOfMeasure } });
+      const response = await client.mutate<{ addIngredient: Ingredient }>({ mutation: ADD_INGRE, variables: { input: ingredient } });
       if (!response.data) throw new Error('No data received from mutation');
       return response.data.addIngredient;
   },
@@ -139,7 +139,7 @@ export const apiService = {
    * @throws {Error} If an error occurs while updating the ingredient
    */
   updateIngredient: async (id: string, ingredient: IngredientInput): Promise<Ingredient> => {
-    const response = await client.mutate<{ updIngredient: Ingredient }>({ mutation: UPD_INGRE, variables: { id: id, name: ingredient.name, UdM: ingredient.unityOfMeasure } });
+    const response = await client.mutate<{ updIngredient: Ingredient }>({ mutation: UPD_INGRE, variables: { id: id, input: ingredient } });
     if (!response.data) throw new Error('No data received from mutation');
     return response.data.updIngredient;
   },

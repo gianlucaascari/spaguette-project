@@ -29,9 +29,15 @@ const AddIngredientInput: React.FC<AddIngredientInputProps> = ({onCancel, afterS
             return
         }
 
+        // create ingredient input
+        const ingredientInput = {
+            name: ingredient.name,
+            unityOfMeasure: ingredient.unityOfMeasure
+        }
+
         // call data service
         try {
-            addIngredient(ingredient)
+            addIngredient(ingredientInput)
         } catch (e: any) {
             alert('AddIngredientInput> Error adding ingredient\n' + e?.message)
             return

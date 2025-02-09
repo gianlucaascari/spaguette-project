@@ -1,48 +1,19 @@
 import { ObjectId } from "mongodb"
 import { User } from "./User.js"
 
-export type Ingredient = {
-    id: string
-    user?: User
-    name: string
-    unityOfMeasure: string
-}
-  
-export type IngredientInput = {
-    name: string;
-    unityOfMeasure: string;
-}
-
 export type DbIngredient = DbIngredientInput & {
     _id: ObjectId,
 }
 
 export type DbIngredientInput = {
-    userID: string,
+    userID: ObjectId,
     name: string,
     unityOfMeasure: string,
 }
-
-export type Recipe = {
-    id: string
-    user?: User
-    name: string
-    description?: string
-    stepsLink?: string
-    ingredients: {
-        quantity: number;
-        ingredient: Ingredient;
-    }[]
-}
-
-export type RecipeInput = {
-    name: string
-    description?: string
-    stepsLink?: string
-    ingredients: {
-        quantity: number;
-        ingredientID: string;
-    }[]
+  
+export type IngredientInput = {
+    name: string;
+    unityOfMeasure: string;
 }
 
 export type DbRecipe = DbRecipeInput &{
@@ -60,4 +31,14 @@ export type DbRecipeInput = {
 export type DbIngredientQuantity = {
     ingredientID: ObjectId
     quantity: number
+}
+
+export type RecipeInput = {
+    name: string
+    description?: string
+    stepsLink?: string
+    ingredients: {
+        quantity: number;
+        ingredientID: string;
+    }[]
 }

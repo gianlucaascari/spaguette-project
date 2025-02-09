@@ -32,6 +32,11 @@ input InputIngredientQuantity {
   quantity: Float!
 }
 
+input IngredientInput {
+  name: String!
+  unityOfMeasure: String!
+}
+
 type Query {
   # ingredients
   getMyIngredients: [Ingredient!]!
@@ -43,8 +48,8 @@ type Query {
 
 type Mutation {
   # ingredients
-  addIngredient(name: String!, unityOfMeasure: String!): Ingredient!
-  updIngredient(id: ID!, name: String!, unityOfMeasure: String!): Ingredient!
+  addIngredient(input: IngredientInput): Ingredient!
+  updIngredient(id: ID!, input: IngredientInput): Ingredient!
   remIngredient(id: ID!): Boolean!
 
   # recipes 

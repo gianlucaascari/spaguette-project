@@ -1,19 +1,21 @@
 import { ObjectId } from "mongodb";
 import { ENV } from "../../config/env.js";
-import { DbIngredient, DbIngredientInput, DbRecipe, DbRecipeInput, Ingredient, IngredientInput, RecipeInput } from "../../types/Catalogue.js";
+import { DbIngredient, DbIngredientInput, DbRecipe, DbRecipeInput, IngredientInput, RecipeInput } from "../../types/Catalogue.js";
 import { Context } from "types/General.js";
 
 
 const CatalogueMutations = {
   addIngredient: async (
     _: unknown, 
-    { name, unityOfMeasure }: IngredientInput, 
+    { input }: { input: IngredientInput}, 
     { db, user }: Context
   ): Promise<DbIngredient> => {
     // check if user is logged
     if (!user) {
       throw new Error("Authentication Error: Please Sign In");
     }
+
+    const {name, unityOfMeasure} = input
 
     // all ingredients equally formatted
     const ingName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
@@ -22,14 +24,14 @@ const CatalogueMutations = {
     // checks if ingredient already exists
     const oldIngredient = await db
       .collection(ENV.DB_INGRE_COL)
-      .findOne({ name: ingName, userID: new ObjectId(user._id) });
+      .findOne({ name: ingName, userID: user._id });
     if (oldIngredient) {
       throw new Error("Ingredient already existing");
     }
 
     // insert ingredient
     const ingredientInput: DbIngredientInput = {
-      userID: user._id.toString(),
+      userID: user._id,
       name: ingName,
       unityOfMeasure: ingUnityOfMeasure,
     };
@@ -45,13 +47,15 @@ const CatalogueMutations = {
   },
   updIngredient: async (
     _: unknown, 
-    { id, name, unityOfMeasure }: {id:string, name:string, unityOfMeasure:string}, 
+    { id, input }: {id: string, input: IngredientInput}, 
     { db, user }: Context
   ): Promise<DbIngredient> => {
     // check if user is logged
     if (!user) {
       throw new Error("Authentication Error: Please Sign In");
     }
+
+    const { name, unityOfMeasure } = input
 
     // all ingredients equally formatted
     const ingName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
