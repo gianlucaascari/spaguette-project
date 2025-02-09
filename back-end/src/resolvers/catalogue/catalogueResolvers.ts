@@ -5,7 +5,7 @@ import { DbUser } from "types/User.js";
 
 const CatalogueResolvers = {
   Ingredient: {
-    id: ({ _id }: DbIngredient) => _id.toString,
+    id: ({ _id }: DbIngredient) => _id.toString(),
     user: async ({ userID }: DbIngredient, _: unknown, { userLoader }: Context): Promise<DbUser | undefined> => {
       return userID ? userLoader.load(new ObjectId(userID)) : undefined;
     },
