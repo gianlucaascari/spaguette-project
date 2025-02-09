@@ -161,8 +161,8 @@ export const apiService = {
    * @returns {Promise<Recipe[]>} A promise that resolves to an array of recipes
    * @throws {Error} If an error occurs while fetching the recipes
    */
-  getRecipes: async (): Promise<Recipe[]> => {
-      const response = await client.query<{ getMyRecipes: Recipe[] }>({ query: GET_MY_RECIP });
+  getRecipes: async (ignoreCache: boolean): Promise<Recipe[]> => {
+      const response = await client.query<{ getMyRecipes: Recipe[] }>({ query: GET_MY_RECIP, fetchPolicy: ignoreCache ? 'network-only' : 'cache-first' });
       return response.data.getMyRecipes;
   },
 

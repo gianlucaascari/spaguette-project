@@ -23,6 +23,7 @@ const RecipeIngredientsInput: React.FC<RecipeIngredientsInputProps> = ({ ingredi
     const { getIngredients } = useDataService();
 
     useEffect(() => {
+        // if not ignore cache, refetches the old list of ingredients if one was just added
         getIngredients(true);
     }, []);
 

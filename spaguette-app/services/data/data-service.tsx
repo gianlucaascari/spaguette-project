@@ -54,9 +54,9 @@ export const useDataService = () => {
                 return;
             }
         },
-        getRecipes: async () => {
+        getRecipes: async (ignoreCache: boolean = false) => {
             try {
-                const recipes = await apiService.getRecipes();
+                const recipes = await apiService.getRecipes(ignoreCache);
                 dispatch({ type: 'SET_RECIPES', payload: recipes });
             } catch (e: any) {
                 console.error('Error getting recipes:', e);

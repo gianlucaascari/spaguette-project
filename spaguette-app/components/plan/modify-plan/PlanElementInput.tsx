@@ -19,7 +19,8 @@ const PlanElementInput: React.FC<PlanElementInputProps> = ({ planElement, setPla
     const { getRecipes } = useDataService();
 
     useEffect(() => {
-        getRecipes();
+        // if not ignore cache, refetches the old list of recipes if one was just added
+        getRecipes(true);
     }, []);
 
   return (
