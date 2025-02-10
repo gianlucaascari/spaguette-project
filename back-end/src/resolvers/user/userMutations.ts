@@ -2,16 +2,18 @@ import { ENV } from "../../config/env.js";
 import bcrypt from "bcryptjs";
 import { getToken } from "../../util/jwt.js";
 import { ObjectId } from "mongodb";
-import { AuthUser, DbAuthUser, DbFriendship, DbFriendshipInput, DbUser, DbUserInput } from "types/User.js";
+import { DbAuthUser, DbFriendship, DbFriendshipInput, DbUser, DbUserInput, SignInInput, SignUpInput } from "types/User.js";
 import { Context } from "types/General.js";
 
 const UserMutations = {
   // allows new users to register
   signUp: async (
     _: unknown, 
-    { name, email, password }: { name:string, email:string, password:string}, 
+    { input }: { input: SignUpInput }, 
     { db }: Context
   ): Promise<DbAuthUser> => {
+    const { name, email, password } = input
+
     // checks if the user is already registered
     const oldUser: DbUser | null = await db
       .collection(ENV.DB_USERS_COL)
@@ -48,9 +50,11 @@ const UserMutations = {
   // allows users to access
   signIn: async (
     _: unknown, 
-    { email, password }: { email:string, password:string }, 
+    { input }: { input: SignInInput }, 
     { db }: Context
   ): Promise<DbAuthUser> => {
+    const { email, password } = input
+
     // checks if user is registered
     const user = await db
       .collection(ENV.DB_USERS_COL)

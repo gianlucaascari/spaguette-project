@@ -18,6 +18,17 @@ type OthUser {
   user: User!
 }
 
+input SignInInput {
+  email: String!
+  password: String!
+}
+
+input SignUpInput {
+  name: String!
+  email: String!
+  password: String!
+}
+
 type Query {
   getFriends: [User!]!
   getUsers(searchString: String): [OthUser!]!
@@ -27,8 +38,8 @@ type Query {
 }
 
 type Mutation {
-  signUp(name: String!, email: String!, password: String!): AuthUser
-  signIn(email: String!, password: String!): AuthUser
+  signUp(input: SignUpInput!): AuthUser
+  signIn(input: SignInInput!): AuthUser
 
   sendFriendshipRequest(userID: ID!): Int!
   answerFriendshipRequest(userID: ID!, mode: Int!): Int!      # mode 0: refuse, mode 1: accept | return status
