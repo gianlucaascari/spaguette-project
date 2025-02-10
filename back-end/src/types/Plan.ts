@@ -1,14 +1,4 @@
 import { ObjectId } from "mongodb"
-import { Ingredient, Recipe } from "./Catalogue.js"
-import { DbUser, User } from "./User.js"
-
-export type Plan = {
-  recipes: {
-      recipe: Recipe
-      user?: User
-      numTimes: number
-    }[]
-}
 
 export type PlanInput = {
   recipes: PlanRecipeInput[]
@@ -30,15 +20,6 @@ export type DbRecipeQuantity = {
   numTimes: number
 }
 
-export type List = {
-  items: {
-      ingredient: Ingredient
-      user?: User
-      quantity: number
-      taken: boolean
-    } []
-}
-
 export type ListInput = {
   items: {
       ingredientID: string
@@ -57,12 +38,6 @@ export type DbListItem = {
   userID?: string
   quantity: number
   taken: boolean
-}
-
-export type AddRequest = {
-  user: User
-  recipe: Recipe
-  numTimes: number
 }
 
 export type DbAddRequest = {

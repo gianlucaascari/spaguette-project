@@ -1,15 +1,5 @@
 import { ObjectId } from "mongodb"
-import { AddRequest, DbAddRequest, DbList, DbPlan, List, Plan } from "./Plan.js"
-
-export type User = {
-  id: string
-  name: string
-  email: string
-  password: string
-  plan?: Plan
-  list?: List
-  addRequests?: [AddRequest]
-}
+import { DbAddRequest, DbList, DbPlan } from "./Plan.js"
 
 export type DbUser = DbUserInput & {
   _id: ObjectId
@@ -24,19 +14,9 @@ export type DbUserInput = {
   addRequests: DbAddRequest[]
 }
 
-export type AuthUser = {
-  user: User
-  token: string
-}
-
 export type DbAuthUser = {
   user: DbUser,
   token: string,
-}
-
-export type OthUser = {
-  status: number
-  user: User
 }
 
 export type DbOthUser = {

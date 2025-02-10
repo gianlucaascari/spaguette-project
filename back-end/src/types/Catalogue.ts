@@ -1,5 +1,4 @@
 import { ObjectId } from "mongodb"
-import { User } from "./User.js"
 
 export type DbIngredient = DbIngredientInput & {
     _id: ObjectId,
