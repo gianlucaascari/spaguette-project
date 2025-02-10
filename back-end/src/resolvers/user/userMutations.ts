@@ -12,7 +12,9 @@ const UserMutations = {
     { input }: { input: SignUpInput }, 
     { db }: Context
   ): Promise<DbAuthUser> => {
-    const { name, email, password } = input
+
+    const { name, email: inputEmail, password } = input;
+    const email = inputEmail.toLowerCase()
 
     // checks if the user is already registered
     const oldUser: DbUser | null = await db
@@ -53,7 +55,9 @@ const UserMutations = {
     { input }: { input: SignInInput }, 
     { db }: Context
   ): Promise<DbAuthUser> => {
-    const { email, password } = input
+    
+    const { email: inputEmail, password } = input
+    const email = inputEmail.toLowerCase()
 
     // checks if user is registered
     const user = await db
