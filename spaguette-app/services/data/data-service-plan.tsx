@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { DataContext } from "./DataContext";
 import { apiService } from "../api/api-service";
+import { ListInput, ListItem, ListItemInput, PlanElementInput, PlanInput, RecipeQuantity } from "@/types/Plan";
 
 export const useDataServicePlan = () => {
     const { state, dispatch } = useContext(DataContext);
@@ -32,10 +33,10 @@ export const useDataServicePlan = () => {
         },
         updateInPlan: async (originalID: string, planElement: PlanElementInput) => {
             try {
-                let recipes = state.plan.recipes.map((planElement: RecipeQuantity) => { return { recipeID: planElement.recipe.id, numTimes: planElement.numTimes } });
+                let recipes: PlanElementInput[] = state.plan.recipes.map((planElement: RecipeQuantity) => { return { recipeID: planElement.recipe.id, numTimes: planElement.numTimes } });
                 const index = recipes.findIndex((recipe) => recipe.recipeID === originalID);
                 recipes[index] = { recipeID: planElement.recipeID, numTimes: planElement.numTimes };
-                const newPlan = { recipes: recipes };
+                const newPlan: PlanInput = { recipes: recipes };
 
                 const updatedPlan = await apiService.updatePlan(newPlan);
                 dispatch({ type: 'SET_PLAN', payload: updatedPlan });
@@ -47,10 +48,10 @@ export const useDataServicePlan = () => {
         },
         deleteFromPlan: async (recipeID: string) => {
             try {
-                let recipes = state.plan.recipes.map((planElement: RecipeQuantity) => { return { recipeID: planElement.recipe.id, numTimes: planElement.numTimes } });
+                let recipes: PlanElementInput[] = state.plan.recipes.map((planElement: RecipeQuantity) => { return { recipeID: planElement.recipe.id, numTimes: planElement.numTimes } });
                 const index = recipes.findIndex((recipe) => recipe.recipeID === recipeID);
                 recipes.splice(index, 1);
-                const newPlan = { recipes: recipes };
+                const newPlan: PlanInput = { recipes: recipes };
 
                 const updatedPlan = await apiService.updatePlan(newPlan);
                 dispatch({ type: 'SET_PLAN', payload: updatedPlan });
@@ -72,10 +73,10 @@ export const useDataServicePlan = () => {
         },
         updateListItem: async (listItem: ListItemInput) => {
             try {
-                let items = state.list.items.map((listItem: ListItem) => { return { ingredientID: listItem.ingredient.id, quantity: listItem.quantity, taken: listItem.taken } });
+                let items: ListItemInput[] = state.list.items.map((listItem: ListItem) => { return { ingredientID: listItem.ingredient.id, quantity: listItem.quantity, taken: listItem.taken } });
                 const index = items.findIndex((item) => item.ingredientID === listItem.ingredientID);
                 items[index] = { ingredientID: listItem.ingredientID, quantity: listItem.quantity, taken: listItem.taken };
-                const newList = { items: items };
+                const newList: ListInput = { items: items };
 
                 const updatedList = await apiService.updateList(newList);
                 dispatch({ type: 'SET_LIST', payload: updatedList });
