@@ -37,7 +37,7 @@ export { PlanQueries };
 const createList = async (db: Db, recipes: DbRecipeQuantity[], oldList: DbListItem[]): Promise<DbListItem[]> => {
 
   // ricavo tutte le ricette complete
-  const recipeIDs = recipes.map((rec) => new ObjectId(rec.recipeID));
+  const recipeIDs = recipes.map((rec) => rec.recipeID);
 
   const resRec = await db
     .collection(ENV.DB_RECIP_COL)
@@ -46,7 +46,7 @@ const createList = async (db: Db, recipes: DbRecipeQuantity[], oldList: DbListIt
 
   const resRecipes = recipes.map((rec) => {
     const recipe = resRec.find(
-      (resRecipe) => resRecipe._id.toString() == rec.recipeID
+      (resRecipe) => resRecipe._id.toString() == rec.recipeID.toString()
     );
     return {
       recipe: recipe as DbRecipe,
@@ -61,14 +61,14 @@ const createList = async (db: Db, recipes: DbRecipeQuantity[], oldList: DbListIt
   resRecipes.map((rec) => {
     rec.recipe.ingredients.map((ing) => {
       const index = newList.findIndex(
-        (item) => ing.ingredientID.toString() === item.ingredientID
+        (item) => ing.ingredientID.toString() === item.ingredientID.toString()
       );
 
       if (index !== -1) {
         newList[index].quantity += ing.quantity * rec.numTimes;
       } else {
         newList.push({
-          ingredientID: ing.ingredientID.toString(),
+          ingredientID: ing.ingredientID,
           userID: rec.userID,
           quantity: ing.quantity * rec.numTimes,
           taken: false,

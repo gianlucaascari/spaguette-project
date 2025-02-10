@@ -16,7 +16,11 @@ const PlanMutations = {
     }
 
     const { recipes } = input;
-    const plan = { recipes: recipes };
+    const plan: DbPlan = { recipes: recipes.map((rec) => ({
+      ...rec,
+      recipeID: new ObjectId(rec.recipeID),
+      userID: new ObjectId(rec.userID),
+    })) };
 
     await db
       .collection(ENV.DB_USERS_COL)
@@ -44,7 +48,13 @@ const PlanMutations = {
       .collection(ENV.DB_USERS_COL)
       .updateOne({ _id: user._id }, { $set: { list: input } });
 
-    return input;
+    const list: DbList = { items: input.items.map((elem) => ({
+      ...elem, 
+      ingredientID: new ObjectId(elem.ingredientID),
+      userID: new ObjectId(elem.userID),
+    }))}
+
+    return list;
   },
   addRequest: async (
     _: unknown, 
@@ -153,20 +163,20 @@ const PlanMutations = {
       const recipes = user.plan.recipes;
 
       const recipeIndex = recipes.findIndex(
-        (recipe) => recipe.recipeID === recipeID
+        (recipe) => recipe.recipeID.toString() === recipeID
       );
       if (recipeIndex !== -1) {
         // Se la ricetta esiste già, aggiornala
         recipes[recipeIndex] = {
-          recipeID: recipeID,
-          userID: userID,
+          recipeID: new ObjectId(recipeID),
+          userID: new ObjectId(userID),
           numTimes: request.numTimes,
         };
       } else {
         // Se la ricetta non esiste, aggiungila
         recipes.push({
-          recipeID: recipeID,
-          userID: userID,
+          recipeID: new ObjectId(recipeID),
+          userID: new ObjectId(userID),
           numTimes: request.numTimes,
         });
       }

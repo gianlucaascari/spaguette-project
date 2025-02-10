@@ -15,8 +15,8 @@ export type DbPlan = {
 }
 
 export type DbRecipeQuantity = {
-  recipeID: string    // why string?
-  userID?: string     // why string?
+  recipeID: ObjectId
+  userID?: ObjectId
   numTimes: number
 }
 
@@ -34,8 +34,8 @@ export type DbList = {
 }
 
 export type DbListItem = {
-  ingredientID: string    // why string?
-  userID?: string
+  ingredientID: ObjectId
+  userID?: ObjectId
   quantity: number
   taken: boolean
 }
