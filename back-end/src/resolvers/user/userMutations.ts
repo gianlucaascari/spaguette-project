@@ -139,6 +139,7 @@ const UserMutations = {
     };
 
     const res = await db.collection(ENV.DB_FRIEN_COL).insertOne(friendship);
+    if (!res.insertedId) throw new Error("Error adding friendship request");
 
     return 1;
   },

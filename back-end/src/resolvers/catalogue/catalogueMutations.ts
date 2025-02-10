@@ -19,7 +19,7 @@ const CatalogueMutations = {
 
     // all ingredients equally formatted
     const ingName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
-    const ingUnityOfMeasure = unityOfMeasure//.toLowerCase();
+    const ingUnityOfMeasure = unityOfMeasure;
 
     // checks if ingredient already exists
     const oldIngredient = await db
@@ -37,11 +37,12 @@ const CatalogueMutations = {
     };
 
     const res = await db.collection(ENV.DB_INGRE_COL).insertOne(ingredientInput);
+    if (!res.insertedId) throw new Error("Error inserting ingredient");
 
     const ingredient = {
       ...ingredientInput,
       _id: res.insertedId
-    }
+    };
 
     return ingredient;
   },
@@ -169,6 +170,7 @@ const CatalogueMutations = {
     };
 
     const res = await db.collection(ENV.DB_RECIP_COL).insertOne(recipeInput);
+    if (!res.insertedId) throw new Error("Error inserting recipe");
 
     const recipe = {
       ...recipeInput,

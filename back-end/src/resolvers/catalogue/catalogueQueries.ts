@@ -52,9 +52,7 @@ const CatalogueQueries = {
       .collection(ENV.DB_RECIP_COL)
       .findOne({ _id: new ObjectId(recipeID)}) as DbRecipe | null;
 
-    if (!recipe) {
-      throw new Error("Recipe not found");
-    }
+    if (!recipe) throw new Error("Recipe not found");
 
     return recipe;
   },

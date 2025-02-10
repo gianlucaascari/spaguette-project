@@ -71,13 +71,6 @@ const PlanMutations = {
       numTimes: recipe.numTimes,
     };
 
-    const message: NewAddRequest = {
-      toUser: userID,
-      recAddRequest: { addRequest: addRequest, addMode: true },
-    }
-
-    pubsub.publish("ADD_REQUESTS", message);
-
     // update existing request
     const filterUpdate = {
       _id: new ObjectId(userID),
@@ -109,6 +102,13 @@ const PlanMutations = {
         .collection(ENV.DB_USERS_COL)
         .updateOne(filterAdd, updateAdd, { upsert: true });
     }
+
+    const message: NewAddRequest = {
+      toUser: userID,
+      recAddRequest: { addRequest: addRequest, addMode: true },
+    }
+
+    pubsub.publish("ADD_REQUESTS", message);
 
     return addRequest;
   },
@@ -142,9 +142,7 @@ const PlanMutations = {
       .collection(ENV.DB_USERS_COL)
       .findOneAndUpdate(filterDel, updateDel) as DbUser | null;
 
-    if (!res) {
-      throw new Error("Add request not found");
-    }
+    if (!res) throw new Error("Add request not found");
 
     const request = res.addRequests.find(
       (req) =>
@@ -220,14 +218,14 @@ const PlanMutations = {
     const filterDel = {
       _id: new ObjectId(userID),
       "plan.recipes.recipeID": recipeID,
-      "plan.recipes.userID": user._id.toString(),
+      "plan.recipes.userID": user._id,
     };
 
     const updateDel: Document = {
       $pull: {
         "plan.recipes": {
           recipeID: recipeID,
-          userID: user._id.toString(),
+          userID: user._id,
         },
       },
     };
@@ -236,7 +234,7 @@ const PlanMutations = {
       .collection(ENV.DB_USERS_COL)
       .findOneAndUpdate(filterDel, updateDel, { returnDocument: "after" }) as DbUser | null;
 
-    if (!res) throw new Error('')
+    if (!res) throw new Error("Recipe not found in the user's plan");
 
     pubsub.publish("UPDATE_PLAN", {
       updatingUser: user._id.toString(),
@@ -271,9 +269,11 @@ const PlanMutations = {
       },
     };
 
-    await db
+    const res = await db
       .collection(ENV.DB_USERS_COL)
       .findOneAndUpdate(filterDel, updateDel, { returnDocument: "after" });
+    
+    if (!res) throw new Error("Pending request not found");
 
     pubsub.publish("ADD_REQUESTS", {
       toUser: userID,
