@@ -5,14 +5,24 @@ import { Redirect, useRouter } from "expo-router";
 import { apiService } from "../api/api-service";
 import { useDataService } from "../data/data-service";
 import { ActivityIndicator, View } from "react-native";
+import { SignInInput, SignUpInput } from "@/types/User";
 
+/**
+ * Auth Service to handle authentication methods and context
+ */
 export const useAuthService = () => {
     const { authState, dispatch } = useContext(AuthContext)
     const router = useRouter()
     const dataService = useDataService()
     
     return {
-        isAuthenticated: async () => {
+        /**
+         * Trigger the verification of the authentication state
+         * During verify operation, it will set the loading state to true
+         * If the user is authenticated, it will set the user in the context
+         * If the user is not authenticated, it will do nothing
+         */
+        triggerAuthVerification: async () => {
             dispatch({ type: 'SET_LOADING', payload: true })
             
             let authUserString;
@@ -27,7 +37,14 @@ export const useAuthService = () => {
             if (authUserString) dispatch({ type: 'SET_USER', payload: (JSON.parse(authUserString)).user })
             dispatch({ type: 'SET_LOADING', payload: false })
         },
-        verifyAuth: () => {
+
+        /**
+         * Verify the authentication state
+         * During verify operation, it will show a loading spinner
+         * If the user is not authenticated, it will redirect to the sign-in page
+         * If the user is authenticated, it will do nothing
+         */
+        verifyAuthState: () => {
             if (authState.loading) return (
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                   <ActivityIndicator size="large" />

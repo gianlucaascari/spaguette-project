@@ -2,87 +2,6 @@ import { gql } from "@apollo/client";
 import client from "./apollo-client";
 import { List, ListInput, Plan, PlanInput } from "@/types/Plan";
 
-
-const GET_MY_PLAN = gql`
-    query GetMyPlan {
-        getMyPlan {
-            recipes {
-                recipe {
-                    id
-                    name
-                    description
-                    stepsLink
-                    ingredients {
-                        quantity
-                        ingredient {
-                            id
-                            name
-                            unityOfMeasure
-                        }
-                    }
-                }
-                numTimes
-            }
-        }
-    }
-`;
-
-const UPDATE_PLAN = gql`
-mutation UpdPlan($input: PlanInput!) {
-  updPlan(input: $input) {
-    recipes {
-      recipe {
-        id
-        name
-        description
-        stepsLink
-        ingredients {
-          quantity
-          ingredient {
-            id
-            name
-            unityOfMeasure
-          }
-        }
-      }
-      numTimes
-    }
-  }
-}
-`;
-
-const GET_MY_LIST = gql`
-query GetMyList {
-  getMyList {
-    items {
-      ingredient {
-        id
-        name
-        unityOfMeasure
-      }
-      quantity
-      taken
-    }
-  }
-}
-`;
-
-const UPDATE_LIST = gql`
-mutation UpdList($input: ListInput!) {
-  updList(input: $input) {
-    items {
-      ingredient {
-        id
-        name
-        unityOfMeasure
-      }
-      quantity
-      taken
-    }
-  }
-}
-`;
-
 /**
  * Service to interact with the plan of the user
  * @module apiServicePlan
@@ -96,7 +15,30 @@ export const apiServicePlan = {
      * @throws an error if the request fails
      */
     getMyPlan: async (): Promise<Plan> => {
-        const response = await client.query<{ getMyPlan: Plan }>({ query: GET_MY_PLAN });
+        const response = await client.query<{ getMyPlan: Plan }>({ 
+          query: gql`
+            query GetMyPlan {
+                getMyPlan {
+                    recipes {
+                        recipe {
+                            id
+                            name
+                            description
+                            stepsLink
+                            ingredients {
+                                quantity
+                                ingredient {
+                                    id
+                                    name
+                                    unityOfMeasure
+                                }
+                            }
+                        }
+                        numTimes
+                    }
+                }
+            }`
+          });
         return response.data.getMyPlan;
     },
 
@@ -107,7 +49,30 @@ export const apiServicePlan = {
      * @throws an error if the request fails
      */
     updatePlan: async (input: PlanInput): Promise<Plan> => {
-        const response = await client.mutate<{ updPlan: Plan }>({ mutation: UPDATE_PLAN, variables: { input } });
+        const response = await client.mutate<{ updPlan: Plan }>({ 
+          mutation: gql`
+            mutation UpdPlan($input: PlanInput!) {
+              updPlan(input: $input) {
+                recipes {
+                  recipe {
+                    id
+                    name
+                    description
+                    stepsLink
+                    ingredients {
+                      quantity
+                      ingredient {
+                        id
+                        name
+                        unityOfMeasure
+                      }
+                    }
+                  }
+                  numTimes
+                }
+              }
+            }`, 
+          variables: { input } });
         if(!response.data) throw new Error('No data received from mutation');
         return response.data.updPlan;
     },
@@ -118,7 +83,22 @@ export const apiServicePlan = {
      * @throws an error if the request fails
      */
     getMyList: async ( ignoreCache: boolean ): Promise<List> => {
-        const response = await client.query<{ getMyList: List }>({ query: GET_MY_LIST, fetchPolicy: ignoreCache ? 'network-only' : 'cache-first' });
+        const response = await client.query<{ getMyList: List }>({ 
+          query: gql`
+            query GetMyList {
+              getMyList {
+                items {
+                  ingredient {
+                    id
+                    name
+                    unityOfMeasure
+                  }
+                  quantity
+                  taken
+                }
+              }
+            }`, 
+          fetchPolicy: ignoreCache ? 'network-only' : 'cache-first' });
         return response.data.getMyList;
     },
 
@@ -129,7 +109,22 @@ export const apiServicePlan = {
      * @throws an error if the request fails
      */
     updateList: async (input: ListInput): Promise<List> => {
-        const response = await client.mutate<{ updList: List }>({ mutation: UPDATE_LIST, variables: { input } });
+        const response = await client.mutate<{ updList: List }>({ 
+          mutation: gql`
+            mutation UpdList($input: ListInput!) {
+              updList(input: $input) {
+                items {
+                  ingredient {
+                    id
+                    name
+                    unityOfMeasure
+                  }
+                  quantity
+                  taken
+                }
+              }
+            }`, 
+          variables: { input } });
         if(!response.data) throw new Error('No data received from mutation');
         return response.data.updList;
     }

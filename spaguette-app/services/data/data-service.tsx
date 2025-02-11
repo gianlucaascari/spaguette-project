@@ -7,9 +7,6 @@ import { useDataServiceCatalogue } from "./data-service-catalogue";
 
 /**
  * Data service to fetch and manipulate data, combining API and (soon) local storage
- * @module services/data/data-service
- * @see module:services/api/api-service
- * @see module:types/Catalogue
  */
 export const useDataService = () => {
     const { dispatch } = useContext(DataContext);

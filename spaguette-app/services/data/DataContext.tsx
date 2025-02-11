@@ -1,11 +1,7 @@
+import { Ingredient, Recipe } from "@/types/Catalogue";
+import { List, Plan } from "@/types/Plan";
 import { createContext, ReactNode, useReducer } from "react";
 
-/**
- * interface for the global state
- * @interface State
- * @property {Recipe[]} recipes - list of recipes
- * @property {Ingredient[]} ingredients - list of ingredients
- */
 interface ContextState {
     recipes: Recipe[];
     ingredients: Ingredient[];
@@ -13,12 +9,6 @@ interface ContextState {
     list: List;
 }
 
-/**
- * action type for the global state
- * @typedef {Object} Action
- * @property {string} type - action type
- * @property {Recipe[] | Ingredient[]} payload - action payload
- */
 type Action = 
     | { type: 'SET_INGREDIENTS'; payload: Ingredient[] }
     | { type: 'ADD_INGREDIENT'; payload: Ingredient }

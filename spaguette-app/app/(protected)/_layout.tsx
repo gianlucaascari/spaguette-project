@@ -4,7 +4,7 @@ import { Slot } from 'expo-router'
 
 const ProtectedLayout = () => {
     const authService = useAuthService()
-    const auth = authService.verifyAuth()
+    const auth = authService.verifyAuthState()
     if (auth) return auth
     
     // return children

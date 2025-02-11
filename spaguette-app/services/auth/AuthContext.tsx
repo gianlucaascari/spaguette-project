@@ -3,6 +3,7 @@ import React, { createContext, useState, useEffect, ReactNode, useReducer } from
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DataContext } from '../data/DataContext';
 import { useAuthService } from './auth-service';
+import { User } from '@/types/User';
 
 interface AuthContext {
     user?: User,
@@ -51,7 +52,7 @@ const AuthVerifier = ({ children }: { children: ReactNode }) => {
     const authService = useAuthService()
 
     useEffect(() => {
-        authService.isAuthenticated()
+        authService.triggerAuthVerification()
     }, [])
 
     return children
