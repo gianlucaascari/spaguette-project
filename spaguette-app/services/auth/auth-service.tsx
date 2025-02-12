@@ -53,6 +53,14 @@ export const useAuthService = () => {
 
             if (!authState.user) return <Redirect href='/(auth)/sign-in' />
         },
+
+        /**
+         * Allows the user to sign in
+         * If the sign in is successful, it will set the user in the context, in the local storage 
+         * and redirect to the plan page
+         * @param input The sign in input
+         * @returns void
+         */
         signIn: async (input: SignInInput) => {
             try {
                 const authUser = await apiService.signIn(input)
@@ -66,6 +74,14 @@ export const useAuthService = () => {
                 return;
             }
         },
+
+        /**
+         * Allows the user to sign up
+         * If the sign up is successful, it will set the user in the context, in the local storage 
+         * and redirect to the plan page
+         * @param input The sign up input
+         * @returns void
+         */
         signUp: async (input: SignUpInput) => {
             try{
                 const authUser = await apiService.signUp(input)
@@ -79,6 +95,13 @@ export const useAuthService = () => {
                 return;
             }
         },
+
+        /**
+         * Allows the user to sign out
+         * It will reset the auth-state, clear the cache of the api-service, 
+         * remove the user from async-storage, reset the data-service state 
+         * and redirect to the sign-in page
+         */
         logOut: async () => {
             dispatch({ type: 'RESET_STATE' })
             await apiService.clearCache()
