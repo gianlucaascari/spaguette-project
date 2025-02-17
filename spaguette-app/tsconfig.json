@@ -2,11 +2,15 @@
   "extends": "./node_modules/expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
+    "strictPropertyInitialization": false,
     "paths": {
       "@/*": [
         "./*"
       ]
-    }
+    },
+    "experimentalDecorators": true, 
+    "emitDecoratorMetadata": true,
+    "useDefineForClassFields": false
   },
   "include": [
     "**/*.ts",
