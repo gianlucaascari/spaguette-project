@@ -23,10 +23,8 @@ const TestPage = () => {
     try {
         const posts = await database.get<Post>("posts").query().fetch();
         const postsData = posts.map(post => post._raw);
-        console.log(JSON.stringify(postsData, null, 2));
         alert(JSON.stringify(postsData, null, 2));
     } catch (error) {
-        console.log(error);
         alert("Errore: " + error);
     }
   };
