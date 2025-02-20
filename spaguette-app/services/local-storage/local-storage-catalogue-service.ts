@@ -1,6 +1,6 @@
 import { Ingredient, Recipe } from "@/types/application/Catalogue";
 import { database } from "./database";
-import { DbIngredient, DbIngredientQuantity, DbRecipe } from "@/types/database/Catalogue";
+import { DbIngredient, DbIngredientQuantity, DbRecipe } from "@/types/database/DbCatalogue";
 import { Q } from "@nozbe/watermelondb";
 
 export const localStorageCatalogueService = {

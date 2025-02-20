@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import Button from "@/components/general/Button";
 import { database } from "@/services/local-storage/database";
 import { DataContext } from "@/services/data/DataContext";
-import { DbIngredient, DbIngredientQuantity, DbRecipe } from "@/types/database/Catalogue";
+import { DbIngredient, DbIngredientQuantity, DbRecipe } from "@/types/database/DbCatalogue";
 import { Recipe, UnityOfMeasure } from "@/types/application/Catalogue";
 
 const TestPage = () => {

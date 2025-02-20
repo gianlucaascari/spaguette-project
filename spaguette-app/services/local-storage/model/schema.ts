@@ -1,7 +1,7 @@
 import { appSchema, tableSchema } from '@nozbe/watermelondb'
 
 export default appSchema({
-  version: 1,
+  version: 2,
   tables: [
     tableSchema({
       name: 'ingredients',
@@ -27,6 +27,21 @@ export default appSchema({
         { name: 'description', type: 'string', isOptional: true },
         { name: 'steps_link', type: 'string', isOptional: true },
       ],
+    }),
+    tableSchema({
+      name: 'plan',
+      columns: [
+        { name: 'num_times', type: 'number' },
+        { name: 'recipe_id', type: 'string' },
+      ]
+    }),
+    tableSchema({
+      name: 'list',
+      columns: [
+        { name: 'ingredient_id', type: 'string' },
+        { name: 'quantity', type: 'number' },
+        { name: 'taken', type: 'boolean' },
+      ]
     })
   ]
 })
