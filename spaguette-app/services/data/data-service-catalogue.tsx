@@ -25,7 +25,7 @@ export const useDataServiceCatalogue = () => {
 
                 await Promise.all(ingredients.map(async (ingredient) => {
                     const existingIngredient = await localStorageService.getIngredient(ingredient.id);
-                    
+
                     if (!existingIngredient) await localStorageService.addIngredient(ingredient);
                     else await localStorageService.updateIngredient(ingredient);
                 }));
@@ -103,6 +103,14 @@ export const useDataServiceCatalogue = () => {
         getRecipes: async (ignoreCache: boolean = false) => {
             try {
                 const recipes = await apiService.getRecipes(ignoreCache);
+                
+                await Promise.all(recipes.map(async (recipe) => {
+                    const existingRecipe = await localStorageService.getRecipe(recipe.id);
+                    
+                    if (!existingRecipe) await localStorageService.addRecipe(recipe);
+                    else await localStorageService.updateRecipe(recipe);
+                }));
+
                 dispatch({ type: 'SET_RECIPES', payload: recipes });
             } catch (e: any) {
                 console.error('Error getting recipes:', e);
@@ -119,6 +127,9 @@ export const useDataServiceCatalogue = () => {
         addRecipe: async (recipe: RecipeInput) => {
             try {
                 const addedRecipe = await apiService.addRecipe(recipe);
+
+                await localStorageService.addRecipe(addedRecipe);
+
                 dispatch({ type: 'ADD_RECIPE', payload: addedRecipe });
             } catch (e: any) {
                 console.error('Error adding recipe:', e);
@@ -136,6 +147,9 @@ export const useDataServiceCatalogue = () => {
         updateRecipe: async (id: string, recipe: RecipeInput) => {
             try {
                 const updatedRecipe = await apiService.updateRecipe(id, recipe);
+
+                await localStorageService.updateRecipe(updatedRecipe);
+
                 dispatch({ type: 'UPDATE_RECIPE', payload: updatedRecipe });
             } catch (e: any) {
                 console.error('Error updating recipe:', e);
@@ -152,6 +166,9 @@ export const useDataServiceCatalogue = () => {
         deleteRecipe: async (id: string) => {
             try {
                 await apiService.deleteRecipe(id);
+
+                await localStorageService.deleteRecipe(id);
+
                 dispatch({ type: 'DELETE_RECIPE', payload: id });
             } catch (e: any) {
                 console.error('Error deleting recipe:', e);

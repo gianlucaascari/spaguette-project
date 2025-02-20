@@ -59,7 +59,8 @@ const TestPage = () => {
         };
       }));
 
-      alert(JSON.stringify(recipes, null, 2));
+      console.log(JSON.stringify(recipes, null, 2));
+      // alert(JSON.stringify(recipes, null, 2));
 
       // const ingredients: DbIngredient[] = await database.get<DbIngredient>("ingredients").query().fetch();
       // const ingredientsData = ingredients.map(i => i._raw)

@@ -85,6 +85,32 @@ export const localStorageCatalogueService = {
             };
         }));
     },
+    getRecipe: async (id: string): Promise<Recipe | null> => {
+        const dbRecipes = await database.get<DbRecipe>("recipes").query(Q.where("remote_id", id)).fetch();
+        if (dbRecipes.length === 0) {
+            return null;
+        }
+
+        const r = dbRecipes[0];
+        const ingredientQuantities: DbIngredientQuantity[] = await r.ingredientQuantities;
+        return {
+            id: r.remoteId,
+            name: r.name,
+            description: r.description,
+            stepsLink: r.stepsLink,
+            ingredients: await Promise.all(ingredientQuantities.map(async (iq: DbIngredientQuantity) => {
+                const ingredient: DbIngredient = await iq.ingredient;
+                return {
+                    ingredient: {
+                        id: ingredient.remoteId,
+                        name: ingredient.name,
+                        unityOfMeasure: ingredient.unityOfMeasure,
+                    },
+                    quantity: iq.quantity,
+                };
+            })
+        )};
+    },
     addRecipe: async (recipe: Recipe): Promise<void> => {
         await database.write(async () => {
             const dbRecipe = await database.get<DbRecipe>("recipes").create((r) => {
