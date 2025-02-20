@@ -33,9 +33,9 @@ export const localStoragePlanService = {
                     dbRecipe = await database.get<DbRecipe>("recipes").query(Q.where("remote_id", pe.recipe.id)).fetch();
                 }
 
-                await database.get<DbPlanElement>("plan").create((pe) => {
-                    pe.recipe.set(dbRecipe[0]);
-                    pe.numTimes = pe.numTimes;
+                await database.get<DbPlanElement>("plan").create((dbpe) => {
+                    dbpe.recipe.set(dbRecipe[0]);
+                    dbpe.numTimes = pe.numTimes;
                 });
             }));
         });

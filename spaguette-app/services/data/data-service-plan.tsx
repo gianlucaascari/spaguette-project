@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { DataContext } from "./DataContext";
 import { apiService } from "../api/api-service";
 import { ListInput, ListItem, ListItemInput, PlanElementInput, PlanInput, RecipeQuantity } from "@/types/application/Plan";
+import { localStorageService } from "../local-storage/local-storage-service";
 
 /**
  * Custom hook for managing data related to the plan.
@@ -20,6 +21,9 @@ export const useDataServicePlan = () => {
         getMyPlan: async () => {
             try {
                 const plan = await apiService.getMyPlan();
+
+                await localStorageService.updateMyPlan(plan);
+
                 dispatch({ type: 'SET_PLAN', payload: plan });
             } catch (e: any) {
                 console.error('Error getting plan:', e);
@@ -40,6 +44,9 @@ export const useDataServicePlan = () => {
                 const newPlan = { recipes: recipes };
 
                 const updatedPlan = await apiService.updatePlan(newPlan);
+
+                await localStorageService.updateMyPlan(updatedPlan);
+
                 dispatch({ type: 'SET_PLAN', payload: updatedPlan });
             } catch (e: any) {
                 console.error('Error adding to plan:', e);
@@ -62,6 +69,9 @@ export const useDataServicePlan = () => {
                 const newPlan: PlanInput = { recipes: recipes };
 
                 const updatedPlan = await apiService.updatePlan(newPlan);
+
+                await localStorageService.updateMyPlan(updatedPlan);
+
                 dispatch({ type: 'SET_PLAN', payload: updatedPlan });
             } catch (e: any) {
                 console.error('Error updating in plan:', e);
@@ -84,6 +94,9 @@ export const useDataServicePlan = () => {
                     const newPlan: PlanInput = { recipes: recipes };
 
                     const updatedPlan = await apiService.updatePlan(newPlan);
+
+                    await localStorageService.updateMyPlan(updatedPlan);
+
                     dispatch({ type: 'SET_PLAN', payload: updatedPlan });
                 } else {
                     console.error('Recipe ID not found:', recipeID);
@@ -104,6 +117,9 @@ export const useDataServicePlan = () => {
         getMyList: async (ignoreCache: boolean = false) => {
             try {
                 const list = await apiService.getMyList(ignoreCache);
+
+                await localStorageService.updateMyList(list);
+
                 dispatch({ type: 'SET_LIST', payload: list });
             } catch (e: any) {
                 console.error('Error getting list:', e);
@@ -125,6 +141,9 @@ export const useDataServicePlan = () => {
                 const newList: ListInput = { items: items };
 
                 const updatedList = await apiService.updateList(newList);
+
+                await localStorageService.updateMyList(updatedList);
+
                 dispatch({ type: 'SET_LIST', payload: updatedList });
             } catch (e: any) {
                 console.error('Error updating list item:', e);
