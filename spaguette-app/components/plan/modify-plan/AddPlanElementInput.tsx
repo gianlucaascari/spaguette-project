@@ -4,7 +4,7 @@ import PlanElementInput from './PlanElementInput';
 import { useDataService } from '@/services/data/data-service';
 import Button from '@/components/general/Button';
 import { useStyles } from '../../../styles/components/plan/modify-plan/AddPlanElementInput.style';
-import { RecipeQuantity } from '@/types/Plan';
+import { RecipeQuantity } from '@/types/application/Plan';
 
 const AddPlanElementInput = () => {
 

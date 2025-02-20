@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import PlanListElementShow from './PlanListElementShow';
 import UpdatePlanElementInput from '../modify-plan/UpdatePlanElementInput';
 import { useStyles } from '../../../styles/components/plan/show-plan/PlanListElement.style';
-import { RecipeQuantity } from '@/types/Plan';
+import { RecipeQuantity } from '@/types/application/Plan';
 
 interface PlanListElementProps {
     planElement: RecipeQuantity;

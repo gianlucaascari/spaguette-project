@@ -4,7 +4,7 @@ import { useDataService } from '@/services/data/data-service'
 import RecipeInput from './RecipeInput'
 import Button from '@/components/general/Button'
 import { useStyles } from '../../../styles/components/catalogue/modify-recipes/UpdateRecipeInput.style'
-import { Recipe, RecipeInput as RecipeInputType } from '@/types/Catalogue'
+import { Recipe, RecipeInput as RecipeInputType } from '@/types/application/Catalogue'
 
 interface UpdateRecipeInputProps {
     initialRecipe: Recipe,

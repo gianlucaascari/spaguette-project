@@ -4,19 +4,29 @@ export default appSchema({
   version: 1,
   tables: [
     tableSchema({
-      name: 'posts',
+      name: 'ingredients',
       columns: [
+        { name: 'remote_id', type: 'string' },
         { name: 'name', type: 'string' },
-        { name: 'body', type: 'string' },
-        { name: 'is_pinned', type: 'boolean' },
-      ]
+        { name: 'unity_of_measure', type: 'string' },
+      ],
     }),
     tableSchema({
-      name: 'comments',
+      name: 'ingredient_quantities',
       columns: [
-        { name: 'body', type: 'string' },
-        { name: 'post_id', type: 'string', isIndexed: true },
-      ]
+        { name: 'recipe_id', type: 'string', isIndexed: true },
+        { name: 'ingredient_id', type: 'string', isIndexed: true },
+        { name: 'quantity', type: 'number' },
+      ],
     }),
+    tableSchema({
+      name: 'recipes',
+      columns: [
+        { name: 'remote_id', type: 'string' },
+        { name: 'name', type: 'string' },
+        { name: 'description', type: 'string', isOptional: true },
+        { name: 'steps_link', type: 'string', isOptional: true },
+      ],
+    })
   ]
 })

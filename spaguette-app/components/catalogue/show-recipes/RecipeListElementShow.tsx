@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Pressable } from 'react-native'
 import React from 'react'
 import { useStyles } from '../../../styles/components/catalogue/show-recipes/RecipeListElementShow.style';
 import Button from '@/components/general/Button';
-import { Recipe } from '@/types/Catalogue';
+import { Recipe } from '@/types/application/Catalogue';
 
 interface RecipeListElementShowProps {
     recipe: Recipe;

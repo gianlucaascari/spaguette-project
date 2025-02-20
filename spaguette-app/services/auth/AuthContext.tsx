@@ -3,7 +3,7 @@ import React, { createContext, useState, useEffect, ReactNode, useReducer } from
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DataContext } from '../data/DataContext';
 import { useAuthService } from './auth-service';
-import { User } from '@/types/User';
+import { User } from '@/types/application/User';
 
 interface AuthContext {
     user?: User,

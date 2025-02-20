@@ -4,7 +4,7 @@ import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite'
 
 import schema from './model/schema'
 import migrations from './model/migrations'
-import Post from './model/Post'
+import { DbIngredient, DbRecipe } from '@/types/database/Catalogue'
 // import Post from './model/Post' // ⬅️ You'll import your Models here
 
 // First, create the adapter to the underlying database:
@@ -20,13 +20,14 @@ const adapter = new SQLiteAdapter({
   // (optional, but you should implement this method)
   onSetUpError: error => {
     // Database failed to load -- offer the user to reload the app or log out
-  }
+  },
 })
 
 // Then, make a Watermelon database from it!
 export const database = new Database({
   adapter,
   modelClasses: [
-    Post
+    DbIngredient,
+    DbRecipe,
   ],
 })

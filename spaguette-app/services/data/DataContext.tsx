@@ -1,5 +1,5 @@
-import { Ingredient, Recipe } from "@/types/Catalogue";
-import { List, Plan } from "@/types/Plan";
+import { Ingredient, Recipe } from "@/types/application/Catalogue";
+import { List, Plan } from "@/types/application/Plan";
 import { createContext, ReactNode, useReducer } from "react";
 
 interface ContextState {

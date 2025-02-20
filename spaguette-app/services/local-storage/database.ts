@@ -3,7 +3,7 @@ import LokiJSAdapter from '@nozbe/watermelondb/adapters/lokijs'
 
 import schema from './model/schema'
 import migrations from './model/migrations'
-import Post from './model/Post'
+import { DbIngredient, DbRecipe } from '@/types/database/Catalogue'
 
 const adapter = new LokiJSAdapter({
   schema,
@@ -44,6 +44,20 @@ const adapter = new LokiJSAdapter({
 export const database = new Database({
     adapter,
     modelClasses: [
-      Post
+      DbIngredient,
+      DbRecipe,
     ],
   })
+
+  async function resetDatabase() {
+    console.log("Resetting WatermelonDB...");
+    await database.write(async () => {
+      await database.unsafeResetDatabase(); // This wipes everything and applies the new schema
+    });
+    console.log("Database reset complete.");
+  }
+  
+  // Call resetDatabase() on web only
+  if (typeof window !== "undefined") {
+    resetDatabase();
+  }

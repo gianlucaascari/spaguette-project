@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 import client from './apollo-client';
 import { apiServicePlan } from './api-service-plan';
 import { apiServiceUser } from './api-service-user';
-import { Ingredient, IngredientInput, Recipe, RecipeInput } from '@/types/Catalogue';
+import { Ingredient, IngredientInput, Recipe, RecipeInput } from '@/types/application/Catalogue';
 import { apiServiceCatalogue } from './api-service-catalogue';
 
 

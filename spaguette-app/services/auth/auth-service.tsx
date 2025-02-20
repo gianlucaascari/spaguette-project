@@ -5,7 +5,7 @@ import { Redirect, useRouter } from "expo-router";
 import { apiService } from "../api/api-service";
 import { useDataService } from "../data/data-service";
 import { ActivityIndicator, View } from "react-native";
-import { SignInInput, SignUpInput } from "@/types/User";
+import { SignInInput, SignUpInput } from "@/types/application/User";
 
 /**
  * Auth Service to handle authentication methods and context

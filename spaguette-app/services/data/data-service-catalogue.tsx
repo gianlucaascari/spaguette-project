@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { DataContext } from "./DataContext"
 import { apiService } from "../api/api-service"
-import { IngredientInput, RecipeInput } from "@/types/Catalogue"
+import { IngredientInput, RecipeInput } from "@/types/application/Catalogue"
 
 /**
  * Custom hook for managing data related to ingredients and recipes.

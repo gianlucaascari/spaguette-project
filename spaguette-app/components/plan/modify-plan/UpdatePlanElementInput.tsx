@@ -4,7 +4,7 @@ import { useDataService } from '@/services/data/data-service'
 import Button from '@/components/general/Button'
 import { useStyles } from '../../../styles/components/plan/modify-plan/UpdatePlanElementInput.style'
 import PlanElementInput from './PlanElementInput'
-import { RecipeQuantity } from '@/types/Plan'
+import { RecipeQuantity } from '@/types/application/Plan'
 
 interface UpdatePlanElementInputProps {
     initialElement: RecipeQuantity,

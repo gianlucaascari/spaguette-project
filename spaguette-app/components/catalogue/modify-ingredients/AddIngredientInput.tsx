@@ -4,7 +4,7 @@ import IngredientInput from './IngredientInput'
 import { useDataService } from '@/services/data/data-service'
 import { useStyles } from '../../../styles/components/catalogue/modify-ingredients/AddIngredientInput.style'
 import Button from '@/components/general/Button'
-import { Ingredient, UnityOfMeasure } from '@/types/Catalogue'
+import { Ingredient, UnityOfMeasure } from '@/types/application/Catalogue'
 
 interface AddIngredientInputProps {
     onCancel: () => void,

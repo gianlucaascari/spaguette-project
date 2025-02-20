@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import client from "./apollo-client";
-import { AuthUser, SignInInput, SignUpInput } from "@/types/User";
+import { AuthUser, SignInInput, SignUpInput } from "@/types/application/User";
 
 /**
  * API service for user-related operations

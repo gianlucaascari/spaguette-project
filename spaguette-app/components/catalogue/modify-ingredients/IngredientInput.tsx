@@ -3,7 +3,7 @@ import React from 'react'
 import { COLORS } from '@/styles/const/colors'
 import { useStyles } from '../../../styles/components/catalogue/modify-ingredients/IngredientInput.style'
 import { Dropdown } from 'react-native-element-dropdown'
-import { Ingredient, UnityOfMeasure } from '@/types/Catalogue'
+import { Ingredient, UnityOfMeasure } from '@/types/application/Catalogue'
 
 interface IngredientInputProps {
     ingredient: Ingredient,

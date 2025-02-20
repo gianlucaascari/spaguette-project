@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import client from "./apollo-client";
-import { List, ListInput, Plan, PlanInput } from "@/types/Plan";
+import { List, ListInput, Plan, PlanInput } from "@/types/application/Plan";
 
 /**
  * Service to interact with the plan of the user

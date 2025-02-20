@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { DataContext } from "./DataContext";
 import { apiService } from "../api/api-service";
-import { ListInput, ListItem, ListItemInput, PlanElementInput, PlanInput, RecipeQuantity } from "@/types/Plan";
+import { ListInput, ListItem, ListItemInput, PlanElementInput, PlanInput, RecipeQuantity } from "@/types/application/Plan";
 
 /**
  * Custom hook for managing data related to the plan.

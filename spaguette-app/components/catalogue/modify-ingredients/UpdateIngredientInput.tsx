@@ -4,7 +4,7 @@ import IngredientInput from './IngredientInput'
 import { useDataService } from '@/services/data/data-service'
 import Button from '@/components/general/Button'
 import { useStyles } from '../../../styles/components/catalogue/modify-ingredients/UpdateIngredientInput.style'
-import { Ingredient, IngredientInput as IngredientInputType } from '@/types/Catalogue'
+import { Ingredient, IngredientInput as IngredientInputType } from '@/types/application/Catalogue'
 
 interface UpdateIngredientInputProps {
     initialIngredient: Ingredient,

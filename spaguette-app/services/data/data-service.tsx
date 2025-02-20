@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { apiService } from "../api/api-service";
 import { DataContext } from "./DataContext";
 import { useDataServicePlan } from "./data-service-plan";
-import { IngredientInput, RecipeInput } from "@/types/Catalogue";
+import { IngredientInput, RecipeInput } from "@/types/application/Catalogue";
 import { useDataServiceCatalogue } from "./data-service-catalogue";
 
 

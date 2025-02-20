@@ -1,4 +1,4 @@
-import { Ingredient, IngredientInput, Recipe, RecipeInput } from "@/types/Catalogue";
+import { Ingredient, IngredientInput, Recipe, RecipeInput } from "@/types/application/Catalogue";
 import client from "./apollo-client";
 import { gql } from "@apollo/client";
 

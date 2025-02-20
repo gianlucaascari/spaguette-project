@@ -9,7 +9,7 @@ import RecipesListElement from '@/components/catalogue/show-recipes/RecipeListEl
 import Button from '@/components/general/Button';
 import { useStyles } from '../../../styles/app/(tabs)/recipe-page.style';
 import { useAuthService } from '@/services/auth/auth-service';
-import { Recipe } from '@/types/Catalogue';
+import { Recipe } from '@/types/application/Catalogue';
 
 export default function TabOneScreen() {
 
