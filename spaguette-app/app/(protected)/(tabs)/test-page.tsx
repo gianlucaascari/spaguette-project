@@ -9,7 +9,6 @@ import { Recipe, UnityOfMeasure } from "@/types/application/Catalogue";
 const TestPage = () => {
 
   const { state } = useContext(DataContext);
-  console.log(JSON.stringify(state.ingredients, null, 2));
 
   const onWrite = async () => {
     try {
@@ -39,32 +38,34 @@ const TestPage = () => {
 
   const onRead = async () => {
     try {
-        const dbRecipes: DbRecipe[] = await database.get<DbRecipe>("recipes").query().fetch();
-        const recipes: Recipe[] = await Promise.all(dbRecipes.map(async (r: DbRecipe) => {
-          const ingredientQuantities: DbIngredientQuantity[] = await r.ingredientQuantities;
-          return {
-            id: r.remoteId,
-            name: r.name,
-            description: r.description,
-            stepsLink: r.stepsLink,
-            ingredients: await Promise.all(ingredientQuantities.map(async (iq: DbIngredientQuantity) => {
-              const ingredient: DbIngredient = await iq.ingredient;
-              return {
-                ingredient: {
-                  id: ingredient.remoteId,
-                  name: ingredient.name,
-                  unityOfMeasure: ingredient.unityOfMeasure,
-                },
-                quantity: iq.quantity,
-              };
-            })),
-          };
-        }));
+      // const dbRecipes: DbRecipe[] = await database.get<DbRecipe>("recipes").query().fetch();
+      // const recipes: Recipe[] = await Promise.all(dbRecipes.map(async (r: DbRecipe) => {
+      //   const ingredientQuantities: DbIngredientQuantity[] = await r.ingredientQuantities;
+      //   return {
+      //     id: r.remoteId,
+      //     name: r.name,
+      //     description: r.description,
+      //     stepsLink: r.stepsLink,
+      //     ingredients: await Promise.all(ingredientQuantities.map(async (iq: DbIngredientQuantity) => {
+      //       const ingredient: DbIngredient = await iq.ingredient;
+      //       return {
+      //         ingredient: {
+      //           id: ingredient.remoteId,
+      //           name: ingredient.name,
+      //           unityOfMeasure: ingredient.unityOfMeasure,
+      //         },
+      //         quantity: iq.quantity,
+      //       };
+      //     }))
+      //   };
+      // }));
 
-        alert(JSON.stringify(recipes, null, 2));
+      // alert(JSON.stringify(recipes, null, 2));
 
-        // const postData = await database.get<Post>("posts").find('BIeuZsKfHceAaqCi');
-        // alert(JSON.stringify(postData._raw, null, 2));
+      const ingredients: DbIngredient[] = await database.get<DbIngredient>("ingredients").query().fetch();
+      const ingredientsData = ingredients.map(i => i._raw)
+      console.log(JSON.stringify(ingredientsData, null, 2));
+      // alert(JSON.stringify(ingredientsData, null, 2));
     } catch (error) {
         alert("Errore: " + error);
     }

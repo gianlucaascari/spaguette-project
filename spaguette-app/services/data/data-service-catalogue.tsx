@@ -2,6 +2,7 @@ import { useContext } from "react"
 import { DataContext } from "./DataContext"
 import { apiService } from "../api/api-service"
 import { IngredientInput, RecipeInput } from "@/types/application/Catalogue"
+import { localStorageService } from "../local-storage/local-storage-service"
 
 /**
  * Custom hook for managing data related to ingredients and recipes.
@@ -21,9 +22,16 @@ export const useDataServiceCatalogue = () => {
         getIngredients: async (ignoreCache: boolean = false) => {
             try {
                 const ingredients = await apiService.getIngredients(ignoreCache);
+
+                await Promise.all(ingredients.map(async (ingredient) => {
+                    const existingIngredient = await localStorageService.getIngredient(ingredient.id);
+                    if (!existingIngredient) {
+                        await localStorageService.addIngredient(ingredient);
+                    }
+                }));
+
                 dispatch({ type: 'SET_INGREDIENTS', payload: ingredients });
             } catch (e: any) {
-                console.error('Error getting ingredients:', e);
                 alert('Data Service > Error getting ingredients\n' + e?.message);
                 return;
             }
@@ -37,6 +45,9 @@ export const useDataServiceCatalogue = () => {
         addIngredient: async (ingredient: IngredientInput) => {
             try {
                 const addedIngredient = await apiService.addIngredient(ingredient);
+
+                await localStorageService.addIngredient(addedIngredient);
+
                 dispatch({ type: 'ADD_INGREDIENT', payload: addedIngredient });
             } catch (e: any) {
                 console.error('Error adding ingredient:', e);
@@ -54,6 +65,9 @@ export const useDataServiceCatalogue = () => {
         updateIngredient: async (id: string, ingredient: IngredientInput) => {
             try {
                 const updatedIngredient = await apiService.updateIngredient(id, ingredient);
+
+                await localStorageService.updateIngredient(updatedIngredient);
+
                 dispatch({ type: 'UPDATE_INGREDIENT', payload: updatedIngredient });
             } catch (e: any) {
                 console.error('Error updating ingredient:', e);
@@ -70,6 +84,9 @@ export const useDataServiceCatalogue = () => {
         deleteIngredient: async (id: string) => {
             try {
                 await apiService.deleteIngredient(id);
+
+                await localStorageService.deleteIngredient(id);
+
                 dispatch({ type: 'DELETE_INGREDIENT', payload: id });
             } catch (e: any) {
                 console.error('Error deleting ingredient:', e);

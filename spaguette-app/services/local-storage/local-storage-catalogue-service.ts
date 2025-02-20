@@ -3,7 +3,7 @@ import { database } from "./database";
 import { DbIngredient } from "@/types/database/Catalogue";
 import { Q } from "@nozbe/watermelondb";
 
-const localStorageCatalogueService = {
+export const localStorageCatalogueService = {
     getIngredients: async (): Promise<Ingredient[]> => {
         const dbIngredients = await database.get<DbIngredient>("ingredients").query().fetch();
         return dbIngredients.map((i: DbIngredient) => ({
@@ -11,6 +11,19 @@ const localStorageCatalogueService = {
             name: i.name,
             unityOfMeasure: i.unityOfMeasure,
         }));
+    },
+    getIngredient: async (id: string): Promise<Ingredient | null> => {
+        const dbIngredients = await database.get<DbIngredient>("ingredients").query(Q.where("remote_id", id)).fetch();
+        if (dbIngredients.length === 0) {
+            return null;
+        }
+
+        const i = dbIngredients[0];
+        return {
+            id: i.remoteId,
+            name: i.name,
+            unityOfMeasure: i.unityOfMeasure,
+        };
     },
     addIngredient: async (ingredient: Ingredient): Promise<void> => {
         const existingIngredient = await database.get<DbIngredient>("ingredients").query(Q.where("remote_id", ingredient.id)).fetch();
