@@ -25,9 +25,9 @@ export const useDataServiceCatalogue = () => {
 
                 await Promise.all(ingredients.map(async (ingredient) => {
                     const existingIngredient = await localStorageService.getIngredient(ingredient.id);
-                    if (!existingIngredient) {
-                        await localStorageService.addIngredient(ingredient);
-                    }
+                    
+                    if (!existingIngredient) await localStorageService.addIngredient(ingredient);
+                    else await localStorageService.updateIngredient(ingredient);
                 }));
 
                 dispatch({ type: 'SET_INGREDIENTS', payload: ingredients });
