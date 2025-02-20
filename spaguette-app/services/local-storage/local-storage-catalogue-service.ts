@@ -6,11 +6,7 @@ import { Q } from "@nozbe/watermelondb";
 export const localStorageCatalogueService = {
     getIngredients: async (): Promise<Ingredient[]> => {
         const dbIngredients = await database.get<DbIngredient>("ingredients").query().fetch();
-        return dbIngredients.map((i: DbIngredient) => ({
-            id: i.remoteId,
-            name: i.name,
-            unityOfMeasure: i.unityOfMeasure,
-        }));
+        return dbIngredients.map((i: DbIngredient) => localStorageCatalogueService._utilities.dbIngredientToIngredient(i));
     },
     getIngredient: async (id: string): Promise<Ingredient | null> => {
         const dbIngredients = await database.get<DbIngredient>("ingredients").query(Q.where("remote_id", id)).fetch();
@@ -19,11 +15,7 @@ export const localStorageCatalogueService = {
         }
 
         const i = dbIngredients[0];
-        return {
-            id: i.remoteId,
-            name: i.name,
-            unityOfMeasure: i.unityOfMeasure,
-        };
+        return localStorageCatalogueService._utilities.dbIngredientToIngredient(i);
     },
     addIngredient: async (ingredient: Ingredient): Promise<void> => {
         const existingIngredient = await database.get<DbIngredient>("ingredients").query(Q.where("remote_id", ingredient.id)).fetch();
@@ -64,26 +56,7 @@ export const localStorageCatalogueService = {
     },
     getRecipes: async (): Promise<Recipe[]> => {
         const dbRecipes = await database.get<DbRecipe>("recipes").query().fetch();
-        return await Promise.all(dbRecipes.map(async (r: DbRecipe) => {
-            const ingredientQuantities: DbIngredientQuantity[] = await r.ingredientQuantities;
-            return {
-                id: r.remoteId,
-                name: r.name,
-                description: r.description,
-                stepsLink: r.stepsLink,
-                ingredients: await Promise.all(ingredientQuantities.map(async (iq: DbIngredientQuantity) => {
-                    const ingredient: DbIngredient = await iq.ingredient;
-                    return {
-                        ingredient: {
-                            id: ingredient.remoteId,
-                            name: ingredient.name,
-                            unityOfMeasure: ingredient.unityOfMeasure,
-                        },
-                        quantity: iq.quantity,
-                    };
-                }))
-            };
-        }));
+        return await Promise.all(dbRecipes.map(async (r: DbRecipe) => localStorageCatalogueService._utilities.dbRecipeToRecipe(r)));
     },
     getRecipe: async (id: string): Promise<Recipe | null> => {
         const dbRecipes = await database.get<DbRecipe>("recipes").query(Q.where("remote_id", id)).fetch();
@@ -92,24 +65,7 @@ export const localStorageCatalogueService = {
         }
 
         const r = dbRecipes[0];
-        const ingredientQuantities: DbIngredientQuantity[] = await r.ingredientQuantities;
-        return {
-            id: r.remoteId,
-            name: r.name,
-            description: r.description,
-            stepsLink: r.stepsLink,
-            ingredients: await Promise.all(ingredientQuantities.map(async (iq: DbIngredientQuantity) => {
-                const ingredient: DbIngredient = await iq.ingredient;
-                return {
-                    ingredient: {
-                        id: ingredient.remoteId,
-                        name: ingredient.name,
-                        unityOfMeasure: ingredient.unityOfMeasure,
-                    },
-                    quantity: iq.quantity,
-                };
-            })
-        )};
+        return await localStorageCatalogueService._utilities.dbRecipeToRecipe(r);
     },
     addRecipe: async (recipe: Recipe): Promise<void> => {
         await database.write(async () => {
@@ -182,6 +138,35 @@ export const localStorageCatalogueService = {
 
             await dbRecipe[0].destroyPermanently();
         });
+    },
+    _utilities: {
+        dbIngredientToIngredient: (dbIngredient: DbIngredient): Ingredient => {
+            return {
+                id: dbIngredient.remoteId,
+                name: dbIngredient.name,
+                unityOfMeasure: dbIngredient.unityOfMeasure,
+            };
+        },
+        dbRecipeToRecipe: async (dbRecipe: DbRecipe): Promise<Recipe> => {
+            const ingredientQuantities: DbIngredientQuantity[] = await dbRecipe.ingredientQuantities;
+            return {
+                id: dbRecipe.remoteId,
+                name: dbRecipe.name,
+                description: dbRecipe.description,
+                stepsLink: dbRecipe.stepsLink,
+                ingredients: await Promise.all(ingredientQuantities.map(async (iq: DbIngredientQuantity) => {
+                    const ingredient: DbIngredient = await iq.ingredient;
+                    return {
+                        ingredient: {
+                            id: ingredient.remoteId,
+                            name: ingredient.name,
+                            unityOfMeasure: ingredient.unityOfMeasure,
+                        },
+                        quantity: iq.quantity,
+                    };
+                }))
+            };
+        }
     }
 };
 
