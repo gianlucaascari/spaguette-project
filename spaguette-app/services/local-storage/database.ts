@@ -3,7 +3,7 @@ import LokiJSAdapter from '@nozbe/watermelondb/adapters/lokijs'
 
 import schema from './model/schema'
 import migrations from './model/migrations'
-import { DbIngredient, DbRecipe } from '@/types/database/Catalogue'
+import { DbIngredient, DbIngredientQuantity, DbRecipe } from '@/types/database/Catalogue'
 
 const adapter = new LokiJSAdapter({
   schema,
@@ -45,6 +45,7 @@ export const database = new Database({
     adapter,
     modelClasses: [
       DbIngredient,
+      DbIngredientQuantity,
       DbRecipe,
     ],
   })
