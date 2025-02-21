@@ -5,7 +5,14 @@ import localStorageCatalogueService from "./local-storage-catalogue-service";
 import { Q } from "@nozbe/watermelondb";
 import { DbIngredient, DbRecipe } from "@/types/database/DbCatalogue";
 
+/*
+* Service to manage the plan related objects in the local storage.
+*/
 export const localStoragePlanService = {
+    /**
+     * Get the plan of the user.
+     * @returns The plan of the user.
+     */
     getMyPlan: async (): Promise<Plan> => {
         const dbPlanElements = await database.get<DbPlanElement>("plan").query().fetch();
         
@@ -13,12 +20,18 @@ export const localStoragePlanService = {
             recipes: await Promise.all(dbPlanElements.map(async dbPlanElement => {
                 const dbRecipe = await dbPlanElement.recipe.fetch();
                 return {
-                    recipe: await localStorageCatalogueService._utilities.dbRecipeToRecipe(dbRecipe),
+                    recipe: await localStorageCatalogueService.utilities.dbRecipeToRecipe(dbRecipe),
                     numTimes: dbPlanElement.numTimes,
                 };
             }))
         }
     },
+
+    /**
+     * Update the plan of the user.
+     * @param plan The new plan of the user.
+     * @returns {Promise<void>}
+     */
     updateMyPlan: async (plan: Plan): Promise<void> => {
         await database.write(async () => {
             const dbPlanElements = await database.get<DbPlanElement>("plan").query().fetch();
@@ -40,6 +53,11 @@ export const localStoragePlanService = {
             }));
         });
     },
+
+    /**
+     * Get the list of the user.
+     * @returns The list of the user.
+     */
     getMyList: async (): Promise<List> => {
         const dbListItems = await database.get<DbListItem>("list").query().fetch();
 
@@ -47,13 +65,19 @@ export const localStoragePlanService = {
             items: await Promise.all(dbListItems.map(async dbListItem => {
                 const dbIngredient = await dbListItem.ingredient.fetch();
                 return {
-                    ingredient: localStorageCatalogueService._utilities.dbIngredientToIngredient(dbIngredient),
+                    ingredient: localStorageCatalogueService.utilities.dbIngredientToIngredient(dbIngredient),
                     quantity: dbListItem.quantity,
                     taken: dbListItem.taken,
                 };
             })),
         };
     },
+
+    /**
+     * Update the list of the user.
+     * @param list The new list of the user.
+     * @returns {Promise<void>}
+     */
     updateMyList: async (list: List): Promise<void> => {
         await database.write(async () => {
             const dbListItems = await database.get<DbListItem>("list").query().fetch();
