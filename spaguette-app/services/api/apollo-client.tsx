@@ -4,20 +4,19 @@ import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
 import { createClient } from 'graphql-ws';
 import { getMainDefinition } from "@apollo/client/utilities";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Platform } from "react-native";
 
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // const getToken = async () => await AsyncStorage.getItem('token');
 
 const httpLink = new HttpLink({
-  uri: "http://10.0.2.2:4000",
-  // uri: "http://localhost:4000",
+  uri: Platform.OS === 'android' ? "http://10.0.2.2:4000" : "http://localhost:4000",
   //uri: "https://d9af-81-164-118-42.ngrok-free.app/",
 });
 
 const wsLink = new GraphQLWsLink(createClient({
-  url: "http://10.0.2.2:4000/subscriptions",
-  //  url: "http://localhost:4000/subscriptions",
+  url: Platform.OS === 'android' ? "http://10.0.2.2/subscriptions" : "http://localhost:4000/subscriptions",
   // url: "https://d9af-81-164-118-42.ngrok-free.app/subscriptions",
   connectionParams: async () => {
     const authUserString = await AsyncStorage.getItem('authUser')
