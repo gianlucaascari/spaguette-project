@@ -11,16 +11,16 @@ import { Platform } from "react-native";
 // const getToken = async () => await AsyncStorage.getItem('token');
 
 const httpLink = new HttpLink({
-  uri: Platform.OS === 'android' ? "http://10.0.2.2:4000" : "http://localhost:4000",
-  //uri: "https://d9af-81-164-118-42.ngrok-free.app/",
+  // uri: Platform.OS === 'android' ? "http://10.0.2.2:4000" : "http://localhost:4000",
+  uri: "https://403c-81-164-118-42.ngrok-free.app",
 });
 
 const wsLink = new GraphQLWsLink(createClient({
-  url: Platform.OS === 'android' ? "http://10.0.2.2/subscriptions" : "http://localhost:4000/subscriptions",
-  // url: "https://d9af-81-164-118-42.ngrok-free.app/subscriptions",
+  // url: Platform.OS === 'android' ? "http://10.0.2.2/subscriptions" : "http://localhost:4000/subscriptions",
+  url: "https://403c-81-164-118-42.ngrok-free.app/subscriptions",
   connectionParams: async () => {
-    const authUserString = await AsyncStorage.getItem('authUser')
-    const authUser = authUserString ? JSON.parse(authUserString) : {} 
+    const authUserString = await AsyncStorage.getItem('authUser');
+    const authUser = authUserString ? JSON.parse(authUserString) : {}; 
     return {
       authorization: authUser.token || '',
     }
