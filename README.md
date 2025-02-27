@@ -26,7 +26,7 @@ Database: MongoDB
 
 ## 📦 Installation and Setup
 
-The project is currently deployed as Progressive Web Application and can be found at the following link:
+The project is currently deployed as Progressive Web Application and can be found at the following link: https://b515-81-164-118-42.ngrok-free.app.
 
 ## 🚧 Project Status
 
