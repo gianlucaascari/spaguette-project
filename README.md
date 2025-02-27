@@ -1,17 +1,13 @@
 # spaguette-project
 A simple application that simplifies creating and managing your shopping list.
 
- 
-
- 
-
 ## 🎯 Main Feature
 
 📦 Compose your shopping list automatically based on what you plan to eat
 
- 
+## 📦 Installation and Setup
 
- 
+The project is deployed as Progressive Web Application at the link: https://b515-81-164-118-42.ngrok-free.app.
 
 ## 🚀 Project roadmap
 
@@ -23,40 +19,6 @@ A simple application that simplifies creating and managing your shopping list.
 
 👀 Flawless recipe and ingredients insertion
 
- 
-
- 
-
-## 🏗️ Project Structure
-
-    /root-directory
-        /spaguette-app (React Native)
-        /backend (Node.js/GraphQL)
-
-
-
-
-
-## 🛠️ Technologies Used
-
-Front-end: React Native, Expo, Apollo
-
-Back-end: Node.js, GraphQL, Apollo, MongoDB
-
-Database: MongoDB
-
-
-
-
-
-## 📦 Installation and Setup
-
-The project is currently deployed as Progressive Web Application and can be found at the following link: https://b515-81-164-118-42.ngrok-free.app.
-
-
-
-
-
 ## 🚧 Project Status
 
 Version 1 deployed:
@@ -65,9 +27,13 @@ Version 1 deployed:
 
 Currently working on: Offline support.
 
+## 🛠️ Technologies Used
 
+Front-end: React Native, Expo, Apollo
 
+Back-end: Node.js, GraphQL, Apollo, MongoDB
 
+Database: MongoDB
 
 ## 📄 License  
 
