@@ -8,8 +8,11 @@ A simple application that simplifies creating and managing your shopping list.
 ## 🚀 Project roadmap
 
 🗂️ Offline support
+
 🫱🏼‍🫲🏽 Collaboration with friends and family
+
 ✨ Recipe suggestion based on owned ingredients
+
 👀 Flawless recipe and ingredients insertion
 
 ## 🏗️ Project Structure
