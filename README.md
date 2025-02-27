@@ -3,7 +3,7 @@ A simple application that simplifies creating and managing your shopping list.
 
 ## 🎯 Main Feature
 
-📋 Compose your shopping list automatically based on what you plan to eat
+Compose your shopping list automatically based on what you plan to eat
 
 ## 📦 Installation and Setup
 
@@ -11,13 +11,13 @@ The project is deployed as Progressive Web Application at the link: https://b515
 
 ## 🚀 Project roadmap
 
-🗂️ Offline support
+Offline support
 
-🫱🏼‍🫲🏽 Collaboration with friends and family
+Collaboration with friends and family
 
-✨ Recipe suggestion based on owned ingredients
+Recipe suggestion based on owned ingredients
 
-👀 Flawless recipe and ingredients insertion
+Flawless recipe and ingredients insertion
 
 ## 🚧 Project Status
 
