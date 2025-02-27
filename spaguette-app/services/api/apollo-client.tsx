@@ -10,13 +10,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // const getToken = async () => await AsyncStorage.getItem('token');
 
 const httpLink = new HttpLink({
-   uri: "http://localhost:4000",
-  //uri: "https://d9af-81-164-118-42.ngrok-free.app/",
+  //  uri: "http://localhost:4000",
+  uri: "https://7afc-193-190-253-145.ngrok-free.app",
 });
 
 const wsLink = new GraphQLWsLink(createClient({
-   url: "http://localhost:4000/subscriptions",
-  //url: "https://d9af-81-164-118-42.ngrok-free.app/subscriptions",
+   //url: "http://localhost:4000/subscriptions",
+   url: "https://7afc-193-190-253-145.ngrok-free.app/subscriptions",
   connectionParams: async () => {
     const authUserString = await AsyncStorage.getItem('authUser')
     const authUser = authUserString ? JSON.parse(authUserString) : {} 
