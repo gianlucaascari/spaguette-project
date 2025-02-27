@@ -3,7 +3,7 @@ A simple application that simplifies creating and managing your shopping list.
 
 ## 🎯 Main Feature
 
-📦 Compose your shopping list automatically based on what you plan to eat
+📋 Compose your shopping list automatically based on what you plan to eat
 
 ## 📦 Installation and Setup
 
