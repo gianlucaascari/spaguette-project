@@ -73,9 +73,28 @@ echo "> manifest.json creato in ./dist/assets/"
 # Copia delle icone nella cartella assets
 cp ./assets/pwa/image_192.png ./dist/assets/icon-192.png
 cp ./assets/pwa/image_512.png ./dist/assets/icon-512.png
+echo "> Icone copiate in ./dist/assets/"
+
 cp ./assets/pwa/service-worker.js ./dist/service-worker.js
 
-echo "> Icone copiate in ./dist/assets/"
+# Trova il file JavaScript effettivo nella cartella
+ENTRY_JS_FILE=$(ls ./dist/_expo/static/js/web/entry*.js | head -n 1 | xargs basename)
+
+if [ -z "$ENTRY_JS_FILE" ]; then
+    echo "> Errore: Nessun file entry trovato in ./dist/_expo/static/js/web/."
+    exit 1
+fi
+
+echo "> Trovato file JS: $ENTRY_JS_FILE"
+
+# Modifica il service-worker.js
+SERVICE_WORKER_FILE="./dist/service-worker.js"
+if [ -f "$SERVICE_WORKER_FILE" ]; then
+    sed -i -E "s|/_expo/static/js/web/entry-[a-zA-Z0-9]+\.js|/_expo/static/js/web/$ENTRY_JS_FILE|g" "$SERVICE_WORKER_FILE"
+    echo "> Aggiornato service-worker.js con $ENTRY_JS_FILE"
+else
+    echo "> Errore: service-worker.js non trovato in ./dist/."
+fi
 
 # Aggiunta del manifest in tutti i file HTML dentro dist/
 for file in $HTML_FILES; do
@@ -90,3 +109,18 @@ for file in $HTML_FILES; do
         echo "> Il link al manifest.json è già presente in $file"
     fi
 done
+
+# Aggiunta dello script per il service worker solo a index.html
+INDEX_FILE="./dist/index.html"
+if [ -f "$INDEX_FILE" ]; then
+    if ! grep -q '<script>\n      if ("serviceWorker" in navigator)' "$INDEX_FILE"; then
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            sed -i '' -E "/<\/body>/ s|<\/body>|    <script>\n      if (\"serviceWorker\" in navigator) {\n        navigator.serviceWorker.register(\"/service-worker.js\")\n          .then(() => console.log(\"Service Worker Registered\"))\n          .catch((err) => console.error(\"Service Worker Registration Failed\", err));\n      }\n    <\/script>\n<\/body>|" "$INDEX_FILE"
+        else
+            sed -i -E "/<\/body>/ s|<\/body>|    <script>\n      if (\"serviceWorker\" in navigator) {\n        navigator.serviceWorker.register(\"/service-worker.js\")\n          .then(() => console.log(\"Service Worker Registered\"))\n          .catch((err) => console.error(\"Service Worker Registration Failed\", err));\n      }\n    <\/script>\n<\/body>|" "$INDEX_FILE"
+        fi
+        echo "> Aggiunto script per il service worker in index.html"
+    else
+        echo "> Lo script per il service worker è già presente in index.html"
+    fi
+fi
