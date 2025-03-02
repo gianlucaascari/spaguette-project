@@ -45,6 +45,16 @@ cat > ./dist/assets/manifest.json <<EOL
       {
         "src": "/assets/icon-192.png",
         "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/assets/icon-512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      },
+      {
+        "src": "/assets/icon-192.png",
+        "sizes": "192x192",
         "type": "image/png",
         "purpose": "maskable"
       },
@@ -61,8 +71,9 @@ EOL
 echo "> manifest.json creato in ./dist/assets/"
 
 # Copia delle icone nella cartella assets
-cp ./assets/images/image_192.png ./dist/assets/icon-192.png
-cp ./assets/images/image_512.png ./dist/assets/icon-512.png
+cp ./assets/pwa/image_192.png ./dist/assets/icon-192.png
+cp ./assets/pwa/image_512.png ./dist/assets/icon-512.png
+cp ./assets/pwa/service-worker.js ./dist/service-worker.js
 
 echo "> Icone copiate in ./dist/assets/"
 
