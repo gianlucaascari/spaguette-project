@@ -29,17 +29,19 @@ const httpLink = new HttpLink({
   // uri: "https://7afc-193-190-253-145.ngrok-free.app",
 });
 
-const wsLink = new GraphQLWsLink(createClient({
-   //url: "http://localhost:4000/subscriptions",
-   url: "https://7afc-193-190-253-145.ngrok-free.app/subscriptions",
-  connectionParams: async () => {
-    const authUserString = await AsyncStorage.getItem('authUser')
-    const authUser = authUserString ? JSON.parse(authUserString) : {} 
-    return {
-      authorization: authUser.token || '',
-    }
-  }
-}))
+const wsLink = typeof window !== "undefined"
+  ? new GraphQLWsLink(createClient({
+      //url: "http://localhost:4000/subscriptions",
+      url: "https://7afc-193-190-253-145.ngrok-free.app/subscriptions",
+      connectionParams: async () => {
+        const authUserString = await AsyncStorage.getItem('authUser')
+        const authUser = authUserString ? JSON.parse(authUserString) : {} 
+        return {
+          authorization: authUser.token || '',
+        }
+      }
+    }))
+  : null;
 
 const authLink = setContext(async (_, { headers }) => {
   const authUserString = await AsyncStorage.getItem('authUser');
@@ -52,17 +54,20 @@ const authLink = setContext(async (_, { headers }) => {
   };
 });
 
-const splitLink = split(
-  ({ query }) => {
-    const definition = getMainDefinition(query);
-    return (
-      definition.kind === 'OperationDefinition' &&
-      definition.operation === 'subscription'
-    );
-  },
-  wsLink,
-  authLink.concat(httpLink),
-);
+const splitLink = typeof window !== "undefined" && wsLink != null
+  ? split(
+      ({ query }) => {
+        const definition = getMainDefinition(query);
+        return (
+          definition.kind === 'OperationDefinition' &&
+          definition.operation === 'subscription'
+        );
+      },
+      wsLink,
+      authLink.concat(httpLink),
+    )
+  : httpLink;
+
 
 const client = new ApolloClient({
   link: splitLink,
