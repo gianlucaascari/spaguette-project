@@ -75,26 +75,25 @@ cp ./assets/pwa/image_192.png ./dist/assets/icon-192.png
 cp ./assets/pwa/image_512.png ./dist/assets/icon-512.png
 echo "> Icone copiate in ./dist/assets/"
 
-cp ./assets/pwa/service-worker.js ./dist/service-worker.js
+# Copia del service worker
+SRC_SW="assets/pwa/service-worker.js"
+DEST_SW="dist/service-worker.js"
+JS_DIR="dist/_expo/static/js/web"
 
-# Trova il file JavaScript effettivo nella cartella
-ENTRY_JS_FILE=$(ls ./dist/_expo/static/js/web/entry*.js | head -n 1 | xargs basename)
+# Trova il file JavaScript che inizia con "entry-"
+ENTRY_JS=$(ls "$JS_DIR" | grep -E '^entry-.*\.js$' | head -n 1)
 
-if [ -z "$ENTRY_JS_FILE" ]; then
-    echo "> Errore: Nessun file entry trovato in ./dist/_expo/static/js/web/."
+# Controlla se il file è stato trovato
+if [[ -z "$ENTRY_JS" ]]; then
+    echo "Errore: Nessun file 'entry-*.js' trovato in $JS_DIR"
     exit 1
 fi
 
-echo "> Trovato file JS: $ENTRY_JS_FILE"
+# Copia il file e sostituisce il nome del file JS
+sed "s|entry-[a-f0-9]*\.js|$ENTRY_JS|g" "$SRC_SW" > "$DEST_SW"
 
-# Modifica il service-worker.js
-SERVICE_WORKER_FILE="./dist/service-worker.js"
-if [ -f "$SERVICE_WORKER_FILE" ]; then
-    sed -i -E "s|/_expo/static/js/web/entry-[a-zA-Z0-9]+\.js|/_expo/static/js/web/$ENTRY_JS_FILE|g" "$SERVICE_WORKER_FILE"
-    echo "> Aggiornato service-worker.js con $ENTRY_JS_FILE"
-else
-    echo "> Errore: service-worker.js non trovato in ./dist/."
-fi
+echo "> Service worker copiato e aggiornato in $DEST_SW"
+
 
 # Aggiunta del manifest in tutti i file HTML dentro dist/
 for file in $HTML_FILES; do
