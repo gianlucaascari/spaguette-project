@@ -111,7 +111,7 @@ const CatalogueMutations = {
     // controlla se l'ingrediente è usato
     const inUseRecipes = await db
       .collection(ENV.DB_RECIP_COL)
-      .find({ "ingredients.ingredientID": id })
+      .find({ "ingredients.ingredientID": new ObjectId(id) })
       .toArray();
 
     if (inUseRecipes.length > 0) {
