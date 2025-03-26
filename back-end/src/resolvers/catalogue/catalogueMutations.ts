@@ -240,7 +240,7 @@ const CatalogueMutations = {
     // elimina la ricetta dai piani in cui era presente
     const inUseUsers = await db
       .collection(ENV.DB_USERS_COL)
-      .find({ "plan.recipes.recipeID": id })
+      .find({ "plan.recipes.recipeID": new ObjectId(id) })
       .toArray();
 
     if (inUseUsers.length > 0) {
