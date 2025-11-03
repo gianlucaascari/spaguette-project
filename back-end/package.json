@@ -4,8 +4,8 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/index.js",
+    "build": "npx shx rm -rf dist && tsc && npx shx cp -r src/schema dist/schema",
+    "start": "cd dist && node index.js",
     "dev": "nodemon"
   },
   "keywords": [],
