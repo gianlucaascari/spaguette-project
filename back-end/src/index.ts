@@ -63,7 +63,7 @@ await connectDB();
 const db = getDb();
 
 const schema = makeExecutableSchema({
-  typeDefs: loadFiles("src/schema/*.graphql"),
+  typeDefs: loadFiles("./schema/*.graphql"),
   resolvers,
 });
 
