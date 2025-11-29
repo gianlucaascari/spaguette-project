@@ -25,14 +25,14 @@ const cache = new InMemoryCache();
 })();
 
 const httpLink = new HttpLink({
-   uri: "http://localhost:4000",
-  // uri: "https://7afc-193-190-253-145.ngrok-free.app",
+  //  uri: "http://localhost:4000",
+  uri: "https://spaguette-api.ascari.it",
 });
 
 const wsLink = typeof window !== "undefined"
   ? new GraphQLWsLink(createClient({
       //url: "http://localhost:4000/subscriptions",
-      url: "https://7afc-193-190-253-145.ngrok-free.app/subscriptions",
+      url: "https://spaguette-api.ascari.it/subscriptions",
       connectionParams: async () => {
         const authUserString = await AsyncStorage.getItem('authUser')
         const authUser = authUserString ? JSON.parse(authUserString) : {} 

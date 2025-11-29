@@ -7,7 +7,7 @@ Compose your shopping list automatically based on what you plan to eat
 
 ## 📦 Installation and Setup
 
-The project is deployed as Progressive Web Application at the link: [https://b515-81-164-118-42.ngrok-free.app](https://e559463ef355.ngrok-free.app).
+The project is deployed as Progressive Web Application at the link: [spaguette.ascari.it](https://spaguette.ascari.it).
 
 ## 🚀 Project roadmap
 
