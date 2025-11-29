@@ -35,7 +35,7 @@ jobs:
           file: ./back-end/Dockerfile # Percorso del dockerfile backend
           push: true
           # Qui specifichi che vuoi un'immagine che funzioni su PC e Raspberry (arm64)
-          platforms: linux/amd64,linux/arm64 
+          platforms: linux/arm/v7
           tags: gianlucaascari1/spaguette-app-backend:latest
 
       # 5. Build e Push del FRONTEND (Multi-arch)
@@ -43,7 +43,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./front-end/Dockerfile # Percorso del dockerfile frontend
+          file: ./spaguette-app/Dockerfile # Percorso del dockerfile frontend
           push: true
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/arm/v7
           tags: gianlucaascari1/spaguette-app-frontend:latest
