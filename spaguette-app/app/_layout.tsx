@@ -11,6 +11,8 @@ import { DataContext, DataProvider } from '@/services/data/DataContext';
 import { View } from 'react-native';
 import { AuthProvider } from '@/services/auth/AuthContext';
 
+import "../global.css"
+
 // export {
 //   // Catch any errors thrown by the Layout component.
 //   ErrorBoundary,
