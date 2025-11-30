@@ -1,10 +1,10 @@
-import { View, Text, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import IngredientInput from './IngredientInput'
 import { useDataService } from '@/services/data/data-service'
-import Button from '@/components/general/Button'
-import { useStyles } from '../../../styles/components/catalogue/modify-ingredients/UpdateIngredientInput.style'
 import { Ingredient, IngredientInput as IngredientInputType } from '@/types/Catalogue'
+import { HStack } from '@/components/ui/hstack'
+import { Box } from '@/components/ui/box'
+import { Button, ButtonText } from '@/components/ui/button'
 
 interface UpdateIngredientInputProps {
     initialIngredient: Ingredient,
@@ -12,8 +12,6 @@ interface UpdateIngredientInputProps {
 }
 
 const UpdateIngredientInput: React.FC<UpdateIngredientInputProps> = ({ initialIngredient, afterSubmit }) => {
-
-    const styles = useStyles()
 
     const [ingredient, setIngredient] = useState<Ingredient>(initialIngredient)
     const { updateIngredient, deleteIngredient } = useDataService()
@@ -57,14 +55,18 @@ const UpdateIngredientInput: React.FC<UpdateIngredientInputProps> = ({ initialIn
     }
 
   return (
-    <View style={styles.container}>
+    <Box className='md:flex-row w-full justify-between'>
         <IngredientInput ingredient={ingredient} setIngredient={setIngredient} />
 
-        <View style={styles.buttonContainer}>
-            <Button text='Delete' style='secondary' onPress={onDeleteIngredientPress} />
-            <Button text='Save' style='primary' onPress={onUpdateIngredientPress} />
-        </View>
-    </View>
+        <HStack className='justify-between'>
+            <Button className='mx-8' variant='link' action='negative' onPress={onDeleteIngredientPress} >
+                <ButtonText>Delete</ButtonText>
+            </Button>
+            <Button className='' variant='solid' onPress={onUpdateIngredientPress} >
+                <ButtonText>Save</ButtonText>
+            </Button>
+        </HStack>
+    </Box>
   )
 }
 

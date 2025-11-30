@@ -16,10 +16,8 @@ const IngredientListElementShow: React.FC<IngredientListElementShowProps> = ({
   ingredient,
   setIsModifying,
 }) => {
-
   return (
-    <VStack className="my-1 px-2 min-w-64 w-screen max-w-xl self-center">
-      <HStack className="w-full py-1 px-3 items-center">
+      <HStack className="w-full py-1 px-3 items-center flex-[3]">
         <Text className="flex-[3]">{ingredient.name}</Text>
         <Text className="flex-[1]">
           {ingredient.unityOfMeasure.toLocaleLowerCase()}
@@ -28,8 +26,6 @@ const IngredientListElementShow: React.FC<IngredientListElementShowProps> = ({
           <ButtonIcon className="text-blue-600 mr-2" as={Pencil} />
         </Button>
       </HStack>
-      <Divider />
-    </VStack>
   );
 };
 

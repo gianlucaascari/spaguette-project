@@ -1,8 +1,10 @@
-import { View, Text } from 'react-native'
 import React, { useState } from 'react'
 import IngredientListElementShow from './IngredientListElementShow'
 import UpdateIngredientInput from '../modify-ingredients/UpdateIngredientInput'
 import { Ingredient } from '@/types/Catalogue'
+import { Box } from '@/components/ui/box'
+import { Divider } from '@/components/ui/divider'
+import { VStack } from '@/components/ui/vstack'
 
 interface IngredientListElementProps {
     ingredient: Ingredient
@@ -13,14 +15,17 @@ const IngredientListElement: React.FC<IngredientListElementProps> = ({ ingredien
     const [isModiying, setIsModifying] = useState<boolean>(false)
 
   return (
-    <View>
+    <VStack className='px-4 w-screen max-w-2xl'>
+      <Box className='py-1'>
       {
         isModiying ?
         <UpdateIngredientInput initialIngredient={ingredient} afterSubmit={() => setIsModifying(false)} />
         :
         <IngredientListElementShow ingredient={ingredient} setIsModifying={setIsModifying} />
       }
-    </View>
+      </Box>
+      <Divider />
+    </VStack>
   )
 }
 

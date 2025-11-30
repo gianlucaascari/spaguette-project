@@ -1,44 +1,76 @@
-import { View, Text, TextInput } from 'react-native'
-import React from 'react'
-import { COLORS } from '@/styles/const/colors'
-import { useStyles } from '../../../styles/components/catalogue/modify-ingredients/IngredientInput.style'
-import { Dropdown } from 'react-native-element-dropdown'
-import { Ingredient, UnityOfMeasure } from '@/types/Catalogue'
+import React from "react";
+import { Ingredient, UnityOfMeasure } from "@/types/Catalogue";
+import {
+  Select,
+  SelectIcon,
+  SelectInput,
+  SelectItem,
+  SelectPortal,
+  SelectTrigger,
+} from "@/components/ui/select";
+import { ChevronDownIcon } from "lucide-react-native";
+import { Input, InputField } from "@/components/ui/input";
+import { Box } from "@/components/ui/box";
 
 interface IngredientInputProps {
-    ingredient: Ingredient,
-    setIngredient: (ingredient: Ingredient) => void,
+  ingredient: Ingredient;
+  setIngredient: (ingredient: Ingredient) => void;
 }
 
-const IngredientInput: React.FC<IngredientInputProps> = ({ ingredient, setIngredient }) => {
+type UnityOfMeasureKey = keyof typeof UnityOfMeasure;
 
-  const styles = useStyles()
+const IngredientInput: React.FC<IngredientInputProps> = ({
+  ingredient,
+  setIngredient,
+}) => {
 
-  const unityOfMeasureOptions = Object.entries(UnityOfMeasure).map(([key, value]) => ({
-    label: key.toLowerCase(),  // GraphQL uses uppercase values like "GR"
-    value: value, // Your lowercase value for frontend use
-  }));
+  const unityOfMeasureOptions = Object.entries(UnityOfMeasure).map(
+    ([key, value]) => ({
+      label: key.toLowerCase(), // GraphQL uses uppercase values like "GR"
+      value: value, // Your lowercase value for frontend use
+    })
+  );
 
   return (
-    <View style={styles.container}>
-        <TextInput 
-            style={styles.textInput} 
-            placeholder="Name" 
-            placeholderTextColor={COLORS.placeholder}
-            value={ingredient.name} 
-            onChangeText={(text) => setIngredient({ ...ingredient, name: text })} 
-            />
-
-        <Dropdown
-          style={styles.textInput}
-          data={unityOfMeasureOptions}
-          value={ingredient.unityOfMeasure}
-          onChange={(value) => setIngredient({ ...ingredient, unityOfMeasure: UnityOfMeasure[value.value]})}
-          labelField={'label'}
-          valueField={'value'}
+    <Box className="sm:flex-col md:flex-row justify-between">
+      <Input
+        variant="outline"
+        size="md"
+        isDisabled={false}
+        isInvalid={false}
+        isReadOnly={false}
+        className="md: w-full"
+      >
+        <InputField 
+          value={ingredient.name} 
+          placeholder="Name"
+          onChangeText={(text) => setIngredient({ ...ingredient, name: text })}
           />
-    </View>
-  )
-}
+      </Input>
 
-export default IngredientInput
+      <Select
+        onValueChange={(value) =>
+          setIngredient({
+            ...ingredient,
+            unityOfMeasure: UnityOfMeasure[value as UnityOfMeasureKey],
+          })
+        }
+        initialLabel={ingredient.unityOfMeasure.toLocaleLowerCase()}
+        selectedValue={ingredient.unityOfMeasure}
+        className="md:ml-4 md:max-w-20"
+      >
+        <SelectTrigger variant="outline" size="md">
+          <SelectInput placeholder="Unity of Measure" />
+          <SelectIcon className="mr-3" as={ChevronDownIcon} />
+        </SelectTrigger>
+        <SelectPortal>
+          {unityOfMeasureOptions.map((UdM) => (
+            <SelectItem key={UdM.label} label={UdM.label} value={UdM.value} />
+          ))}
+        </SelectPortal>
+      </Select>
+    </Box>
+  );
+};
+
+export default IngredientInput;
