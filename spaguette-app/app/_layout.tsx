@@ -13,6 +13,9 @@ import { AuthProvider } from '@/services/auth/AuthContext';
 
 import "../global.css"
 
+import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
+import '@/global.css';
+
 // export {
 //   // Catch any errors thrown by the Layout component.
 //   ErrorBoundary,
@@ -57,8 +60,11 @@ import "../global.css"
 //   return (
 //       <DataProvider>
 //         <ApolloProvider client={client}>
-//           <Slot />
-//           {/* <Stack>
+//
+    <GluestackUIProvider mode="dark">
+      <Slot />
+    </GluestackUIProvider>
+    //           {/* <Stack>
 //             {state.user == undefined ?
 //             <View>
 //               <Stack.Screen name='(auth)/sign-up' options={{ title: 'Sign Up', headerShown: false }} />
