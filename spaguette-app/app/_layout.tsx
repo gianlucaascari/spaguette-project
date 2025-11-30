@@ -1,20 +1,20 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { useFonts } from 'expo-font';
-import { Slot, Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useContext, useEffect } from 'react';
-import 'react-native-reanimated';
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { useFonts } from "expo-font";
+import { Slot, Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { useContext, useEffect } from "react";
+import "react-native-reanimated";
 
-import { ApolloProvider } from '@apollo/client';
-import client from '@/services/api/apollo-client';
-import { DataContext, DataProvider } from '@/services/data/DataContext';
-import { View } from 'react-native';
-import { AuthProvider } from '@/services/auth/AuthContext';
+import { ApolloProvider } from "@apollo/client";
+import client from "@/services/api/apollo-client";
+import { DataContext, DataProvider } from "@/services/data/DataContext";
+import { View } from "react-native";
+import { AuthProvider } from "@/services/auth/AuthContext";
 
-import "../global.css"
+import "../global.css";
 
-import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
-import '@/global.css';
+import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
+import "@/global.css";
 
 // export {
 //   // Catch any errors thrown by the Layout component.
@@ -61,10 +61,7 @@ import '@/global.css';
 //       <DataProvider>
 //         <ApolloProvider client={client}>
 //
-    <GluestackUIProvider mode="dark">
-      <Slot />
-    </GluestackUIProvider>
-    //           {/* <Stack>
+//           {/* <Stack>
 //             {state.user == undefined ?
 //             <View>
 //               <Stack.Screen name='(auth)/sign-up' options={{ title: 'Sign Up', headerShown: false }} />
@@ -74,7 +71,7 @@ import '@/global.css';
 //             <View>
 //               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 //             </View>
-//             } 
+//             }
 //           </Stack> */}
 //         </ApolloProvider>
 //       </DataProvider>
@@ -87,7 +84,9 @@ export default function StackLayout() {
     <AuthProvider>
       <DataProvider>
         <ApolloProvider client={client}>
-          <Stack screenOptions={{ headerShown: false }}/>
+          <GluestackUIProvider>
+            <Stack screenOptions={{ headerShown: false }} />
+          </GluestackUIProvider>
         </ApolloProvider>
       </DataProvider>
     </AuthProvider>

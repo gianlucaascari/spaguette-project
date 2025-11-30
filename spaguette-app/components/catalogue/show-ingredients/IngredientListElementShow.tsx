@@ -1,27 +1,36 @@
-import { View, Text, Pressable, StyleSheet } from 'react-native'
-import React from 'react'
-import Button from '@/components/general/Button'
-import { useStyles } from '../../../styles/components/catalogue/show-ingredients/IngredientListElementShow.style'
-import { Ingredient } from '@/types/Catalogue'
+import React from "react";
+import { Ingredient } from "@/types/Catalogue";
+import { HStack } from "@/components/ui/hstack";
+import { VStack } from "@/components/ui/vstack";
+import { Divider } from "@/components/ui/divider";
+import { Text } from "@/components/ui/text";
+import { Button, ButtonIcon } from "@/components/ui/button";
+import { Pencil } from "lucide-react-native";
 
 interface IngredientListElementShowProps {
-    ingredient: Ingredient,
-    setIsModifying: (b: boolean) => void,
+  ingredient: Ingredient;
+  setIsModifying: (b: boolean) => void;
 }
 
-const IngredientListElementShow: React.FC<IngredientListElementShowProps> = ({ ingredient, setIsModifying }) => {
-
-  const styles = useStyles()
+const IngredientListElementShow: React.FC<IngredientListElementShowProps> = ({
+  ingredient,
+  setIsModifying,
+}) => {
 
   return (
-    <View style={styles.shadowContainer}>
-      <View style={styles.container}>
-          <Text style={styles.ingredientName}>{ingredient.name}</Text>
-          <Text style={styles.UdM}>{ingredient.unityOfMeasure.toLowerCase()}</Text>
-          <Button text='Modify' style='tertiary' onPress={() => setIsModifying(true)} />
-      </View>
-    </View>
-  )
-}
+    <VStack className="my-1 px-2 min-w-64 w-screen max-w-xl self-center">
+      <HStack className="w-full py-1 px-3 items-center">
+        <Text className="flex-[3]">{ingredient.name}</Text>
+        <Text className="flex-[1]">
+          {ingredient.unityOfMeasure.toLocaleLowerCase()}
+        </Text>
+        <Button variant="link" onPress={() => setIsModifying(true)}>
+          <ButtonIcon className="text-blue-600 mr-2" as={Pencil} />
+        </Button>
+      </HStack>
+      <Divider />
+    </VStack>
+  );
+};
 
-export default IngredientListElementShow
+export default IngredientListElementShow;
