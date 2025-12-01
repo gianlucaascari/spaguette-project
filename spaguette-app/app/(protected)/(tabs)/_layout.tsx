@@ -5,6 +5,7 @@ import { Tabs } from 'expo-router';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import Button from '@/components/general/Button';
 import { useAuthService } from '@/services/auth/auth-service';
+import { useColorScheme } from 'react-native';
 
 export const unstable_settings = {
   initialRouteName: 'plan-page',
@@ -19,7 +20,7 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
-
+  const colorScheme = useColorScheme();
   const authService = useAuthService()
 
   return (
@@ -29,6 +30,17 @@ export default function TabLayout() {
         // to prevent a hydration error in React Navigation v6.
         headerShown: useClientOnlyValue(false, true),
         headerRight: () => <Button text='Log out' style='tertiary' onPress={authService.logOut} />,
+        tabBarStyle: {
+          backgroundColor: colorScheme == 'dark' ? '#000000' : '#ffffff',
+        },
+
+        headerStyle: {
+          backgroundColor: colorScheme == 'dark' ? '#000000' : '#ffffff',
+        },
+
+        headerTitleStyle: {
+          color: colorScheme == 'dark' ? '#ffffff' : '#000000',
+        }
       }}
       initialRouteName='plan-page'
       >
