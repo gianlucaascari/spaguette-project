@@ -15,7 +15,7 @@ const IngredientListElement: React.FC<IngredientListElementProps> = ({ ingredien
     const [isModiying, setIsModifying] = useState<boolean>(false)
 
   return (
-    <VStack className='px-4 w-screen max-w-2xl'>
+    <VStack className='w-full'>
       <Box className='py-1'>
       {
         isModiying ?

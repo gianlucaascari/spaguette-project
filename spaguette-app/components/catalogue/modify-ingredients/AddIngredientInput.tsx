@@ -1,10 +1,10 @@
-import { View, Text, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import IngredientInput from './IngredientInput'
 import { useDataService } from '@/services/data/data-service'
-import { useStyles } from '../../../styles/components/catalogue/modify-ingredients/AddIngredientInput.style'
-import Button from '@/components/general/Button'
 import { Ingredient, UnityOfMeasure } from '@/types/Catalogue'
+import { Box } from '@/components/ui/box'
+import { HStack } from '@/components/ui/hstack'
+import { Button, ButtonText } from '@/components/ui/button'
 
 interface AddIngredientInputProps {
     onCancel: () => void,
@@ -12,8 +12,6 @@ interface AddIngredientInputProps {
 }
 
 const AddIngredientInput: React.FC<AddIngredientInputProps> = ({onCancel, afterSubmit}) => {
-
-    const styles = useStyles()
 
     const emptyIngredient = {
         id: '',
@@ -53,14 +51,18 @@ const AddIngredientInput: React.FC<AddIngredientInputProps> = ({onCancel, afterS
     }
 
   return (
-    <View style={styles.container}>
+    <Box className='md:flex-row w-full justify-between'>
         <IngredientInput ingredient={ingredient} setIngredient={setIngredient} />
 
-        <View style={styles.buttonContainer}>
-            <Button text='Cancel' style='tertiary' onPress={onCancel} />
-            <Button text='Add Ingredient' style='primary' onPress={onAddIngredientPress} />
-        </View>
-    </View>
+        <HStack className='self-end md:justify-between my-1 md:my-0'>
+            <Button className='px-4 mx-4' variant='link' action='negative' onPress={onCancel} >
+                <ButtonText>Cancel</ButtonText>
+            </Button>
+            <Button className='' variant='solid' onPress={onAddIngredientPress} >
+                <ButtonText>Add</ButtonText>
+            </Button>
+        </HStack>
+    </Box>
   )
 }
 

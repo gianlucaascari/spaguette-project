@@ -39,7 +39,7 @@ const IngredientInput: React.FC<IngredientInputProps> = ({
         isDisabled={false}
         isInvalid={false}
         isReadOnly={false}
-        className="md: w-full"
+        className="md:w-full my-1 md:my-0"
       >
         <InputField 
           value={ingredient.name} 
@@ -57,7 +57,7 @@ const IngredientInput: React.FC<IngredientInputProps> = ({
         }
         initialLabel={ingredient.unityOfMeasure.toLocaleLowerCase()}
         selectedValue={ingredient.unityOfMeasure}
-        className="md:ml-4 md:max-w-20"
+        className="md:ml-4 md:max-w-20 my-1 md:my-0"
       >
         <SelectTrigger variant="outline" size="md">
           <SelectInput placeholder="Unity of Measure" />

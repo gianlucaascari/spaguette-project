@@ -58,8 +58,8 @@ const UpdateIngredientInput: React.FC<UpdateIngredientInputProps> = ({ initialIn
     <Box className='md:flex-row w-full justify-between'>
         <IngredientInput ingredient={ingredient} setIngredient={setIngredient} />
 
-        <HStack className='justify-between'>
-            <Button className='mx-8' variant='link' action='negative' onPress={onDeleteIngredientPress} >
+        <HStack className='self-end md:justify-between my-1 md:my-0'>
+            <Button className='mx-2' variant='solid' action='negative' onPress={onDeleteIngredientPress} >
                 <ButtonText>Delete</ButtonText>
             </Button>
             <Button className='' variant='solid' onPress={onUpdateIngredientPress} >
