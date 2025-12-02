@@ -1,36 +1,53 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native'
-import React from 'react'
-import { useStyles } from '../../../styles/components/catalogue/show-recipes/RecipeListElementShow.style';
-import Button from '@/components/general/Button';
-import { Recipe } from '@/types/Catalogue';
+import React from "react";
+import { Recipe } from "@/types/Catalogue";
+import { Card } from "@/components/ui/card";
+import { Box } from "@/components/ui/box";
+import { Text } from "@/components/ui/text";
+import { Heading } from "@/components/ui/heading";
+import { Button, ButtonIcon } from "@/components/ui/button";
+import { Pencil } from "lucide-react-native";
 
 interface RecipeListElementShowProps {
-    recipe: Recipe;
-    setIsModifying: (state: boolean) => void;
+  recipe: Recipe;
+  setIsModifying: (state: boolean) => void;
 }
 
-const RecipeListElementShow: React.FC<RecipeListElementShowProps> = ({ recipe, setIsModifying }) => {
-
-    const styles = useStyles()
-
+const RecipeListElementShow: React.FC<RecipeListElementShowProps> = ({
+  recipe,
+  setIsModifying,
+}) => {
   return (
-    <View style={styles.shadowContainer}>
-        <View style={styles.container}>
-            <View style={styles.image}></View>
+    <Card
+      size="md"
+      variant="filled"
+      className="my-2 w-full md:flex-row md:h-40 max-w-sm md:max-w-lg self-center"
+    >
+      <Box className="min-h-48 md:min-h-0 md:min-w-48 bg-blue-500 rounded-sm"></Box>
 
-            <View style={styles.contentContainer}>
-                <Text style={styles.title}>{recipe.name}</Text>
-                {recipe.ingredients.map((ingredient, index) => (
-                <Text key={index}>
-                    {ingredient.quantity} {ingredient.ingredient.unityOfMeasure} of{" "} {ingredient.ingredient.name}
-                </Text>
-                ))}
-            </View>
+      <Box className="flex-row md:flex-col">
+        <Box className="md:px-6 pt-2 md:pt-0 flex-1 md:self-center">
+          <Heading size="xl" className="mb-0.5 truncate line-clamp-2" >
+            {recipe.name}
+          </Heading>
+          {recipe.ingredients.slice(0, 3).map((ingredient, index) => (
+            <Text size="sm" key={index} className="line-clamp-1">
+              {ingredient.quantity}{" "}
+              {ingredient.ingredient.unityOfMeasure.toLocaleLowerCase()} of{" "}
+              {ingredient.ingredient.name}
+            </Text>
+          ))}
+        </Box>
 
-            <Button text='Modify' style='tertiary' onPress={() => setIsModifying(true)} />
-        </View>
-    </View>
-  )
-}
+        <Button
+          variant="link"
+          className="mx-2"
+          onPress={() => setIsModifying(true)}
+        >
+          <ButtonIcon as={Pencil} />
+        </Button>
+      </Box>
+    </Card>
+  );
+};
 
-export default RecipeListElementShow
+export default RecipeListElementShow;
