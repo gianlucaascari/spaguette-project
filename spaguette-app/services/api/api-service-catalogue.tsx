@@ -117,6 +117,33 @@ export const apiServiceCatalogue = {
     });
     return response.data.getMyRecipes;
   },
+
+
+  getRecipe: async (id: string): Promise<Recipe> => {
+    const response = await client.query<{ getRecipe: Recipe }>({
+      query: gql`
+        query GetRecipe($recipeId: ID!) {
+          getRecipe(recipeID: $recipeId) {
+            id
+            name
+            stepsLink
+            description
+            ingredients {
+              quantity
+              ingredient {
+                id
+                name
+                unityOfMeasure
+              }
+            }
+          }
+        }
+      `,
+      variables: { recipeId: id }
+    })
+
+    return response.data.getRecipe
+  },
   
   /**
    * Add a new recipe to the remote database

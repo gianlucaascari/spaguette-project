@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { DataContext } from "./DataContext"
 import { apiService } from "../api/api-service"
-import { IngredientInput, RecipeInput } from "@/types/Catalogue"
+import { IngredientInput, Recipe, RecipeInput } from "@/types/Catalogue"
 
 /**
  * Custom hook for managing data related to ingredients and recipes.
@@ -107,6 +107,19 @@ export const useDataServiceCatalogue = () => {
                 console.error('Error adding recipe:', e);
                 alert('Data Service > Error adding recipe\n' + e?.message);
                 return;
+            }
+        },
+
+        getRecipe: async (id: string): Promise<Recipe | undefined> => {
+            try {
+                const gottenRecipe = await apiService.getRecipe(id)
+                dispatch({ type: 'UPDATE_RECIPE', payload: gottenRecipe })
+                return gottenRecipe
+            }
+            catch (e: any) {
+                console.error('Error getting recipe:', e);
+                alert('Data Service > Error getting recipe\n' + e?.message);
+                return undefined;
             }
         },
 
