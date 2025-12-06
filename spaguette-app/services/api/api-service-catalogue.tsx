@@ -120,7 +120,7 @@ export const apiServiceCatalogue = {
 
 
   getRecipe: async (id: string): Promise<Recipe> => {
-    const response = await client.query<{ getRecipe: Recipe }>({
+    const response = await client.query<{ getRecipe: Recipe & { __typename?: string } }>({
       query: gql`
         query GetRecipe($recipeId: ID!) {
           getRecipe(recipeID: $recipeId) {
@@ -142,7 +142,8 @@ export const apiServiceCatalogue = {
       variables: { recipeId: id }
     })
 
-    return response.data.getRecipe
+    const { __typename, ...recipe } = response.data.getRecipe
+    return recipe
   },
   
   /**

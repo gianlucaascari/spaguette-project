@@ -14,13 +14,21 @@ import IngredientsSectionInput from "@/components/catalogue/recipes/IngredientsS
 import { Textarea, TextareaInput } from "@/components/ui/textarea";
 import { useDataService } from "@/services/data/data-service";
 import { DataContext } from "@/services/data/DataContext";
+import { HStack } from "@/components/ui/hstack";
 
 interface RecipeInputProps {
-    recipe?: RecipeInput,
-    onSave: (i: RecipeInput) => void,
+  recipe?: RecipeInput;
+  onSave: (i: RecipeInput) => void;
+  onCancel: () => void;
+  onDelete?: () => void;
 }
 
-const RecipeInputComponent: React.FC<RecipeInputProps> = ({ recipe, onSave }) => {
+const RecipeInputComponent: React.FC<RecipeInputProps> = ({
+  recipe,
+  onSave,
+  onCancel,
+  onDelete,
+}) => {
   const dataService = useDataService();
   const { state } = useContext(DataContext);
 
@@ -28,15 +36,17 @@ const RecipeInputComponent: React.FC<RecipeInputProps> = ({ recipe, onSave }) =>
     dataService.getIngredients();
   }, []);
 
-  const [newRecipe, setNewRecipe] = useState<OptionalRecipeInput>(recipe ?? {
-    name: "",
-    ingredients: [],
-  });
+  const [newRecipe, setNewRecipe] = useState<OptionalRecipeInput>(
+    recipe ?? {
+      name: "",
+      ingredients: [],
+    }
+  );
 
   useEffect(() => {
     if (recipe) {
       setNewRecipe(recipe);
-      setAreIngredientsValid(recipe.ingredients.map(isCompleteIngredientInput))
+      setAreIngredientsValid(recipe.ingredients.map(isCompleteIngredientInput));
     }
   }, [recipe]);
 
@@ -86,7 +96,7 @@ const RecipeInputComponent: React.FC<RecipeInputProps> = ({ recipe, onSave }) =>
       ingredients: newRecipe?.ingredients.filter(isCompleteIngredientInput),
     };
 
-    onSave(recipeInput)
+    onSave(recipeInput);
   };
 
   if (newRecipe == null) {
@@ -110,6 +120,17 @@ const RecipeInputComponent: React.FC<RecipeInputProps> = ({ recipe, onSave }) =>
       <Box className="w-full bg-blue-500 min-h-48" />
 
       <Box className="p-4 w-full max-w-2xl self-center">
+        {onDelete && (
+          <Button
+            variant="solid"
+            action="negative"
+            className="self-end"
+            onPress={onDelete}
+          >
+            <ButtonText>Delete</ButtonText>
+          </Button>
+        )}
+
         <Box className="my-4">
           <RecipeHeadingInput
             name={newRecipe.name}
@@ -148,9 +169,15 @@ const RecipeInputComponent: React.FC<RecipeInputProps> = ({ recipe, onSave }) =>
           />
         </Textarea>
 
-        <Button variant="solid" action="primary" onPress={() => onPressSave()}>
-          <ButtonText>Save</ButtonText>
-        </Button>
+        <HStack>
+          <Button variant="outline" action="secondary" onPress={onCancel} className="mr-3 flex-1">
+            <ButtonText>Cancel</ButtonText>
+          </Button>
+
+          <Button variant="solid" action="primary" onPress={onPressSave} className="flex-1">
+            <ButtonText>Save</ButtonText>
+          </Button>
+        </HStack>
       </Box>
     </ScrollView>
   );

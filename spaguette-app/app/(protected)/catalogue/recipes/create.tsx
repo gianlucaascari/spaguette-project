@@ -41,9 +41,13 @@ const UpdateRecipePage = () => {
     }
   };
 
+  const onCancel = () => {
+    router.navigate("/(protected)/(tabs)/recipe-page")
+  }
+
   return (
     <>
-      <RecipeInputComponent onSave={onSave}/>
+      <RecipeInputComponent onSave={onSave} onCancel={onCancel}/>
 
       <Modal isOpen={loading}>
         <ModalBackdrop />

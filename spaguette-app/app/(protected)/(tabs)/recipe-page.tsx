@@ -24,18 +24,22 @@ export default function TabOneScreen() {
     getRecipes(true);
   }, []);
 
+  if (!state.recipes) {
+    return (
+      <Box className="bg-background-0 flex-1 items-center justify-center">
+        <Text> loading... </Text>
+      </Box>
+    );
+  }
+
   return (
     <Box className="bg-background-0">
       <ScrollView className="p-4 w-screen self-center">
-        {state.recipes ? (
-          <Box className="justify-center">
-            {state.recipes.map((recipe: Recipe, index: number) => (
-              <RecipesListElement key={index} recipe={recipe} />
-            ))}
-          </Box>
-        ) : (
-          <Text>Loading...</Text>
-        )}
+        <Box className="justify-center">
+          {state.recipes.map((recipe: Recipe, index: number) => (
+            <RecipesListElement key={index} recipe={recipe} />
+          ))}
+        </Box>
       </ScrollView>
       <Fab
         size="md"
