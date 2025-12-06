@@ -3,8 +3,8 @@ import { useContext, useEffect, useState } from "react";
 
 import { DataContext } from "@/services/data/DataContext";
 import { useDataService } from "@/services/data/data-service";
-import IngredientListElement from "@/components/catalogue/show-ingredients/IngredientListElement";
-import AddIngredientInput from "@/components/catalogue/modify-ingredients/AddIngredientInput";
+import IngredientListElement from "@/components/catalogue/ingredients/IngredientListElement";
+import AddIngredientInput from "@/components/catalogue/ingredients/AddIngredientInput";
 import { Ingredient } from "@/types/Catalogue";
 import { Box } from "@/components/ui/box";
 import { Button, ButtonIcon } from "@/components/ui/button";

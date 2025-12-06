@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Input, InputField } from "@/components/ui/input";
 import { VStack } from "@/components/ui/vstack";
 import {
@@ -14,6 +14,8 @@ interface RecipeHeadingProps {
   setName: (name: string) => void;
   link: string | undefined;
   setLink: (link: string) => void;
+  isNameValid: boolean,
+  setIsNameValid: (b: boolean) => void
 }
 
 const RecipeHeadingInput: React.FC<RecipeHeadingProps> = ({
@@ -21,22 +23,23 @@ const RecipeHeadingInput: React.FC<RecipeHeadingProps> = ({
   setName,
   link,
   setLink,
+  isNameValid,
+  setIsNameValid,
 }) => {
-  const [invalidName, setIsInvalidName] = useState(false);
 
   return (
     <VStack className="w-full mr-4">
-      <FormControl isInvalid={invalidName} className="mb-2">
+      <FormControl isInvalid={!isNameValid} className="mb-2">
         <Input size="xl">
           <InputField
             className="text-2xl"
             value={name}
             onChangeText={(name) => {
               setName(name);
-              if (name.trim() !== "") setIsInvalidName(false);
+              if (name.trim() !== "") setIsNameValid(true);
             }}
             placeholder="Name"
-            onBlur={() => setIsInvalidName(name.trim() === "")}
+            onBlur={() => setIsNameValid(name.trim() !== "")}
           />
         </Input>
         <FormControlError>

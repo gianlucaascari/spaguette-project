@@ -9,8 +9,8 @@ import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
 import { Pencil } from "lucide-react-native";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
-import RecipeHeading from "@/components/catalogue/show-recipes/RecipeHeading";
-import IngredientsSection from "@/components/catalogue/show-recipes/IngredientsSection";
+import RecipeHeading from "@/components/catalogue/recipes/RecipeHeading";
+import IngredientsSection from "@/components/catalogue/recipes/IngredientsSection";
 import { useDataService } from "@/services/data/data-service";
 
 const RecipePage = () => {

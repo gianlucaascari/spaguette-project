@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import IngredientListElementShow from './IngredientListElementShow'
-import UpdateIngredientInput from '../modify-ingredients/UpdateIngredientInput'
+import UpdateIngredientInput from './UpdateIngredientInput'
 import { Ingredient } from '@/types/Catalogue'
 import { Box } from '@/components/ui/box'
 import { Divider } from '@/components/ui/divider'
