@@ -1,13 +1,9 @@
 import { ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
-import { router, useLocalSearchParams } from "expo-router";
+import React, { useContext, useEffect, useState } from "react";
+import { router } from "expo-router";
 import {
-  IngredientQuantity,
-  isCompleteIngredient,
-  OptionalIngredientQuantity,
-  OptionalRecipe,
-  Recipe,
-  RecipeInput,
+  isCompleteIngredientInput,
+  OptionalRecipeInput,
 } from "@/types/Catalogue";
 import { Text } from "@/components/ui/text";
 import { Box } from "@/components/ui/box";
@@ -20,31 +16,32 @@ import { Textarea, TextareaInput } from "@/components/ui/textarea";
 import { useDataService } from "@/services/data/data-service";
 import { Modal, ModalBackdrop, ModalContent } from "@/components/ui/modal";
 import { Spinner } from "@/components/ui/spinner";
+import { DataContext } from "@/services/data/DataContext";
 
 const UpdateRecipePage = () => {
-  const { recipeId } = useLocalSearchParams();
   const dataService = useDataService();
+  const { state } = useContext(DataContext);
 
-  const [newRecipe, setNewRecipe] = useState<OptionalRecipe | undefined | null>(
-    null
-  );
+  const [newRecipe, setNewRecipe] = useState<OptionalRecipeInput>({
+    name: "",
+    ingredients: [],
+  });
   const [isUpdating, setIsUpdating] = useState(false);
-
-  useEffect(() => {
-    dataService.getRecipe(recipeId as string).then((recipe) => {
-      setNewRecipe(recipe);
-    });
-  }, [recipeId]);
 
   useEffect(() => {
     dataService.getIngredients();
   }, []);
 
+  const fullIngredients = newRecipe.ingredients.map((ing) => ({
+    ingredient: state.ingredients.find((i) => i.id === ing.ingredientID),
+    quantity: ing.quantity,
+  }));
+
   const onSave = async () => {
     const isNameInvalid = newRecipe?.name.trim() === "";
-    const validIngredients =
-      newRecipe?.ingredients.filter(isCompleteIngredient);
-
+    const validIngredients = newRecipe?.ingredients.filter(
+      isCompleteIngredientInput
+    );
     if (
       isNameInvalid ||
       !validIngredients ||
@@ -53,23 +50,20 @@ const UpdateRecipePage = () => {
       return;
     }
 
-    const recipeInput: RecipeInput = {
-      name: newRecipe.name,
-      description: newRecipe.description,
-      stepsLink: newRecipe.stepsLink,
-      ingredients: validIngredients.map((i) => ({
-        ingredientID: i.ingredient.id,
-        quantity: i.quantity,
-      })),
-    };
+    const recipeInput = { ...newRecipe, ingredients: validIngredients };
 
     setIsUpdating(true);
-    await dataService.updateRecipe(newRecipe.id, recipeInput);
+    const recipeId = await dataService.addRecipe(recipeInput);
     setIsUpdating(false);
-    router.navigate({
-      pathname: "/(protected)/catalogue/recipes/[recipeId]",
-      params: { recipeId: recipeId as string },
-    });
+
+    if (recipeId === undefined) {
+      router.navigate("/(protected)/(tabs)/recipe-page");
+    } else {
+      router.navigate({
+        pathname: "/(protected)/catalogue/recipes/[recipeId]",
+        params: { recipeId: recipeId as string },
+      });
+    }
   };
 
   if (newRecipe == null) {
@@ -103,14 +97,19 @@ const UpdateRecipePage = () => {
         </Box>
 
         <IngredientsSectionInput
-          ingredients={newRecipe.ingredients}
+          ingredients={fullIngredients}
           setIngredients={(ingredients) =>
-            setNewRecipe({ ...newRecipe, ingredients })
+            setNewRecipe({
+              ...newRecipe,
+              ingredients: ingredients.map((ing) => ({
+                ingredientID: ing.ingredient?.id,
+                quantity: ing.quantity,
+              })),
+            })
           }
         />
-
         <Heading className="mb-2">Description</Heading>
-        <Textarea className="min-h-56">
+        <Textarea className="min-h-56 mb-6">
           <TextareaInput
             value={newRecipe.description}
             placeholder="Enter your description here..."
@@ -119,11 +118,11 @@ const UpdateRecipePage = () => {
             }
           />
         </Textarea>
-      </Box>
 
-      <Button variant="solid" action="primary" onPress={() => onSave()}>
-        <ButtonText>Save</ButtonText>
-      </Button>
+        <Button variant="solid" action="primary" onPress={() => onSave()}>
+          <ButtonText>Save</ButtonText>
+        </Button>
+      </Box>
 
       <Modal isOpen={isUpdating}>
         <ModalBackdrop />

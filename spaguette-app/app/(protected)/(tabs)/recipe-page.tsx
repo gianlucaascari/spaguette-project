@@ -1,16 +1,16 @@
-import { ScrollView, StyleSheet } from "react-native";
-import { useContext, useEffect, useState } from "react";
+import { ScrollView } from "react-native";
+import { useContext, useEffect } from "react";
 
-import { Text, View } from "@/components/Themed";
 import { DataContext } from "@/services/data/DataContext";
 import { useDataService } from "@/services/data/data-service";
-import AddRecipeInput from "@/components/catalogue/modify-recipes/AddRecipeInput";
 import RecipesListElement from "@/components/catalogue/show-recipes/RecipeListElement";
 import { useStyles } from "../../../styles/app/(tabs)/recipe-page.style";
 import { Recipe } from "@/types/Catalogue";
 import { Box } from "@/components/ui/box";
-import { Button, ButtonText } from "@/components/ui/button";
 import { useRouter } from "expo-router";
+import { Text } from "@/components/ui/text";
+import { Fab, FabIcon, FabLabel } from "@/components/ui/fab";
+import { AddIcon } from "@/components/ui/icon";
 
 export default function TabOneScreen() {
   // utilities
@@ -20,32 +20,13 @@ export default function TabOneScreen() {
 
   const router = useRouter();
 
-  const [isAddingRecipe, setAddingRecipe] = useState(false);
-
   useEffect(() => {
-    getRecipes();
+    getRecipes(true);
   }, []);
 
   return (
-    <ScrollView
-      className="bg-background-0"
-      style={styles.container}
-      contentContainerStyle={styles.scrollViewContent}
-    >
-      <Box className="p-4 w-screen max-w-2xl self-center">
-        {isAddingRecipe ? (
-          <AddRecipeInput
-            onCancel={() => setAddingRecipe(false)}
-            afterSubmit={() => setAddingRecipe(false)}
-          />
-        ) : (
-          <Button
-            onPress={() => setAddingRecipe(true)}
-          >
-            <ButtonText>Add recipe</ButtonText>
-          </Button>
-        )}
-
+    <Box className="bg-background-0">
+      <ScrollView className="p-4 w-screen self-center">
         {state.recipes ? (
           <Box className="justify-center">
             {state.recipes.map((recipe: Recipe, index: number) => (
@@ -55,7 +36,18 @@ export default function TabOneScreen() {
         ) : (
           <Text>Loading...</Text>
         )}
-      </Box>
-    </ScrollView>
+      </ScrollView>
+      <Fab
+        size="md"
+        placement="bottom right"
+        isHovered={true}
+        isDisabled={false}
+        isPressed={true}
+        onPress={() => router.navigate("/(protected)/catalogue/recipes/create")}
+      >
+        <FabIcon as={AddIcon} />
+        <FabLabel>Add Recipe</FabLabel>
+      </Fab>
+    </Box>
   );
 }

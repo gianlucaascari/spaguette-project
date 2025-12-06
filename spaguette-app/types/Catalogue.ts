@@ -41,18 +41,38 @@ export type OptionalRecipe = {
   ingredients: OptionalIngredientQuantity[];
 };
 
+export type IngredientQuantityInput = {
+  ingredientID: string,
+  quantity: number,
+}
+
+export type OptionalIngredientQuantityInput = {
+  ingredientID: string | undefined,
+  quantity: number | undefined,
+}
+
 export type RecipeInput = {
   name: string;
   description?: string;
   stepsLink?: string;
-  ingredients: {
-    quantity: number;
-    ingredientID: string;
-  }[];
+  ingredients: IngredientQuantityInput[];
 };
+
+export type OptionalRecipeInput = {
+  name: string;
+  description?: string;
+  stepsLink?: string;
+  ingredients: OptionalIngredientQuantityInput[];
+}
 
 export function isCompleteIngredient(
   item: OptionalIngredientQuantity
 ): item is IngredientQuantity {
   return item.ingredient !== undefined && item.quantity !== undefined;
+}
+
+export function isCompleteIngredientInput(
+  item: OptionalIngredientQuantityInput
+): item is IngredientQuantityInput {
+  return item.ingredientID !== undefined && item.quantity !== undefined;
 }

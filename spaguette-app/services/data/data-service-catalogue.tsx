@@ -99,10 +99,11 @@ export const useDataServiceCatalogue = () => {
          * @param {RecipeInput} recipe The recipe to add
          * @returns {Promise<void>}
          */
-        addRecipe: async (recipe: RecipeInput) => {
+        addRecipe: async (recipe: RecipeInput): Promise<string | undefined> => {
             try {
                 const addedRecipe = await apiService.addRecipe(recipe);
                 dispatch({ type: 'ADD_RECIPE', payload: addedRecipe });
+                return addedRecipe.id
             } catch (e: any) {
                 console.error('Error adding recipe:', e);
                 alert('Data Service > Error adding recipe\n' + e?.message);
