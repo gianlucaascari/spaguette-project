@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Heading } from "@/components/ui/heading";
 import { OptionalIngredientQuantity } from "@/types/Catalogue";
@@ -15,6 +15,7 @@ import {
 import { DataContext } from "@/services/data/DataContext";
 import { Button, ButtonIcon } from "@/components/ui/button";
 import IngredientQuantityInput from "./IngredientQuantityInput";
+import { TextInput } from "react-native";
 
 interface IngredientSectionProps {
   ingredients: OptionalIngredientQuantity[];
@@ -39,6 +40,15 @@ const IngredientsSectionInput: React.FC<IngredientSectionProps> = ({
       ingredient != undefined &&
       !ingredients.some((i) => i.ingredient?.id === ingredient.id)
   );
+
+  const lastIngredientInputRef = useRef<TextInput>(null)
+  const prevIngredientsLength = useRef(ingredients.length);
+  useEffect(() => {
+  if (ingredients.length > prevIngredientsLength.current) {
+    lastIngredientInputRef.current?.focus();
+  }
+  prevIngredientsLength.current = ingredients.length;
+}, [ingredients.length]);
 
   return (
     <FormControl isInvalid={!isIngredientsValid} className="mb-6">
@@ -79,6 +89,7 @@ const IngredientsSectionInput: React.FC<IngredientSectionProps> = ({
               selectableIngredients={selIngredients.sort((a, b) =>
                 a.name.localeCompare(b.name)
               )}
+              quantityRef={index === (ingredients.length - 1) ? lastIngredientInputRef : undefined}
             />
           );
         })}

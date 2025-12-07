@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select";
 import { Button, ButtonIcon } from "@/components/ui/button";
 import { Trash2 } from "lucide-react-native";
+import { TextInput } from "react-native";
 
 interface IngredientQuantityInputProps {
   ingredient: Ingredient | undefined;
@@ -30,6 +31,7 @@ interface IngredientQuantityInputProps {
   isIngredientValid: boolean;
   setIsIngredientValid: (b: boolean) => void;
   selectableIngredients: Ingredient[];
+  quantityRef: React.RefObject<TextInput> | undefined;
 }
 
 const IngredientQuantityInput: React.FC<IngredientQuantityInputProps> = ({
@@ -41,6 +43,7 @@ const IngredientQuantityInput: React.FC<IngredientQuantityInputProps> = ({
   isIngredientValid,
   setIsIngredientValid,
   selectableIngredients,
+  quantityRef,
 }) => {
   const [quantityInput, setQuantityInput] = useState(quantity?.toString());
   const [isQuantityValid, setIsQuantityValid] = useState(true);
@@ -79,6 +82,7 @@ const IngredientQuantityInput: React.FC<IngredientQuantityInputProps> = ({
       <HStack className="w-full items-center">
         <Input className="min-w-16 max-w-20 mr-2 flex-[1]">
           <InputField
+            ref={quantityRef as any}
             value={quantityInput}
             onChangeText={setQuantityInput}
             onBlur={handleInsertedQuantity}
