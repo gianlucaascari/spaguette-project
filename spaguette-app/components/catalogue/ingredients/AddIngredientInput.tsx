@@ -55,7 +55,7 @@ const AddIngredientInput: React.FC<AddIngredientInputProps> = ({onCancel, afterS
         <IngredientInput ingredient={ingredient} setIngredient={setIngredient} />
 
         <HStack className='self-end md:justify-between my-1 md:my-0'>
-            <Button className='px-4 mx-4' variant='link' action='negative' onPress={onCancel} >
+            <Button className='px-4 mx-4' variant='link' onPress={onCancel} >
                 <ButtonText>Cancel</ButtonText>
             </Button>
             <Button className='' variant='solid' onPress={onAddIngredientPress} >
