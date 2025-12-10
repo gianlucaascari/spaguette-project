@@ -1,45 +1,55 @@
-import { ScrollView, StyleSheet } from 'react-native';
-import { useContext, useEffect, useState } from 'react';
+import { ScrollView } from "react-native";
+import { useContext, useEffect } from "react";
 
-import { Text, View } from '@/components/Themed';
-import { DataContext } from '@/services/data/DataContext';
-import { useDataService } from '@/services/data/data-service';
-import AddRecipeInput from '@/components/catalogue/modify-recipes/AddRecipeInput';
-import RecipesListElement from '@/components/catalogue/show-recipes/RecipeListElement';
-import Button from '@/components/general/Button';
-import { useStyles } from '../../../styles/app/(tabs)/recipe-page.style';
-import { useAuthService } from '@/services/auth/auth-service';
-import { Recipe } from '@/types/Catalogue';
+import { DataContext } from "@/services/data/DataContext";
+import { useDataService } from "@/services/data/data-service";
+import RecipesListElement from "@/components/catalogue/recipes/RecipeListElement";
+import { Recipe } from "@/types/Catalogue";
+import { Box } from "@/components/ui/box";
+import { useRouter } from "expo-router";
+import { Text } from "@/components/ui/text";
+import { Fab, FabIcon, FabLabel } from "@/components/ui/fab";
+import { AddIcon } from "@/components/ui/icon";
 
 export default function TabOneScreen() {
-
   // utilities
-  const styles = useStyles()
   const { state } = useContext(DataContext);
   const { getRecipes } = useDataService();
 
-  const [isAddingRecipe, setAddingRecipe] = useState(false)
+  const router = useRouter();
 
   useEffect(() => {
-    getRecipes();
+    getRecipes(true);
   }, []);
-  
+
+  if (!state.recipes) {
+    return (
+      <Box className="bg-background-0 flex-1 items-center justify-center">
+        <Text> loading... </Text>
+      </Box>
+    );
+  }
+
   return (
-      <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContent}>
-
-          {isAddingRecipe ?  
-            <AddRecipeInput onCancel={() => setAddingRecipe(false)} afterSubmit={() => setAddingRecipe(false)}/> 
-            : 
-            <Button text='Add New Recipe' onPress={() => setAddingRecipe(true)} style='primary'/>
-          }
-
-          {state.recipes ? (
-            <View>
-              {state.recipes.map((recipe: Recipe, index: number) => <RecipesListElement key={index} recipe={recipe} />)}
-            </View>
-          ) : (
-            <Text>Loading...</Text>
-          )}      
+    <Box className="bg-background-0">
+      <ScrollView className="p-4 w-screen self-center">
+        <Box className="justify-center">
+          {state.recipes.map((recipe: Recipe, index: number) => (
+            <RecipesListElement key={index} recipe={recipe} />
+          ))}
+        </Box>
       </ScrollView>
+      <Fab
+        size="md"
+        placement="bottom right"
+        isHovered={true}
+        isDisabled={false}
+        isPressed={true}
+        onPress={() => router.navigate("/(protected)/catalogue/recipes/create")}
+      >
+        <FabIcon as={AddIcon} />
+        <FabLabel>Add Recipe</FabLabel>
+      </Fab>
+    </Box>
   );
 }
