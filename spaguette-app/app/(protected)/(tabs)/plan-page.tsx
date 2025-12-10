@@ -4,20 +4,17 @@ import { useDataService } from "@/services/data/data-service";
 import { DataContext } from "@/services/data/DataContext";
 import PlanListElement from "@/components/plan/plan/PlanListElement";
 import AddPlanElementInput from "@/components/plan/plan/AddPlanElementInput";
-import { useStyles } from "../../../styles/app/(tabs)/plan-page.style";
-import ListItem from "@/components/plan/show-list/ListItem";
-import { ListItem as ListItemType, RecipeQuantity } from "@/types/Plan";
+import { RecipeQuantity } from "@/types/Plan";
 import { Box } from "@/components/ui/box";
 import { Text } from "@/components/ui/text";
-import { useMediaQuery } from "react-responsive";
+import { Fab, FabIcon, FabLabel } from "@/components/ui/fab";
+import { List } from "lucide-react-native";
+import { router } from "expo-router";
 
 const PlanPage = () => {
   // utilities
-  const styles = useStyles();
   const { state } = useContext(DataContext);
   const { getMyPlan, getMyList } = useDataService();
-
-  const isDesktop = useMediaQuery({ minWidth: 768 });
 
   useEffect(() => {
     getMyPlan();
@@ -25,12 +22,10 @@ const PlanPage = () => {
   }, []);
 
   return (
-    <ScrollView className="bg-background-0 items-center">
-      <Box className="p-4 w-screen max-w-2xl self-center">
-        <Box>
-          <AddPlanElementInput />
-
-          <Box style={styles.planContainer}></Box>
+    <Box className="bg-background-0 items-center h-full">
+      <ScrollView className="p-4 w-screen max-w-2xl self-center">
+        <AddPlanElementInput />
+        <Box className="mt-4">
           {state.plan ? (
             state.plan.recipes.map(
               (planElement: RecipeQuantity, index: number) => (
@@ -41,23 +36,16 @@ const PlanPage = () => {
             <Text>Loading...</Text>
           )}
         </Box>
-      </Box>
-    </ScrollView>
-    // <ScrollView className='bg-background-0' style={styles.container} contentContainerStyle={styles.scrollViewContentStyling}>
+      </ScrollView>
 
-    //     <Box style={styles.listContainer}>
-    //         {state.list ?
-    //         (
-    //             state.list.items.map((item: ListItemType, index: number) => (
-    //                 <ListItem key={index} item={item} />
-    //             ))
-    //         )
-    //         :
-    //         (
-    //             <Text>Loading...</Text>
-    //         )}
-    //     </Box>
-    // </ScrollView>
+      <Fab
+        placement="bottom right"
+        onPress={() => router.navigate("/(protected)/plan/list")}
+      >
+        <FabIcon as={List} className="ml-1" />
+        <FabLabel>See List</FabLabel>
+      </Fab>
+    </Box>
   );
 };
 

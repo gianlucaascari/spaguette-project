@@ -4,7 +4,6 @@ import { useContext, useEffect } from "react";
 import { DataContext } from "@/services/data/DataContext";
 import { useDataService } from "@/services/data/data-service";
 import RecipesListElement from "@/components/catalogue/recipes/RecipeListElement";
-import { useStyles } from "../../../styles/app/(tabs)/recipe-page.style";
 import { Recipe } from "@/types/Catalogue";
 import { Box } from "@/components/ui/box";
 import { useRouter } from "expo-router";
@@ -14,7 +13,6 @@ import { AddIcon } from "@/components/ui/icon";
 
 export default function TabOneScreen() {
   // utilities
-  const styles = useStyles();
   const { state } = useContext(DataContext);
   const { getRecipes } = useDataService();
 
