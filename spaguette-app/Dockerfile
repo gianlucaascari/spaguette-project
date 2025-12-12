@@ -1,5 +1,5 @@
 # --- STAGE 1: The "Builder" ---
-FROM node:18-alpine AS builder
+FROM node:20-slim AS builder
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ WORKDIR /app
 COPY spaguette-app/package.json spaguette-app/package-lock.json ./
 
 # Installiamo le dipendenze
-RUN npm ci
+RUN npm install
 
 # Copiamo il resto del codice sorgente
 COPY spaguette-app/ ./
