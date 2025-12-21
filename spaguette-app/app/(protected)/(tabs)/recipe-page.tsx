@@ -31,7 +31,7 @@ export default function TabOneScreen() {
   }
 
   return (
-    <Box className="bg-background-0">
+    <Box className="bg-background-0 flex-1">
       <ScrollView className="p-4 w-screen self-center">
         <Box className="justify-center">
           {state.recipes.map((recipe: Recipe, index: number) => (

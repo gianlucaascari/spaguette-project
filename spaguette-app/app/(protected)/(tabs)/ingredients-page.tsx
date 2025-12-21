@@ -19,7 +19,7 @@ export default function TabTwoScreen() {
   const [isAddingIngredient, setIsAddingIngredient] = useState(false);
 
   useEffect(() => {
-    getIngredients();
+    getIngredients(true);
   }, []);
 
   return (

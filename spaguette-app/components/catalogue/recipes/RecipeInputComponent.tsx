@@ -33,7 +33,7 @@ const RecipeInputComponent: React.FC<RecipeInputProps> = ({
   const { state } = useContext(DataContext);
 
   useEffect(() => {
-    dataService.getIngredients();
+    dataService.getIngredients(true);
   }, []);
 
   const [newRecipe, setNewRecipe] = useState<OptionalRecipeInput>(
